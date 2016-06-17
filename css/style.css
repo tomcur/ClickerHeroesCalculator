@@ -1,0 +1,41 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Open Sans";
+    font-size: 1.5em;
+}
+
+.wrapper {
+    width: 1004px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
+}
+
+
+#input {
+    width: 500px; 
+    display: inline-block;
+}
+
+#output { 
+    width: 500px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+table input[type=text] {
+    width: 100px;
+    padding: 0px;
+}
+
+.odd_row {
+    background-color: #f9f9f9;
+}
+
+.col_change {
+    font-weight: bold;
+}

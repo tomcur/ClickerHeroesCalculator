@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Clicker Heroes Optimizer</title>
+        
+        <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.min.js"></script>
+        <script src="//chlist.github.io/decoder/assets/js/md5.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script src="data/functions.js"></script>
+        <script src="data/model.js"></script>
+        <script src="js/calc.js"></script>
+        <script src="js/utils.js"></script>
+    </head>
+    <body>
+    <div class="wrapper">
+        <div class="panel panel-danger">
+            <header class="panel-heading">Basic Information</header>
+            <div class="panel-body">
+                <p>
+                    This calculator uses the <em><a href="https://www.reddit.com/r/ClickerHeroes/comments/4naohc/math_and_transcendance/">Rules of Thumb</a></em> to offer ancient suggestions. It assumes that, at the very least, you own Siyalatas (or Fragsworth for an active build). The calculator distributes the available hero souls among the available ancients.
+                </p>
+                <p>
+                    See also: <a href="https://www.reddit.com/user/Shruikan864">/u/Shruikan864</a>'s <a href="https://www.reddit.com/r/ClickerHeroes/comments/4nox6i/rules_of_thumb_10_spreadsheet/">Rules of Thumb 1.0 Spreadsheet</a> and <a href="https://www.reddit.com/user/sugima">/u/sugima</a>'s <a href="https://www.reddit.com/r/ClickerHeroes/comments/4naohc/math_and_transcendance/">1.0 Rules of Thumb</a>.
+                </p>
+            </div>
+        </div>
+        <div id="input">
+            <div class="panel panel-primary">
+              <header class="panel-heading">Data</header>
+              <div class="panel-body">
+                <label>Paste your game file here:
+                <textarea id="savedata" style="width: 100%; height: 50px" onclick="this.select()" onblur="Import()"></textarea></label>
+                <div style="float: right; margin-top: 10px;">
+                    <button type="button" id="update" onclick="calculateAndUpdate()" class="btn btn-default">Update</button>
+                    <button type="button" onclick="Import()" class="btn btn-primary" style="float: right;">Import</button>
+                </div>
+                <div class="panel-settings">
+                    <div>
+                        <label><input type="checkbox" onclick="Import()" id="addsouls"> Include souls gained after ascension</label>
+                    </div>
+                    <hr>
+                    <div>
+                        Build
+                        <label><input type="radio" name="buildmode" onclick="Import()" value="idle" checked="checked"> Idle</label>
+                        <label><input type="radio" name="buildmode" onclick="Import()" value="hybrid" checked="checked"> Hybrid</label>
+                        <label><input type="radio" name="buildmode" onclick="Import()" value="active"> Active</label>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div role="tabpanel" id="output">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#tab-ancients" aria-controls="tab-ancients" role="tab" data-toggle="tab">Ancients</a></li>
+                <li role="presentation"><a href="#tab-outsiders" aria-controls="tab-outsiders" role="tab" data-toggle="tab">Outsiders</a></li>
+                <li role="presentation"><a href="#tab-other" aria-controls="tab-other" role="tab" data-toggle="tab">Other</a></li>
+            </ul>
+            <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="tab-ancients">
+                <div class="panel-heading"></div>
+                <table id="ancienttbl" class="table">
+                    <thead><tr><th>Ancient</th><th>Current</th><th>Goal</th><th>Change</th></tr></thead>
+                    <tr class="odd_row">
+                        <td>Hero Souls</td>
+                        <td><input type="text" id="soulsin" value="0" onblur="calculateAndUpdate()"></td>
+                        <td><span id="soulsgoal"></span></td>
+                        <td><span id="soulschange"></span></td>
+                    </tr>
+                </table>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="tab-outsiders">
+                <table id="outsidertbl" class="table table-striped">
+                    <thead><tr><th>Outsider</th><th>Current</th></tr></thead>
+                </table>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="tab-other">
+                <table class="table table-striped">
+                    <tr><td><label for="tp">Transcendent Power</label></td><td><input type="text" id="tp" disabled></td></tr>
+                    <tr><td><label for="ascensionzone">Highest Zone Reached</td><td><input type="text" id="ascensionzone" disabled></td></tr>
+                    <tr><td><label for="tprewardcapzone">TP Reward Cap Zone</label></td><td><input type="text" id="tprewardcapzone" disabled></td></tr>
+                </table>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">About</div>
+            <div class="panel-body">
+                <p>
+                    <em>Calculator for Clickerheroes v1.0 by <a href="http://www.reddit.com/u/beskhue">/u/beskhue</a>.</em>
+                </p>
+                <p>
+                    Optimizer is loosely based on the code by <a href="http://philni.neocities.org/ancientssoul.html">/u/philni</a>, which is based on the code by <a href="http://s3-us-west-2.amazonaws.com/clickerheroes/ancientssoul.html">/u/rler</a>, which in turn was based on the original calculator and source from <a href="http://www.rivsoft.net/clicker/ancientssoul">rivsoft</a>. Optimization procedure based on <a href="https://www.reddit.com/user/graceoflives">/u/graceoflives</a>' <a href="https://www.reddit.com/r/ClickerHeroes/comments/4nwf3h/10_ancient_calculator/">calculator</a>. Visit <a href="http://www.reddit.com/r/clickerheroes">/r/clickerheroes</a> for more info.
+                </p>
+                <p>
+                Changelog:
+                </p>
+                <table class="table table-striped">
+                    <thead>
+                        <tr><th>Date</th><th>Change</th></tr></thead>
+                    <tbody>
+                        <tr><td>2016/06/17</td><td>Update rule for Kumawakamaru.</td></tr>
+                        <tr><td>2016/06/16</td><td>Display TP reward cap zone.</td></tr>
+                        <tr><td>2016/06/16</td><td>Remove Solomon leveling at TP cap based on new calculations.</td></tr>
+                        <tr><td>2016/06/16</td><td>Implemented Solomon leveling at TP cap.</td></tr>
+                        <tr><td>2016/06/16</td><td>Support Atman and Kumawakamaru pre-transcendence (note that optimal RoTs still need to be devised for these ancients).</td></tr>
+                        <tr><td>2016/06/16</td><td>Add method to underlevel Solomon.</td></tr>
+                        <tr><td>2016/06/16</td><td>Solomon calculation is now correct pre-transcendence.</td></tr>
+                        <tr><td>2016/06/15</td><td>Implement easier copying of ancient level changes.</td></tr>
+                        <tr><td>2016/06/15</td><td>If Morgulis is not owned, keep a soul bank.</td></tr>
+                        <tr><td>2016/06/15</td><td>Further improvements to optimization speed. Notably, optimization (for high HS) now runs in constant time.</td></tr>
+                        <tr><td>2016/06/15</td><td>Now correctly takes into account HS requirement to upgrade Siyalatas.</td></tr>
+                        <tr><td>2016/06/15</td><td>Optimization when there are a lot of HS to distribute is now significantly faster.</td></tr>
+                        <tr><td>2016/06/14</td><td>Added support for hybrid and active builds.</td></tr>
+                        <tr><td>2016/06/14</td><td>Initial release.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script language="javascript">
+    "use strict";
+
+    var strSettingsCheckBox = [
+        "#addsouls",
+    ];
+
+    var strSettingsRadio = [
+        "buildmode"
+    ];
+
+    var strSettingsList = [
+    ];
+
+    var strCustomSave = [
+    ];
+
+    function LoadAllSettings() {
+        if (typeof(Storage) !== "undefined") {
+            for (var i in strCustomSave) {
+                if (localStorage.hasOwnProperty(i)) {
+                    strCustomSave[i] = localStorage[i];
+                }
+            }
+
+            for (var i in strSettingsCheckBox) {
+                var str = strSettingsCheckBox[i];
+                if (localStorage.hasOwnProperty(str)) {
+                    $(str).prop('checked', localStorage[str]=="true");
+                }
+            }
+
+            for (var i in strSettingsRadio) {
+                var str = strSettingsRadio[i];
+                if (localStorage.hasOwnProperty(str)) {
+                    $('input[name="'+str+'"][value="'+localStorage[str]+'"]').prop('checked', true);
+                }
+            }
+
+            // Now the other settings.
+            for (var i in strSettingsList) {
+                var str = strSettingsList[i];
+                if (localStorage.hasOwnProperty(str)) {
+                    $(str).val(localStorage[str]);
+                }
+            }
+        }
+    }
+
+    function SaveSettings(strSetting) {
+        if (typeof(Storage) !== "undefined") {
+            localStorage[strSetting] = $(strSetting).val();
+        }
+    };
+
+    function SaveSettingsCheckBox(strSetting) {
+        if (typeof(Storage) !== "undefined") {
+            localStorage[strSetting] = $(strSetting).prop('checked');
+        }
+    }
+
+    function saveBuildMode() {
+        var strBuildMode = $('input[name="buildmode"]:checked').val();
+        if (typeof(Storage) !== "undefined") {
+            localStorage.buildmode = strBuildMode;
+        }
+    }
+
+    $(function () {
+        $('#addsouls').change(function() {
+            SaveSettingsCheckBox("#addsouls");
+        });
+
+        $("input[name=buildmode]:radio").change(function() {
+            saveBuildMode();
+        });
+        
+        $(window).on("message", function(event) {
+            $("#savedata").val(event.originalEvent.data);
+            Import();
+        });
+        
+        // Load game data
+        $.ajax('data/ClickerHeroes_v6575.js', {
+            complete: function(xhr) {
+                window.data = JSON.parse(xhr.responseText);
+                createObjects(data);
+                window.Items = {items : {}, slots : {}};	// No relics.
+                ShowTables();
+                LoadAllSettings();
+            }
+        });
+    });
+
+    function AddAncient(key) {
+        Ancients[key].ui = {};
+    
+        var tr = Ancients[key].ui.targetBox = $("<tr></tr>");
+        tr.append($("<td></td>").append(Ancients[key].used).append($("<span></span>").text(Ancients[key].name.substring(0, Ancients[key].name.indexOf(','))).attr("title", Ancients[key].name)));
+        Ancients[key].level = 0;
+        Ancients[key].ui.level = $("<span></span>").text(numberToStringFormatted(0));
+        Ancients[key].ui.goal = $("<span></span>");
+        Ancients[key].ui.change = $("<input></input>").attr("readonly", "readonly").attr("type", "text").addClass("col_change");
+        
+        Ancients[key].ui.change.focus(function() { 
+            $(this).val(numberToString(Ancients[key].extraInfo.optimalLevel - Ancients[key].level));
+            $(this).select();
+        });
+        
+        Ancients[key].ui.change.focusout(function() { 
+            $(this).val(numberToStringFormatted(Ancients[key].extraInfo.optimalLevel - Ancients[key].level));
+        });
+        
+        tr.append($("<td></td>").append(Ancients[key].ui.level)).append($("<td></td>").append(Ancients[key].ui.goal)).append($("<td></td>").append(Ancients[key].ui.change));
+        $("#ancienttbl").append(tr);
+        tr.hide();
+    }
+    
+    function addOutsider(key) {
+        Outsiders[key].ui = {};
+    
+        var tr = $("<tr></tr>");
+        tr.append($("<td></td>").append($("<span></span>").text(Outsiders[key].name)));
+        Outsiders[key].ui.level = $("<span></span>").text(numberToStringFormatted(0));
+        tr.append($("<td></td>").append(Outsiders[key].ui.level));
+        $("#outsidertbl").append(tr);
+    }
+
+    function ShowTables() {
+        var ancientList = _.keys(Ancients).sort();
+
+        // Ancient Tab
+        for (var i = 0; i < ancientList.length; i++) {
+            var key = ancientList[i];
+            if (!Ancients[key].maxLevel) {
+                AddAncient(key);
+            }
+        }
+
+        for (var i = 0; i < ancientList.length; i++) {
+            var key = ancientList[i];
+            if (Ancients[key].maxLevel) {
+                AddAncient(key);
+            }
+        }
+        
+        // Outsiders Tab
+        for (var k in Outsiders) {
+            addOutsider(k);
+        }
+    }
+
+    var ToPurchase = [1,2,4,8,16,35,70,125,250,500,800,1200,1700,2200,2750,3400,4100,5000,6000,7500,10000,12500,16000,25000,35000,50000,70000,100000,150000,250000,400000];
+    var OwnedNotInList = 1;
+
+    var ItemTypeMap = {
+        "1": "siyalatas",
+        "2": "fragsworth",
+        "3": "chronos",
+        "4": "chawedo",
+        "5": "revolc",
+        "6": "iris",
+        "7": "argaiv",
+        "8": "energon",
+        "9": "kleptos",
+        "10": "sniperino",
+        "11": "berserker",
+        "12": "hecatoncheir",
+        "13": "bubos",
+        "14": "morgulis",
+        "15": "bhaal",
+        "16": "dora",
+        "17": "atman",
+        "18": "fortuna",
+        "19": "dogcog",
+        "20": "pluto",
+        "21": "mimzee",
+        "22": "mammon",
+        "24": "libertas",
+        "25": "solomon"
+    };
+
+    function SetDifference(a, b) {
+        var cnt = 0;
+        for (var k in b) {
+            if (!a.hasOwnProperty(k)) {
+                cnt++;
+            }
+        }
+        return cnt;
+    }
+
+    var ANTI_CHEAT_CODE = "Fe12NAfA3R6z4k0z";
+    var SALT = "af0ik392jrmt0nsfdghy0";
+    function Import() {
+        var txtIn = $("#savedata").val();
+        var txtOut="";
+
+        if (txtIn.search("ClickerHeroesAccountSO") != -1) {
+            var start = 53;
+            txtOut = txtIn.substr(start, txtIn.length - start - 1);
+        } else {
+            txtIn = txtIn.trim();
+            if (txtIn=="") {
+                return;
+            }
+            if (txtIn.search(ANTI_CHEAT_CODE) != -1) {
+                var result = txtIn.split(ANTI_CHEAT_CODE);
+                for (var i = 0; i < result[0].length; i += 2) {
+                    txtOut += result[0][i];
+                }
+                if (CryptoJS.MD5(txtOut + SALT) != result[1]) {
+                    alert("Bad hash");
+                    return;
+                }
+            }
+            txtOut = atob(txtOut);
+        }
+
+        var data = $.parseJSON(txtOut);
+        
+        // Older saves won't have items.
+        window.Items = data.hasOwnProperty("items") ? data.items : {items : {}, slots : {}};
+        
+        window.HeroSoulsSacrificed = Number(data.heroSoulsSacrificed);
+        
+        var heroes = data.heroCollection.heroes;
+        var ascensionSouls = 0;
+        for (var k in heroes) {
+            var id = parseInt(k, 10);
+            ascensionSouls += Number(heroes[k].level);
+        }
+        ascensionSouls = Math.floor(ascensionSouls / 2000) + Number(data.primalSouls);
+        
+        var levels = {};
+        OwnedNotInList = 0;
+        for (var i = AncientMin; i <= AncientMax; i++) {
+            if (data.ancients.ancients.hasOwnProperty(i)) {
+                levels[i] = true;
+                OwnedNotInList += 1;
+            }
+        }
+        for (var k in Ancients) {
+            if (levels[Ancients[k].id]) {
+                OwnedNotInList -= 1;
+            }
+        }
+        
+        $("#soulsin").val(numberToString(Number(data.heroSouls) + Number($("#addsouls").prop("checked") ? ascensionSouls : 0)));
+        
+        for (var k in Ancients) {
+            if (Ancients.hasOwnProperty(k)) {
+                if (data.ancients.ancients[Ancients[k].id]) {
+                    Ancients[k].level = Math.round(Number(data.ancients.ancients[Ancients[k].id].level));
+                } else {
+                    Ancients[k].level = 0;
+                }
+                Ancients[k].ui.level.text(numberToStringFormatted(Ancients[k].level));
+            }
+        }
+        
+        for (var k in Outsiders) {
+            if (Outsiders.hasOwnProperty(k)) {
+                if (data.outsiders.outsiders[Outsiders[k].id]) {
+                    Outsiders[k].level = data.outsiders.outsiders[Outsiders[k].id].level;
+                } else {
+                    Outsiders[k].level = 0;
+                }
+                Outsiders[k].ui.level.text(numberToStringFormatted(Outsiders[k].level));
+            }
+        }
+        
+        var tp = Math.max(50-49 * Math.exp(-data.ancientSoulsTotal/10000) + Outsiders["phandoryss"].level*0.05, 1.0);
+        
+        
+        if(! data.transcendent) {
+            tp = 0;
+        }
+        
+        $("#tp").val(numberToString(tp));
+        
+        $("#ascensionzone").val(data.highestFinishedZonePersist);
+        
+        $("#capreached").prop("checked", tpCapReached());
+        
+        calculateAndUpdate();
+    }
+    
+    function calculateAndUpdate() {
+        var spentHS = calculate();
+        display(spentHS);
+    }
+    
+    function display(spentHS) {
+        $("#soulsgoal").text(numberToStringFormatted($("#soulsin").val() - spentHS));
+        $("#soulschange").text("-" + numberToStringFormatted(spentHS));
+        
+        for (var k in Ancients) {
+            var ancient = Ancients[k];
+            if (ancient.extraInfo.optimalLevel) {
+                ancient.ui.goal.text(numberToStringFormatted(ancient.extraInfo.optimalLevel));
+                ancient.ui.change.val(numberToStringFormatted(ancient.extraInfo.optimalLevel - ancient.level));
+                ancient.ui.targetBox.show();
+            } else {
+                ancient.ui.targetBox.hide();
+            }
+        }
+        
+        $("#ancienttbl tr:visible").each(function(index, row){
+            $(row).removeClass('odd_row');
+            if (index%2==1){ //odd row
+                $(row).addClass('odd_row');
+            }
+        });
+        
+        $("#tprewardcapzone").val(numberToStringFormatted(zoneToHitCap()));
+    }
+    </script>
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-45620982-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    </body>
+</html>
