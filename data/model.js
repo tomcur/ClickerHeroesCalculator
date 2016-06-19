@@ -161,11 +161,26 @@ function costFunctionCreator(ancient) {
     };
 }
 
+function costPartialSumFunctionCreator(ancient) {
+    if(functions[ancient.levelCostFormula + "PartialSum"]) {
+        return function(lvl) { 
+            if (ancient.levelCostParams) {
+                return functions[ancient.levelCostFormula + "PartialSum"](lvl, ancient.levelCostParams);
+            } else {
+                return functions[ancient.levelCostFormula + "PartialSum"](lvl);
+            }
+        };
+    } else {
+        return null;
+    }
+}
+
 function addToAncients() {
-	for(var k in Ancients) {
+    for(var k in Ancients) {
         var ancient = Ancients[k];
-		Ancients[k].extraInfo = AncientsExtraInfo[k] ? AncientsExtraInfo[k] : EmptyExtraInfo;
-		Ancients[k].costfn = costFunctionCreator(ancient);
-	}
+        Ancients[k].extraInfo = AncientsExtraInfo[k] ? AncientsExtraInfo[k] : EmptyExtraInfo;
+        Ancients[k].costfn = costFunctionCreator(ancient);
+        Ancients[k].partialCostfn = costPartialSumFunctionCreator(ancient);
+    }
 }
 

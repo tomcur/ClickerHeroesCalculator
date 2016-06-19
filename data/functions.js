@@ -88,13 +88,18 @@ var functions = {
         return param1 * param2;
     },
 
+    linearPartialSum: function (param1, param2) {
+        return param1 * (param1 + 1) * 0.5 * Number(param2);
+    },
+    
     exponential: function (param1, param2) {
         param2 = Number(param2);
         return Math.pow(param2, param1);
     },
 
-    exponentialPartialSum: function (param1) {
-        return math.pow(2, param1 + 1) - 2;
+    exponentialPartialSum: function (param1, param2) {
+        var r = Number(param2);
+        return (1 - Math.pow(r, param1 + 1)) / (1 - r);
     },
 
     polynomial1_5: function (param1) {
