@@ -143,10 +143,10 @@ function calculateHSCostToOptimalLevel() {
             
             var numSteps = Math.min(maxNumSteps, diff);
             var stepSize = Math.floor(diff/numSteps);
-            
             var temp = 0;
             
-            for (var level = oldLevel + stepSize; level <= (optimalLevel + stepSize); level += stepSize) {
+            for(var step = 1; step <= numSteps; step++) {
+                var level = oldLevel + step * stepSize;
                 var thisStepSize = stepSize;
                 if (level > optimalLevel) {
                     thisStepSize = stepSize - (level - optimalLevel);
@@ -162,7 +162,7 @@ function calculateHSCostToOptimalLevel() {
         }
     }
     
-    return totalCost ;
+    return totalCost;
 }
 
 function compute(tuneAncient, addLevels) {
