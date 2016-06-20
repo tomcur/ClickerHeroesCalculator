@@ -149,17 +149,18 @@ function calculateHSCostToOptimalLevel() {
                 // We have defined the partial sum for this level cost formula,
                 // use it instead of iterating
                 thisAncientCost = Ancients[k].partialCostfn(optimalLevel) - Ancients[k].partialCostfn(oldLevel);
-            } else {                    
+            } else {
                 var numSteps = Math.min(maxNumSteps, diff);
-                var stepSize = Math.floor(diff/numSteps);
-                var temp = 0;
+                var stepSize = diff/numSteps;
                 
+                var temp = 0;
                 for(var step = 1; step <= numSteps; step++) {
-                    var level = oldLevel + step * stepSize;
-                    var thisStepSize = stepSize;
-                    if (level > optimalLevel) {
-                        thisStepSize = stepSize - (level - optimalLevel);
-                    }
+                    var prevAddLevels = Math.ceil((step - 1) * stepSize);
+                    var addLevels = Math.ceil(step * stepSize);
+                    
+                    var level = oldLevel + addLevels;
+                    var thisStepSize = addLevels - prevAddLevels;
+                    
                     temp += Ancients[k].costfn(level) * thisStepSize;
                 }
                 
