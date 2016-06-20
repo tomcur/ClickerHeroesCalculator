@@ -148,10 +148,7 @@ function calculateHSCostToOptimalLevel() {
             if(Ancients[k].partialCostfn) {
                 // We have defined the partial sum for this level cost formula,
                 // use it instead of iterating
-                var partialSum = Ancients[k].partialCostfn(optimalLevel) - Ancients[k].partialCostfn(oldLevel);
-                console.log(k);
-                console.log(partialSum);
-                thisAncientCost = Math.ceil(partialSum * multiplier);
+                thisAncientCost = Ancients[k].partialCostfn(optimalLevel) - Ancients[k].partialCostfn(oldLevel);
             } else {                    
                 var numSteps = Math.min(maxNumSteps, diff);
                 var stepSize = Math.floor(diff/numSteps);
@@ -166,11 +163,11 @@ function calculateHSCostToOptimalLevel() {
                     temp += Ancients[k].costfn(level) * thisStepSize;
                 }
                 
-                if (k != "soulbank") {
-                    temp = Math.ceil(temp * multiplier);
-                }
-                
                 thisAncientCost = temp;
+            }
+            
+            if (k != "soulbank") {
+                thisAncientCost = Math.ceil(thisAncientCost * multiplier);
             }
             
             Ancients[k].extraInfo.costToLevelToOptimal = thisAncientCost;
