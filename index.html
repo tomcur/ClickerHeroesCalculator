@@ -401,7 +401,7 @@
             }
         }
         
-        var tp = Math.max(50-49 * Math.exp(-data.ancientSoulsTotal/10000) + Outsiders["phandoryss"].level*0.05, 1.0);
+        var tp = Math.max(50-49 * Math.exp(-data.ancientSoulsTotal/10000) + 50 * (1 - Math.exp(- Outsiders["phandoryss"].level / 1000)), 1.0);
         
         
         if(! data.transcendent) {
