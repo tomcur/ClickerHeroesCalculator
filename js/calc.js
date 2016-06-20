@@ -223,9 +223,6 @@ function optimize(tuneAncient) {
     while ((right - left) > 1 && (right - left) / initialDiff > 0.00001) {
         var mid = Math.floor((right + left) / 2);
         
-        // Set tune ancient optimal level 
-        tuneAncient.extraInfo.optimalLevel = tuneAncient.level + mid;
-        
         // Level according to RoT and calculate new cost
         spentHS = compute(tuneAncient, mid);
         if (spentHS <= hs) {
@@ -235,16 +232,8 @@ function optimize(tuneAncient) {
         }
     }
     
-    // Set tune ancient optimal level 
-    tuneAncient.extraInfo.optimalLevel = tuneAncient.level + left;
-    
     // Level according to RoT and calculate new cost
     spentHS = compute(tuneAncient, left);
-    
-    // Set tune ancient level not to change, if it would optimally be below 0
-    if (left < 0) {
-        tuneAncient.extraInfo.optimalLevel = tuneAncient.level;
-    }
     
     if  (Ancients["soulbank"]) {
         // Soul bank was used, subtract number of HS put into soulbank

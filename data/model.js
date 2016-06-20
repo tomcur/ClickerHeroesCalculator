@@ -37,8 +37,8 @@ var AncientsExtraInfo = {
         "goalActive": "goalIdle"
     },
     "siyalatas": {
-        "goalIdle": null,
-        "goalHybrid": null,
+        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended) { return baseLevel; },
+        "goalHybrid": "goalIdle",
         "goalActive": null
     },
     "argaiv": {
@@ -114,7 +114,7 @@ var AncientsExtraInfo = {
     "fragsworth": {
         "goalIdle": null,
         "goalHybrid": function(baseLevel, oldLevel, alpha, tpcap, transcended) { return 0.1 * baseLevel; },
-        "goalActive": null
+        "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended) { return baseLevel; }
     },
     "bhaal": {
         "goalIdle": null,
