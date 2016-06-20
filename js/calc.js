@@ -18,7 +18,6 @@ function maxTpReward() {
 }
  
 function hpScaleFactor() { 
-    console.log(maxTpReward());
     var zone = Number($('#ascensionzone').val());
     var i = Math.floor(zone/500);
     var scale = 1.145+i*0.005;
