@@ -161,20 +161,6 @@ function costFunctionCreator(ancient) {
     };
 }
 
-function costPartialSumFunctionCreator(ancient) {
-    if(functions[ancient.levelCostFormula + "PartialSum"]) {
-        return function(lvl) { 
-            if (ancient.levelCostParams) {
-                return functions[ancient.levelCostFormula + "PartialSum"](lvl, ancient.levelCostParams);
-            } else {
-                return functions[ancient.levelCostFormula + "PartialSum"](lvl);
-            }
-        };
-    } else {
-        return null;
-    }
-}
-
 function addToAncients() {
     for(var k in Ancients) {
         var ancient = Ancients[k];
