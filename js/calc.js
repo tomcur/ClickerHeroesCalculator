@@ -185,7 +185,6 @@ function compute(tuneAncient, addLevels) {
 
 function optimize(tuneAncient) {
     var hs = Number($("#soulsin").val());
-    var left, right;
     var baseLevel = tuneAncient.level;
     
     if (! Ancients["morgulis"].level > 0) {
@@ -202,18 +201,10 @@ function optimize(tuneAncient) {
                 }
         };
     }
-   
-    // Check whether we can upgrade all ancients according to the rules up to the current Siyalatas level
-    var spentHS = compute(tuneAncient, 0);
     
-    if(spentHS > hs) {
-        left = -baseLevel;
-        right = 0;
-    } else {
-        left = 0;
-        right = Math.ceil(Math.sqrt(hs + baseLevel * (baseLevel + 1))) - baseLevel;
-    }
-    
+    var left = -baseLevel;
+    var right = Math.ceil(Math.sqrt(hs + baseLevel * (baseLevel + 1))) - baseLevel;
+    var spentHS;
     
     // Iterate until we have converged, or until we are very close to convergence.
     // Converging exactly has run-time complexity in O(log(hs)), which, though sub-
