@@ -27,15 +27,33 @@ body {
     vertical-align: top;
 }
 
-table input[type=text] {
-    width: 100px;
-    padding: 0px;
-}
-
 .odd_row {
     background-color: #f9f9f9;
 }
 
 .col_change {
     font-weight: bold;
+}
+
+#ancienttbl {
+    table-layout: fixed;
+}
+
+#ancienttbl td, #ancienttbl th {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#ancienttbl .col1 {
+    width: 18%;
+}
+
+#ancienttbl .col2, .col3 {
+    width: 20%;
+}
+
+table input[type=text] {
+    width: 100%;
+    padding: 0px;
 }

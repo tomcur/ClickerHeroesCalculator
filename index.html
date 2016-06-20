@@ -69,13 +69,24 @@
             <div role="tabpanel" class="tab-pane active" id="tab-ancients">
                 <div class="panel-heading"></div>
                 <table id="ancienttbl" class="table">
-                    <thead><tr><th>Ancient</th><th>Current</th><th>Goal</th><th>Change</th></tr></thead>
-                    <tr class="odd_row">
-                        <td>Hero Souls</td>
-                        <td><input type="text" id="soulsin" value="0" onblur="calculateAndUpdate()"></td>
-                        <td><span id="soulsgoal"></span></td>
-                        <td><span id="soulschange"></span></td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th class="col1">Ancient</th>
+                            <th class="col2">Current</th>
+                            <th class="col3">Goal</th>
+                            <th class="col4">Change</th>
+                            <th class="col5">Cost (HS)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="odd_row">
+                            <td class="col1">Hero Souls</td>
+                            <td class="col2"><input type="text" id="soulsin" value="0" onblur="calculateAndUpdate()"></td>
+                            <td class="col3"><span id="soulsgoal"></span></td>
+                            <td class="col4"><span id="soulschange"></span></td>
+                            <td class="col5"></td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
             <div role="tabpanel" class="tab-pane" id="tab-outsiders">
@@ -227,11 +238,12 @@
         Ancients[key].ui = {};
     
         var tr = Ancients[key].ui.targetBox = $("<tr></tr>");
-        tr.append($("<td></td>").append(Ancients[key].used).append($("<span></span>").text(Ancients[key].name.substring(0, Ancients[key].name.indexOf(','))).attr("title", Ancients[key].name)));
+        tr.append($("<td></td>").addClass("col1").append(Ancients[key].used).append($("<span></span>").text(Ancients[key].name.substring(0, Ancients[key].name.indexOf(','))).attr("title", Ancients[key].name)));
         Ancients[key].level = 0;
         Ancients[key].ui.level = $("<span></span>").text(numberToStringFormatted(0));
-        Ancients[key].ui.goal = $("<span></span>");
+        Ancients[key].ui.goal = $("<span></span>").text(numberToStringFormatted(0));
         Ancients[key].ui.change = $("<input></input>").attr("readonly", "readonly").attr("type", "text").addClass("col_change");
+        Ancients[key].ui.cost = $("<span></span>").text(numberToStringFormatted(0));
         
         Ancients[key].ui.change.focus(function() { 
             $(this).val(numberToString(Ancients[key].extraInfo.optimalLevel - Ancients[key].level));
@@ -242,7 +254,10 @@
             $(this).val(numberToStringFormatted(Ancients[key].extraInfo.optimalLevel - Ancients[key].level));
         });
         
-        tr.append($("<td></td>").append(Ancients[key].ui.level)).append($("<td></td>").append(Ancients[key].ui.goal)).append($("<td></td>").append(Ancients[key].ui.change));
+        tr  .append($("<td></td>").addClass("col2").append(Ancients[key].ui.level))
+            .append($("<td></td>").addClass("col3").append(Ancients[key].ui.goal))
+            .append($("<td></td>").addClass("col4").append(Ancients[key].ui.change))
+            .append($("<td></td>").addClass("col5").append(Ancients[key].ui.cost));
         $("#ancienttbl").append(tr);
         tr.hide();
     }
@@ -431,6 +446,7 @@
             if (ancient.extraInfo.optimalLevel) {
                 ancient.ui.goal.text(numberToStringFormatted(ancient.extraInfo.optimalLevel));
                 ancient.ui.change.val(numberToStringFormatted(ancient.extraInfo.optimalLevel - ancient.level));
+                ancient.ui.cost.text(numberToStringFormatted(ancient.extraInfo.costToLevelToOptimal));
                 ancient.ui.targetBox.show();
             } else {
                 ancient.ui.targetBox.hide();

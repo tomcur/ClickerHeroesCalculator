@@ -18,6 +18,7 @@ function maxTpReward() {
 }
  
 function hpScaleFactor() { 
+    console.log(maxTpReward());
     var zone = Number($('#ascensionzone').val());
     var i = Math.floor(zone/500);
     var scale = 1.145+i*0.005;
@@ -138,14 +139,19 @@ function calculateHSCostToOptimalLevel() {
             
             var diff = optimalLevel - oldLevel;
             if (diff <= 0) {
+                Ancients[k].extraInfo.costToLevelToOptimal = 0;
                 continue;
             }
+            
+            var thisAncientCost = 0;
             
             if(Ancients[k].partialCostfn) {
                 // We have defined the partial sum for this level cost formula,
                 // use it instead of iterating
                 var partialSum = Ancients[k].partialCostfn(optimalLevel) - Ancients[k].partialCostfn(oldLevel);
-                totalCost += Math.ceil(partialSum * multiplier);
+                console.log(k);
+                console.log(partialSum);
+                thisAncientCost = Math.ceil(partialSum * multiplier);
             } else {                    
                 var numSteps = Math.min(maxNumSteps, diff);
                 var stepSize = Math.floor(diff/numSteps);
@@ -164,8 +170,11 @@ function calculateHSCostToOptimalLevel() {
                     temp = Math.ceil(temp * multiplier);
                 }
                 
-                totalCost += temp;
+                thisAncientCost = temp;
             }
+            
+            Ancients[k].extraInfo.costToLevelToOptimal = thisAncientCost;
+            totalCost += thisAncientCost; 
         }
     }
     
