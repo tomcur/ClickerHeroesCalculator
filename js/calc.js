@@ -188,6 +188,7 @@ function optimize(tuneAncient) {
             "name": "soulbank", 
             "level": 0, 
             "costfn": functions.one,
+            "partialCostfn": functions.onePartialSum,
             "extraInfo": {
                 "goalIdle": Ancients["morgulis"].extraInfo.goalIdle,
                 "goalHybrid": Ancients["morgulis"].extraInfo.goalHybrid,
