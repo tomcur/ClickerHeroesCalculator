@@ -399,7 +399,7 @@
         for (var k in Ancients) {
             if (Ancients.hasOwnProperty(k)) {
                 if (data.ancients.ancients[Ancients[k].id]) {
-                    Ancients[k].level = Math.round(Number(data.ancients.ancients[Ancients[k].id].level));
+                    Ancients[k].level = Math.floor(Number(data.ancients.ancients[Ancients[k].id].level));
                 } else {
                     Ancients[k].level = 0;
                 }
