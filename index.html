@@ -248,7 +248,7 @@
         Ancients[key].ui.cost = $("<span></span>").text(numberToStringFormatted(0));
         
         Ancients[key].ui.change.focus(function() { 
-            $(this).val(numberToString(Ancients[key].extraInfo.optimalLevel - Ancients[key].level));
+            $(this).val(numberToClickerHeroesPasteableString(Ancients[key].extraInfo.optimalLevel - Ancients[key].level));
             $(this).select();
         });
         
