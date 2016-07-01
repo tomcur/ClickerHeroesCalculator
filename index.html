@@ -8,11 +8,13 @@
         
         <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.1.0/css/bootstrap-slider.min.css">
         
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.min.js"></script>
         <script src="//chlist.github.io/decoder/assets/js/md5.js"></script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.1.0/bootstrap-slider.min.js"></script>
         <script src="data/functions.js"></script>
         <script src="data/model.js"></script>
         <script src="js/calc.js"></script>
@@ -54,6 +56,11 @@
                         <label><input type="radio" name="buildmode" onclick="Import()" value="idle" checked="checked"> Idle</label>
                         <label><input type="radio" name="buildmode" onclick="Import()" value="hybrid" checked="checked"> Hybrid</label>
                         <label><input type="radio" name="buildmode" onclick="Import()" value="active"> Active</label>
+                    </div>
+                    <div id="hybridratiocontainer">
+                        <label>Ratio Fragsworth/Siyalatas<br>
+                        <input id="hybridratio" data-slider-id="hybridratioSlider" type="text" data-slider-min="0.05" data-slider-max="1" data-slider-step="0.05" value="0.5"/>
+                        </label>
                     </div>
                 </div>
               </div>
@@ -120,6 +127,7 @@
                         <tr><th>Date</th><th>Change</th></tr>
                     </thead>
                     <tbody>
+                        <tr><td>2016/07/01</td><td>Add adjustable hybrid ratio.</td></tr>
                         <tr><td>2016/06/20</td><td>Implemented much better cost approximation.</td></tr>
                         <tr><td>2016/06/20</td><td>Implemented quicker and more precise formulae.</td></tr>
                         <tr><td>2016/06/17</td><td>Update rule for Kumawakamaru.</td></tr>
@@ -154,6 +162,7 @@
     ];
 
     var strSettingsList = [
+        "#hybridratio"
     ];
 
     var strCustomSave = [
@@ -209,6 +218,14 @@
             localStorage.buildmode = strBuildMode;
         }
     }
+    
+    function showHideHybridRatioContainer() { 
+        if($('input[name="buildmode"]:checked').val() == "hybrid") {
+            $("#hybridratiocontainer").show();
+        } else {
+            $("#hybridratiocontainer").hide();
+        }
+    }
 
     $(function () {
         $('#addsouls').change(function() {
@@ -217,6 +234,11 @@
 
         $("input[name=buildmode]:radio").change(function() {
             saveBuildMode();
+            showHideHybridRatioContainer();
+        });
+        
+        $("#hybridratio").change(function() {
+            SaveSettings("#hybridratio");
         });
         
         $(window).on("message", function(event) {
@@ -234,6 +256,17 @@
                 LoadAllSettings();
             }
         });
+        
+        // Set up hybrid ratio slider
+        $('#hybridratio').slider({
+            formatter: function(value) {
+                return value;
+            },
+            value: Number($('#hybridratio').val())
+        });
+        $('#hybridratio').on("slideStop", function() { Import(); });
+        showHideHybridRatioContainer();
+        
     });
 
     function AddAncient(key) {
@@ -430,6 +463,8 @@
         $("#ascensionzone").val(data.highestFinishedZonePersist);
         
         $("#capreached").prop("checked", tpCapReached());
+        
+        window.HybridRatio = $('#hybridratio').slider('getValue');
         
         calculateAndUpdate();
     }

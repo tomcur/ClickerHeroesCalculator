@@ -111,7 +111,7 @@ function computeOptimalLevels(tuneAncient, addLevels) {
             }
             
             if (goalFun) {
-                var g = goalFun(baseLevel, oldLevel, alpha, atcap, transcendent);
+                var g = goalFun(baseLevel, oldLevel, alpha, atcap, transcendent, HybridRatio);
                 
                 Ancients[k].extraInfo.optimalLevel = Math.max(Ancients[k].level, Math.ceil(g));
             }
