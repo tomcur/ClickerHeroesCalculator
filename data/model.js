@@ -17,7 +17,7 @@ var EmptyExtraInfo = {
 // Base level for hybrid: Siyalatas' level
 // Base level for active: Fragsworth's level
 var AncientsExtraInfo = {
-    "solomon": {
+    "solomon": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { 
             if(transcended) {
                 return Math.pow(baseLevel, 0.8) / Math.pow(alpha, 0.4); 
@@ -31,44 +31,60 @@ var AncientsExtraInfo = {
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle"
     },
-    "morgulis": {
-        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { return Math.pow(baseLevel, 2); },
+    "morgulis": { // Both
+        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { 
+            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
+            return Math.pow(baseLevel, 2); 
+        },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle"
     },
-    "siyalatas": {
+    "siyalatas": { // Idle
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { return baseLevel; },
         "goalHybrid": "goalIdle",
         "goalActive": null
     },
-    "argaiv": {
-        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { return baseLevel; },
+    "argaiv": { // Both
+        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { 
+            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
+            return baseLevel; 
+        },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle"
         
     },
-    "libertas": {
+    "libertas": { // Idle
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { return 0.926*baseLevel; },
         "goalHybrid": "goalIdle",
         "goalActive": null
     },
-    "mammon": {
-        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { return 0.926*baseLevel; },
-        "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
-    },
-    "mimzee": {
-        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { return 0.926*baseLevel; },
-        "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
-    },
-    "dora": {
-        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { return 2.877 * Math.log(baseLevel) - 1.4365 * Math.log(100/99 - Math.exp(-0.002 * oldLevel)) - 9.63; },
-        "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
-    },
-    "atman": {
+    "mammon": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { 
+            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
+            return 0.926*baseLevel; 
+        },
+        "goalHybrid": "goalIdle",
+        "goalActive": "goalIdle"
+    },
+    "mimzee": { // Both
+        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { 
+            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
+            return 0.926*baseLevel; 
+        },
+        "goalHybrid": "goalIdle",
+        "goalActive": "goalIdle"
+    },
+    "dora": { // Both
+        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { 
+            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
+            return 2.877 * Math.log(baseLevel) - 1.4365 * Math.log(100/99 - Math.exp(-0.002 * oldLevel)) - 9.63; 
+        },
+        "goalHybrid": "goalIdle",
+        "goalActive": "goalIdle"
+    },
+    "atman": { // Both
+        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { 
+            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
             if(transcended) {
                 return 2.832 * Math.log(baseLevel) - 1.416 * Math.log(alpha) - 1.416 * Math.log(4/3 - Math.exp(-0.013 * oldLevel)) - 6.613; 
             } else {
@@ -79,8 +95,9 @@ var AncientsExtraInfo = {
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle"
     },
-    "kumawakamaru": {
+    "kumawakamaru": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { 
+            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
             if(transcended) {
                 return 2.844 * Math.log(baseLevel) - 1.422 * Math.log(alpha) - 1.422 * Math.log(1/4 + Math.exp(-0.01 * oldLevel)) - 7.014; 
             } else {
@@ -91,37 +108,49 @@ var AncientsExtraInfo = {
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle"
     },
-    "dogcog": {
-        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { return 2.844 * Math.log(baseLevel) - 1.422 * Math.log(1/99 + Math.exp(-0.01 * oldLevel)) - 7.232; },
+    "dogcog": { // Both
+        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { 
+            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
+            return 2.844 * Math.log(baseLevel) - 1.422 * Math.log(1/99 + Math.exp(-0.01 * oldLevel)) - 7.232; 
+        },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle"
     },
-    "fortuna": {
-        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { return 2.875 * Math.log(baseLevel) - 1.4375 * Math.log(10/9 - Math.exp(-0.0025 * oldLevel)) - 9.3; },
+    "fortuna": { // Both
+        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { 
+            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
+            return 2.875 * Math.log(baseLevel) - 1.4375 * Math.log(10/9 - Math.exp(-0.0025 * oldLevel)) - 9.3; 
+        },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle"
     },
-    "bubos": {
-        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { return 2.8 * Math.log(baseLevel) - 1.4 * Math.log(1 + Math.exp(-0.02 * oldLevel)) - 5.94; },
+    "bubos": { // Both
+        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { 
+            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
+            return 2.8 * Math.log(baseLevel) - 1.4 * Math.log(1 + Math.exp(-0.02 * oldLevel)) - 5.94; 
+        },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle"
     },
-    "chronos": {
-        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; },
+    "chronos": { // Both
+        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { 
+            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
+            return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
+        },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle"
     },
-    "fragsworth": {
+    "fragsworth": { // Active
         "goalIdle": null,
         "goalHybrid": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { return hybridRatio * baseLevel; },
         "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { return baseLevel; }
     },
-    "bhaal": {
+    "bhaal": { // Active
         "goalIdle": null,
         "goalHybrid": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { return hybridRatio * baseLevel; },
         "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { return baseLevel; }
     },
-    "juggernaut": {
+    "juggernaut": { // Active
         "goalIdle": null,
         "goalHybrid": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { return Math.pow(hybridRatio * baseLevel, 0.8); },
         "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { return Math.pow(baseLevel, 0.8); }
