@@ -3,6 +3,22 @@ function numberToString(number) {
     return ""+r;
 }
 
+/**
+ * There are some difficulties with locales with this script's number
+ * output (when number > 1e21) and Clicker Heroes' input formatting. 
+ * This function makes sure there are no decimal points in the output.
+ */
+function numberToClickerHeroesPasteableString(number) {
+    var b = Math.floor(Math.log(number)/Math.log(10));
+    if(b >= 21) {
+        var intPart;
+        intPart = Math.round(number / Math.pow(10, b-10));
+        return intPart + "e" + (b-10);
+    } else {
+        return ""+number;
+    }
+}
+
 function addCommas(nStr)
 {
 	nStr += '';
