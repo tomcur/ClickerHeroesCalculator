@@ -98,12 +98,16 @@ function computeOptimalLevels(tuneAncient, addLevels) {
         
         if (oldLevel > 0 || k == "soulbank") {
             var goalFun;
+            var hybridRatio;
             if (buildMode() == "idle") {
                 goalFun = Ancients[k].extraInfo.goalIdle;
+                hybridRatio = 1;
             } else if(buildMode() == "hybrid") {
                 goalFun = Ancients[k].extraInfo.goalHybrid;
+                hybridRatio = HybridRatio;
             } else {
                 goalFun = Ancients[k].extraInfo.goalActive;
+                hybridRatio = 1;
             }
             
             if(typeof goalFun === 'string') {
