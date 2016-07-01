@@ -13,7 +13,7 @@ function numberToClickerHeroesPasteableString(number) {
     if(b >= 21) {
         var intPart;
         intPart = Math.round(number / Math.pow(10, b-10));
-        return intPart + "e" + (b-10);
+        return intPart + "0".repeat(b-10);
     } else {
         return ""+number;
     }
