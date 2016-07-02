@@ -110,42 +110,62 @@
             </div>
           </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">About</div>
-            <div class="panel-body">
-                <p>
-                    <em>Calculator for Clicker Heroes v1.0 by <a href="http://www.reddit.com/u/beskhue">/u/beskhue</a>.</em>
-                </p>
-                <p>
-                    Optimizer is loosely based on the code by <a href="http://philni.neocities.org/ancientssoul.html">/u/philni</a>, which is based on the code by <a href="http://s3-us-west-2.amazonaws.com/clickerheroes/ancientssoul.html">/u/rler</a>, which in turn was based on the original calculator and source from <a href="http://www.rivsoft.net/clicker/ancientssoul">rivsoft</a>. Optimization procedure based on <a href="https://www.reddit.com/user/graceoflives">/u/graceoflives</a>' <a href="https://www.reddit.com/r/ClickerHeroes/comments/4nwf3h/10_ancient_calculator/">calculator</a>. Visit <a href="http://www.reddit.com/r/clickerheroes">/r/clickerheroes</a> for more info.
-                </p>
-                <p>
-                Changelog:
-                </p>
-                <table class="table table-striped">
-                    <thead>
-                        <tr><th>Date</th><th>Change</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>2016/07/01</td><td>Add adjustable hybrid ratio.</td></tr>
-                        <tr><td>2016/06/20</td><td>Implemented much better cost approximation.</td></tr>
-                        <tr><td>2016/06/20</td><td>Implemented quicker and more precise formulae.</td></tr>
-                        <tr><td>2016/06/17</td><td>Update rule for Kumawakamaru.</td></tr>
-                        <tr><td>2016/06/16</td><td>Display TP reward cap zone.</td></tr>
-                        <tr><td>2016/06/16</td><td>Remove Solomon leveling at TP cap based on new calculations.</td></tr>
-                        <tr><td>2016/06/16</td><td>Implemented Solomon leveling at TP cap.</td></tr>
-                        <tr><td>2016/06/16</td><td>Support Atman and Kumawakamaru pre-transcendence (note that optimal RoTs still need to be devised for these ancients).</td></tr>
-                        <tr><td>2016/06/16</td><td>Add method to underlevel Solomon.</td></tr>
-                        <tr><td>2016/06/16</td><td>Solomon calculation is now correct pre-transcendence.</td></tr>
-                        <tr><td>2016/06/15</td><td>Implement easier copying of ancient level changes.</td></tr>
-                        <tr><td>2016/06/15</td><td>If Morgulis is not owned, keep a soul bank.</td></tr>
-                        <tr><td>2016/06/15</td><td>Further improvements to optimization speed. Notably, optimization (for high HS) now runs in constant time.</td></tr>
-                        <tr><td>2016/06/15</td><td>Now correctly takes into account HS requirement to upgrade Siyalatas.</td></tr>
-                        <tr><td>2016/06/15</td><td>Optimization when there are a lot of HS to distribute is now significantly faster.</td></tr>
-                        <tr><td>2016/06/14</td><td>Added support for hybrid and active builds.</td></tr>
-                        <tr><td>2016/06/14</td><td>Initial release.</td></tr>
-                    </tbody>
-                </table>
+        <div role="tabpanel">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#tab-about" aria-controls="tab-about" role="tab" data-toggle="tab">About</a></li>
+                <li role="presentation"><a href="#tab-faq" aria-controls="tab-faq" role="tab" data-toggle="tab">FAQ</a></li>
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="tab-about">
+                    <p>
+                        <em>Calculator for Clicker Heroes v1.0 by <a href="http://www.reddit.com/u/beskhue">/u/beskhue</a>.</em>
+                    </p>
+                    <p>
+                        Optimizer is loosely based on the code by <a href="http://philni.neocities.org/ancientssoul.html">/u/philni</a>, which is based on the code by <a href="http://s3-us-west-2.amazonaws.com/clickerheroes/ancientssoul.html">/u/rler</a>, which in turn was based on the original calculator and source from <a href="http://www.rivsoft.net/clicker/ancientssoul">rivsoft</a>. Optimization procedure based on <a href="https://www.reddit.com/user/graceoflives">/u/graceoflives</a>' <a href="https://www.reddit.com/r/ClickerHeroes/comments/4nwf3h/10_ancient_calculator/">calculator</a>. Visit <a href="http://www.reddit.com/r/clickerheroes">/r/clickerheroes</a> for more info.
+                    </p>
+                    <p>
+                    Changelog:
+                    </p>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr><th>Date</th><th>Change</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>2016/07/01</td><td>Add adjustable hybrid ratio.</td></tr>
+                            <tr><td>2016/06/20</td><td>Implemented much better cost approximation.</td></tr>
+                            <tr><td>2016/06/20</td><td>Implemented quicker and more precise formulae.</td></tr>
+                            <tr><td>2016/06/17</td><td>Update rule for Kumawakamaru.</td></tr>
+                            <tr><td>2016/06/16</td><td>Display TP reward cap zone.</td></tr>
+                            <tr><td>2016/06/16</td><td>Remove Solomon leveling at TP cap based on new calculations.</td></tr>
+                            <tr><td>2016/06/16</td><td>Implemented Solomon leveling at TP cap.</td></tr>
+                            <tr><td>2016/06/16</td><td>Support Atman and Kumawakamaru pre-transcendence (note that optimal RoTs still need to be devised for these ancients).</td></tr>
+                            <tr><td>2016/06/16</td><td>Add method to underlevel Solomon.</td></tr>
+                            <tr><td>2016/06/16</td><td>Solomon calculation is now correct pre-transcendence.</td></tr>
+                            <tr><td>2016/06/15</td><td>Implement easier copying of ancient level changes.</td></tr>
+                            <tr><td>2016/06/15</td><td>If Morgulis is not owned, keep a soul bank.</td></tr>
+                            <tr><td>2016/06/15</td><td>Further improvements to optimization speed. Notably, optimization (for high HS) now runs in constant time.</td></tr>
+                            <tr><td>2016/06/15</td><td>Now correctly takes into account HS requirement to upgrade Siyalatas.</td></tr>
+                            <tr><td>2016/06/15</td><td>Optimization when there are a lot of HS to distribute is now significantly faster.</td></tr>
+                            <tr><td>2016/06/14</td><td>Added support for hybrid and active builds.</td></tr>
+                            <tr><td>2016/06/14</td><td>Initial release.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="tab-faq">
+                    <div class="panel-body">
+                        <h3>What is the easiest method to level ancients?</h3>
+                        <p>If you press on the number in the <em>change</em> field, the number changes to a long format and is automatically selected for copying. If you hold &quot;v&quot; when clicking on the corresponding ancient's purchase button, an input field will pop up. Paste the number you just copied into this field, and press &quot;Ok&quot;.</p>
+                        
+                        <h3>Why does the calculator tell me to level Morgulis more than I am able to?</h3>
+                        <p>It probably doesn't. If you have the outsider Chor'gorloth leveled, all ancietns become cheaper, including Chor'gorloth. This means that one level in Morgulis costs less than one soul when buying in bulk.</p>
+                        
+                        <h3>After buying the recommended ancients, why do I have more souls left over than the calculator predicts?</h3>
+                        <p>Firstly, when you have many souls to spend the calculator will over-estimate the cost of a few ancients with a &quot;difficult&quot; cost formula. This approximation is accurate enough to yield very good recommendations; calculating it precisely often does not actually make a difference in regard to the number of levels recommended. Only the predicted cost becomes more accurate. Secondly, when you have only few souls to spend the predicted cost is accurate as far as the cost formulae go; there appear to be some issues in-game where an ancient sometimes costs one soul less or more than it should.</p>
+                        
+                        <h3>Will you add the ancient Revolc/Sniperino/... to the list?</h3>
+                        <p>The efficiency of these kinds of ancients depends on your personal play style. There are no rules of thumb in a general sense to tell you how to level them. For most people I would recommend leveling them to a point where their cost is insignificant. If you spent 1e17 souls this ascension and were left with 1e13 souls, you could use some of those to level these ancients.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
