@@ -276,18 +276,18 @@
                 window.Items = {items : {}, slots : {}};	// No relics.
                 ShowTables();
                 LoadAllSettings();
+                
+                // Set up hybrid ratio slider
+                $('#hybridratio').slider({
+                    formatter: function(value) {
+                        return value;
+                    },
+                    value: Number($('#hybridratio').val())
+                });
+                $('#hybridratio').on("slideStop", function() { Import(); });
+                showHideHybridRatioContainer();
             }
         });
-        
-        // Set up hybrid ratio slider
-        $('#hybridratio').slider({
-            formatter: function(value) {
-                return value;
-            },
-            value: Number($('#hybridratio').val())
-        });
-        $('#hybridratio').on("slideStop", function() { Import(); });
-        showHideHybridRatioContainer();
         
     });
 
