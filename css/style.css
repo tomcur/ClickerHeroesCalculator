@@ -13,6 +13,7 @@ body {
     margin-left: auto;
     margin-right: auto;
     margin-top: 2em;
+    margin-bottom: 2em;
 }
 
 
@@ -56,4 +57,12 @@ body {
 table input[type=text] {
     width: 100%;
     padding: 0px;
+}
+
+#about .tab-pane {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0px 0px 4px 4px;
+    padding: 15px;
 }
