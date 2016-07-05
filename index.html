@@ -112,6 +112,7 @@
                 <li role="presentation" class="active"><a href="#tab-about" aria-controls="tab-about" role="tab" data-toggle="tab">About</a></li>
                 <li role="presentation"><a href="#tab-faq" aria-controls="tab-faq" role="tab" data-toggle="tab">FAQ</a></li>
                 <li role="presentation"><a href="#tab-changelog" aria-controls="tab-changelog" role="tab" data-toggle="tab">Changelog</a></li>
+                <li role="presentation"><a href="#tab-decoded" aria-controls="tab-decoded" role="tab" data-toggle="tab">Decoded save</a></li>
             </ul>
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="tab-about">
@@ -170,6 +171,10 @@
                             <tr><td>2016/06/14</td><td>Initial release.</td></tr>
                         </tbody>
                     </table>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="tab-decoded">
+                    <p>This is your decoded savefile at the time of Import</p>
+                    <textarea id="decoded-save" rows="30" style="width:100%"></textarea>
                 </div>
             </div>
         </div>
@@ -424,6 +429,9 @@
         }
 
         var data = $.parseJSON(txtOut);
+
+        var decodedElem = $("#decoded-save");
+        decodedElem.text(JSON.stringify(data, null, 2));
         
         // Older saves won't have items.
         window.Items = data.hasOwnProperty("items") ? data.items : {items : {}, slots : {}};
