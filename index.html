@@ -103,6 +103,7 @@
                     <tr><td><label for="tp">Transcendent Power</label></td><td><input type="text" id="tp" disabled></td></tr>
                     <tr><td><label for="ascensionzone">Highest Zone Reached</td><td><input type="text" id="ascensionzone" disabled></td></tr>
                     <tr><td><label for="tprewardcapzone">TP Reward Cap Zone</label></td><td><input type="text" id="tprewardcapzone" disabled></td></tr>
+                    <tr><td><label for="astotal">Ancient Souls Total</label></td><td><input type="text" id="astotal" disabled></td></tr>
                 </table>
             </div>
           </div>
@@ -488,6 +489,8 @@
         $("#ascensionzone").val(data.highestFinishedZonePersist);
         
         $("#capreached").prop("checked", tpCapReached());
+
+        $("#astotal").val(data.ancientSoulsTotal);
         
         window.HybridRatio = $('#hybridratio').slider('getValue');
         
