@@ -19,6 +19,7 @@ var EmptyExtraInfo = {
 var AncientsExtraInfo = {
     "solomon": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, hybridRatio) { 
+            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
             if(transcended) {
                 return Math.pow(baseLevel, 0.8) / Math.pow(alpha, 0.4); 
             } else {
