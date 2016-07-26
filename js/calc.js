@@ -24,8 +24,12 @@ function hpScaleFactor() {
     return scale;
 }
 
-function alphaFactor() { 
-    return 1.4067 * Math.log(1 + Number($('#tp').val())/100) / Math.log(hpScaleFactor());
+function alphaFactor(wepwawetLeveledBeyond8k) { 
+    if(wepwawetLeveledBeyond8k) {
+        return 1.1085 * Math.log(1 + Number($('#tp').val())/100) / Math.log(hpScaleFactor());
+    } else {
+        return 1.4067 * Math.log(1 + Number($('#tp').val())/100) / Math.log(hpScaleFactor());
+    }
 }
 
 /**
@@ -88,7 +92,7 @@ function calculate() {
 }
 
 function computeOptimalLevels(tuneAncient, addLevels) {
-    var alpha = alphaFactor();
+    var alpha = alphaFactor(Wep8k);
     var transcendent = alpha > 0;
     var atcap = tpCapReached();
     
@@ -115,7 +119,7 @@ function computeOptimalLevels(tuneAncient, addLevels) {
             }
             
             if (goalFun) {
-                var g = goalFun(baseLevel, oldLevel, alpha, atcap, transcendent, hybridRatio);
+                var g = goalFun(baseLevel, oldLevel, alpha, atcap, transcendent, Wep8k, hybridRatio);
                 
                 Ancients[k].extraInfo.optimalLevel = Math.max(Ancients[k].level, Math.ceil(g));
             }

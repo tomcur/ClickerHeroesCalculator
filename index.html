@@ -47,6 +47,9 @@
                     <div>
                         <label><input type="checkbox" onclick="Import()" id="addsouls"> Include souls gained after ascension</label>
                     </div>
+                    <div>
+                        <label><input type="checkbox" onclick="Import()" id="wep8k"> Wepwawet will be leveled beyond 8,000</label>
+                    </div>
                     <hr>
                     <div>
                         Build
@@ -181,6 +184,7 @@
 
     var strSettingsCheckBox = [
         "#addsouls",
+        "#wep8k"
     ];
 
     var strSettingsRadio = [
@@ -256,6 +260,10 @@
     $(function () {
         $('#addsouls').change(function() {
             SaveSettingsCheckBox("#addsouls");
+        });
+        
+        $('#wep8k').change(function() {
+            SaveSettingsCheckBox("#wep8k");
         });
 
         $("input[name=buildmode]:radio").change(function() {
@@ -431,6 +439,8 @@
         
         window.HeroSoulsSacrificed = Number(data.heroSoulsSacrificed);
         
+        window.Wep8k = $("#wep8k").prop("checked");
+        
         var heroes = data.heroCollection.heroes;
         var ascensionSouls = 0;
         for (var k in heroes) {
@@ -453,7 +463,7 @@
             }
         }
         
-        $("#soulsin").val(numberToString(Number(data.heroSouls) + Number($("#addsouls").prop("checked") ? ascensionSouls : 0)));
+        $("#soulsin").val(numberToString(Number(data.heroSouls) + Number($("#addsouls").prop("checked") ? ascensionSouls : 0)));      
         
         for (var k in Ancients) {
             if (Ancients.hasOwnProperty(k)) {
