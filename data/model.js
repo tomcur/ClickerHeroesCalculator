@@ -169,6 +169,18 @@ var AncientsExtraInfo = {
         "goalIdle": null,
         "goalHybrid": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return Math.pow(hybridRatio * baseLevel, 0.8); },
         "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return Math.pow(baseLevel, 0.8); }
+    },
+    "nogardnit": { // Idle
+        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) {
+            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
+            if(wepwawetLeveledBeyond8k) {
+                return Math.pow(0.905*baseLevel, 0.8);
+            } else {
+                return Math.pow(0.926*baseLevel, 0.8);
+            }
+        },
+        "goalHybrid": "goalIdle",
+        "goalActive": null
     }
 };
 
