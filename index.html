@@ -458,7 +458,7 @@
         }
         
         data.heroSouls = Number(rawData.heroSouls) + Number($("#addsouls").prop("checked") ? ascensionSouls : 0);
-        $("#soulsin").val(numberToString(data.heroSouls));      
+        $("#soulsin").val(numberToString(Math.floor(data.heroSouls)));
         
         for (var k in data.ancients) {
             if (data.ancients.hasOwnProperty(k)) {
@@ -513,7 +513,7 @@
     }
     
     function display(spentHS) {
-        $("#soulsgoal").text(numberToStringFormatted($("#soulsin").val() - spentHS));
+        $("#soulsgoal").text(numberToStringFormatted(Math.floor(data.heroSouls - spentHS)));
         $("#soulschange").text("-" + numberToStringFormatted(spentHS));
         
         for (var k in data.ancients) {
