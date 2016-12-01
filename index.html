@@ -463,7 +463,7 @@
         for (var k in data.ancients) {
             if (data.ancients.hasOwnProperty(k)) {
                 if (rawData.ancients.ancients[data.ancients[k].id]) {
-                    data.ancients[k].level = Math.floor(Number(rawData.ancients.ancients[data.ancients[k].id].level));
+                    data.ancients[k].level = Number(rawData.ancients.ancients[data.ancients[k].id].level);
                 } else {
                     data.ancients[k].level = 0;
                 }
