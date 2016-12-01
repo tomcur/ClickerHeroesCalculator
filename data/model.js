@@ -6,11 +6,11 @@ var goalJuggernaut = function(base, gold) { return Math.pow(base, 0.8); }
 var goalMorgulis = function(base, gold) { return Math.pow(base+2+Math.min(base, 100)/5, 2); }
 
 var EmptyExtraInfo = {
-	"goalEval": null,
-	"goalfunction": null,
-	"fIncludeForSol": false,
-	"fIdle": false,
-	"fActive": false
+    "goalEval": null,
+    "goalfunction": null,
+    "fIncludeForSol": false,
+    "fIdle": false,
+    "fActive": false
 };
 
 // Base level for idle: Siyalatas' level
@@ -191,20 +191,20 @@ var outsiderExtraInfo = {
 };
 
 function createObjects(data) {
-	// Add ItemId's to ancients.
-	for (var type in data.itemBonusTypes) {
-		data.ancients[data.itemBonusTypes[type].ancientId].itemId = type; 
-	}
+    // Add ItemId's to ancients.
+    for (var type in data.itemBonusTypes) {
+        data.ancients[data.itemBonusTypes[type].ancientId].itemId = type; 
+    }
 
-	window.Ancients = _.mapKeys(data.ancients, function(anc) { return anc.name.toLowerCase().substring(0, anc.name.indexOf(',')); });
+    data.ancients = _.mapKeys(data.ancients, function(anc) { return anc.name.toLowerCase().substring(0, anc.name.indexOf(',')); });
     
-	addToAncients();
-	
-	window.Achievements = _.mapValues(data.achievements, function(ach) { return ach.rewardFunction === 'addDps' ? parseInt(ach.rewardParams) : 0; });
-	
-	window.AncientMin = Math.min.apply(null, _.keys(data.ancients));
-	window.AncientMax = Math.max.apply(null, _.keys(data.ancients));
-    window.Outsiders = _.mapKeys(data.outsiders, function(outsider) { return outsider.name.toLowerCase(); });
+    addToAncients();
+    
+    data.achievements = _.mapValues(data.achievements, function(ach) { return ach.rewardFunction === 'addDps' ? parseInt(ach.rewardParams) : 0; });
+    
+    data.ancientMin = Math.min.apply(null, _.keys(data.ancients));
+    data.ancientMax = Math.max.apply(null, _.keys(data.ancients));
+    data.outsiders = _.mapKeys(data.outsiders, function(outsider) { return outsider.name.toLowerCase(); });
 }
 
 function costFunctionCreator(ancient) {
@@ -232,11 +232,11 @@ function costPartialSumFunctionCreator(ancient) {
 }
 
 function addToAncients() {
-    for(var k in Ancients) {
-        var ancient = Ancients[k];
-        Ancients[k].extraInfo = AncientsExtraInfo[k] ? AncientsExtraInfo[k] : EmptyExtraInfo;
-        Ancients[k].costfn = costFunctionCreator(ancient);
-        Ancients[k].partialCostfn = costPartialSumFunctionCreator(ancient);
+    for(var k in data.ancients) {
+        var ancient = data.ancients[k];
+        data.ancients[k].extraInfo = AncientsExtraInfo[k] ? AncientsExtraInfo[k] : EmptyExtraInfo;
+        data.ancients[k].costfn = costFunctionCreator(ancient);
+        data.ancients[k].partialCostfn = costPartialSumFunctionCreator(ancient);
     }
 }
 

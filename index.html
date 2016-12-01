@@ -306,69 +306,68 @@
     });
 
     function AddAncient(key) {
-        Ancients[key].ui = {};
+        data.ancients[key].ui = {};
     
-        var tr = Ancients[key].ui.targetBox = $("<tr></tr>");
-        tr.append($("<td></td>").addClass("col1").append(Ancients[key].used).append($("<span></span>").text(Ancients[key].name.substring(0, Ancients[key].name.indexOf(','))).attr("title", Ancients[key].name)));
-        Ancients[key].level = 0;
-        Ancients[key].ui.level = $("<span></span>").text(numberToStringFormatted(0));
-        Ancients[key].ui.goal = $("<span></span>").text(numberToStringFormatted(0));
-        Ancients[key].ui.change = $("<input></input>").attr("readonly", "readonly").attr("type", "text").addClass("col_change");
-        Ancients[key].ui.cost = $("<span></span>").text(numberToStringFormatted(0));
+        var tr = data.ancients[key].ui.targetBox = $("<tr></tr>");
+        tr.append($("<td></td>").addClass("col1").append(data.ancients[key].used).append($("<span></span>").text(data.ancients[key].name.substring(0, data.ancients[key].name.indexOf(','))).attr("title", data.ancients[key].name)));
+        data.ancients[key].level = 0;
+        data.ancients[key].ui.level = $("<span></span>").text(numberToStringFormatted(0));
+        data.ancients[key].ui.goal = $("<span></span>").text(numberToStringFormatted(0));
+        data.ancients[key].ui.change = $("<input></input>").attr("readonly", "readonly").attr("type", "text").addClass("col_change");
+        data.ancients[key].ui.cost = $("<span></span>").text(numberToStringFormatted(0));
         
-        Ancients[key].ui.change.focus(function() { 
-            $(this).val(numberToClickerHeroesPasteableString(Ancients[key].extraInfo.optimalLevel - Ancients[key].level));
+        data.ancients[key].ui.change.focus(function() { 
+            $(this).val(numberToClickerHeroesPasteableString(data.ancients[key].extraInfo.optimalLevel - data.ancients[key].level));
             $(this).select();
         });
         
-        Ancients[key].ui.change.focusout(function() { 
-            $(this).val(numberToStringFormatted(Ancients[key].extraInfo.optimalLevel - Ancients[key].level));
+        data.ancients[key].ui.change.focusout(function() { 
+            $(this).val(numberToStringFormatted(data.ancients[key].extraInfo.optimalLevel - data.ancients[key].level));
         });
         
-        tr  .append($("<td></td>").addClass("col2").append(Ancients[key].ui.level))
-            .append($("<td></td>").addClass("col3").append(Ancients[key].ui.goal))
-            .append($("<td></td>").addClass("col4").append(Ancients[key].ui.change))
-            .append($("<td></td>").addClass("col5").append(Ancients[key].ui.cost));
+        tr  .append($("<td></td>").addClass("col2").append(data.ancients[key].ui.level))
+            .append($("<td></td>").addClass("col3").append(data.ancients[key].ui.goal))
+            .append($("<td></td>").addClass("col4").append(data.ancients[key].ui.change))
+            .append($("<td></td>").addClass("col5").append(data.ancients[key].ui.cost));
         $("#ancienttbl").append(tr);
         tr.hide();
     }
     
     function addOutsider(key) {
-        Outsiders[key].ui = {};
+        data.outsiders[key].ui = {};
     
         var tr = $("<tr></tr>");
-        tr.append($("<td></td>").append($("<span></span>").text(Outsiders[key].name)));
-        Outsiders[key].ui.level = $("<span></span>").text(numberToStringFormatted(0));
-        tr.append($("<td></td>").append(Outsiders[key].ui.level));
+        tr.append($("<td></td>").append($("<span></span>").text(data.outsiders[key].name)));
+        data.outsiders[key].ui.level = $("<span></span>").text(numberToStringFormatted(0));
+        tr.append($("<td></td>").append(data.outsiders[key].ui.level));
         $("#outsidertbl").append(tr);
     }
 
     function ShowTables() {
-        var ancientList = _.keys(Ancients).sort();
+        var ancientList = _.keys(data.ancients).sort();
 
         // Ancient Tab
         for (var i = 0; i < ancientList.length; i++) {
             var key = ancientList[i];
-            if (!Ancients[key].maxLevel) {
+            if (!data.ancients[key].maxLevel) {
                 AddAncient(key);
             }
         }
 
         for (var i = 0; i < ancientList.length; i++) {
             var key = ancientList[i];
-            if (Ancients[key].maxLevel) {
+            if (data.ancients[key].maxLevel) {
                 AddAncient(key);
             }
         }
         
-        // Outsiders Tab
-        for (var k in Outsiders) {
+        // data.outsiders Tab
+        for (var k in data.outsiders) {
             addOutsider(k);
         }
     }
 
     var ToPurchase = [1,2,4,8,16,35,70,125,250,500,800,1200,1700,2200,2750,3400,4100,5000,6000,7500,10000,12500,16000,25000,35000,50000,70000,100000,150000,250000,400000];
-    var OwnedNotInList = 1;
 
     var ItemTypeMap = {
         "1": "siyalatas",
@@ -434,77 +433,76 @@
             txtOut = atob(txtOut);
         }
 
-        var data = $.parseJSON(txtOut);
+        var rawData = $.parseJSON(txtOut);
         
         // Older saves won't have items.
-        window.Items = data.hasOwnProperty("items") ? data.items : {items : {}, slots : {}};
+        data.items = rawData.hasOwnProperty("items") ? rawData.items : {items : {}, slots : {}};
         
-        window.HeroSoulsSacrificed = Number(data.heroSoulsSacrificed);
+        data.heroSoulsSacrificed = Number(rawData.heroSoulsSacrificed);
         
-        window.Wep8k = $("#wep8k").prop("checked");
+        data.wep8k = $("#wep8k").prop("checked");
         
-        var heroes = data.heroCollection.heroes;
+        var heroes = rawData.heroCollection.heroes;
         var ascensionSouls = 0;
         for (var k in heroes) {
             var id = parseInt(k, 10);
             ascensionSouls += Number(heroes[k].level);
         }
-        ascensionSouls = Math.floor(ascensionSouls / 2000) + Number(data.primalSouls);
+        ascensionSouls = Math.floor(ascensionSouls / 2000) + Number(rawData.primalSouls);
         
         var levels = {};
-        OwnedNotInList = 0;
-        for (var i = AncientMin; i <= AncientMax; i++) {
-            if (data.ancients.ancients.hasOwnProperty(i)) {
+        for (var i = data.ancientMin; i <= data.ancientMax; i++) {
+            if (rawData.ancients.ancients.hasOwnProperty(i)) {
                 levels[i] = true;
-                OwnedNotInList += 1;
-            }
-        }
-        for (var k in Ancients) {
-            if (levels[Ancients[k].id]) {
-                OwnedNotInList -= 1;
             }
         }
         
-        $("#soulsin").val(numberToString(Number(data.heroSouls) + Number($("#addsouls").prop("checked") ? ascensionSouls : 0)));      
+        data.heroSouls = Number(rawData.heroSouls) + Number($("#addsouls").prop("checked") ? ascensionSouls : 0);
+        $("#soulsin").val(numberToString(data.heroSouls));      
         
-        for (var k in Ancients) {
-            if (Ancients.hasOwnProperty(k)) {
-                if (data.ancients.ancients[Ancients[k].id]) {
-                    Ancients[k].level = Math.floor(Number(data.ancients.ancients[Ancients[k].id].level));
+        for (var k in data.ancients) {
+            if (data.ancients.hasOwnProperty(k)) {
+                if (rawData.ancients.ancients[data.ancients[k].id]) {
+                    data.ancients[k].level = Math.floor(Number(rawData.ancients.ancients[data.ancients[k].id].level));
                 } else {
-                    Ancients[k].level = 0;
+                    data.ancients[k].level = 0;
                 }
-                Ancients[k].ui.level.text(numberToStringFormatted(Ancients[k].level));
+                data.ancients[k].ui.level.text(numberToStringFormatted(data.ancients[k].level));
             }
         }
         
-        for (var k in Outsiders) {
-            if (Outsiders.hasOwnProperty(k)) {
-                if (data.outsiders.outsiders[Outsiders[k].id]) {
-                    Outsiders[k].level = data.outsiders.outsiders[Outsiders[k].id].level;
+        for (var k in data.outsiders) {
+            if (data.outsiders.hasOwnProperty(k)) {
+                if (rawData.outsiders.outsiders[data.outsiders[k].id]) {
+                    data.outsiders[k].level = rawData.outsiders.outsiders[data.outsiders[k].id].level;
                 } else {
-                    Outsiders[k].level = 0;
+                    data.outsiders[k].level = 0;
                 }
-                Outsiders[k].ui.level.text(numberToStringFormatted(Outsiders[k].level));
+                data.outsiders[k].ui.level.text(numberToStringFormatted(data.outsiders[k].level));
             }
         }
         
-        var tp = Math.max(50-49 * Math.exp(-data.ancientSoulsTotal/10000) + 50 * (1 - Math.exp(- Outsiders["phandoryss"].level / 1000)), 1.0);
+        data.tp = Math.max(50-49 * Math.exp(-rawData.ancientSoulsTotal/10000) + 50 * (1 - Math.exp(- data.outsiders["phandoryss"].level / 1000)), 1.0);
         
         
-        if(! data.transcendent) {
-            tp = 0;
+        if(! rawData.transcendent) {
+            data.tp = 0;
         }
         
-        $("#tp").val(numberToString(tp));
+        $("#tp").val(numberToString(data.tp));
         
-        $("#ascensionzone").val(data.highestFinishedZonePersist);
+        data.ascensionZone = Number(rawData.highestFinishedZonePersist);
+        $("#ascensionzone").val(data.ascensionZone);
         
-        $("#capreached").prop("checked", tpCapReached());
+        data.capReached = tpCapReached();
+        $("#capreached").prop("checked", data.capReached);
 
+        data.ancientSoulsTotal = rawData.ancientSoulsTotal
         $("#astotal").val(data.ancientSoulsTotal);
         
-        window.HybridRatio = $('#hybridratio').slider('getValue');
+        data.hybridRatio = $('#hybridratio').slider('getValue');
+        
+        data.buildMode = $('input[name="buildmode"]:checked').val();
         
         calculateAndUpdate();
     }
@@ -518,8 +516,8 @@
         $("#soulsgoal").text(numberToStringFormatted($("#soulsin").val() - spentHS));
         $("#soulschange").text("-" + numberToStringFormatted(spentHS));
         
-        for (var k in Ancients) {
-            var ancient = Ancients[k];
+        for (var k in data.ancients) {
+            var ancient = data.ancients[k];
             if (ancient.extraInfo.optimalLevel) {
                 ancient.ui.goal.text(numberToStringFormatted(ancient.extraInfo.optimalLevel));
                 ancient.ui.change.val(numberToStringFormatted(ancient.extraInfo.optimalLevel - ancient.level));

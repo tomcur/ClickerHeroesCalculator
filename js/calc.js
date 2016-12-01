@@ -3,10 +3,9 @@
  */
 
 function buildMode() {
-    var strBuildMode = $('input[name="buildmode"]:checked').val();
-    if(strBuildMode == "idle") {
+    if(data.buildMode == "idle") {
         return "idle";
-    } else if (strBuildMode == "hybrid") {
+    } else if (data.buildMode == "hybrid") {
         return "hybrid";
     } else {
         return "active";
@@ -14,11 +13,11 @@ function buildMode() {
 }
 
 function maxTpReward() { 
-    return (0.05 + Outsiders["borb"].level * 0.005) * HeroSoulsSacrificed;
+    return (0.05 + data.outsiders["borb"].level * 0.005) * data.heroSoulsSacrificed;
 }
  
 function hpScaleFactor() { 
-    var zone = Number($('#ascensionzone').val());
+    var zone = data.ascensionZone;
     var i = Math.floor(zone/500);
     var scale = 1.145+i*0.005;
     return scale;
@@ -26,9 +25,9 @@ function hpScaleFactor() {
 
 function alphaFactor(wepwawetLeveledBeyond8k) { 
     if(wepwawetLeveledBeyond8k) {
-        return 1.1085 * Math.log(1 + Number($('#tp').val())/100) / Math.log(hpScaleFactor());
+        return 1.1085 * Math.log(1 + data.tp/100) / Math.log(hpScaleFactor());
     } else {
-        return 1.4067 * Math.log(1 + Number($('#tp').val())/100) / Math.log(hpScaleFactor());
+        return 1.4067 * Math.log(1 + data.tp/100) / Math.log(hpScaleFactor());
     }
 }
 
@@ -36,9 +35,9 @@ function alphaFactor(wepwawetLeveledBeyond8k) {
  * See: https://www.reddit.com/r/ClickerHeroes/comments/4n80r5/boss_level_to_hit_cap/
  */
 function bossToHitCap() {
-    var solomon = Ancients["solomon"].extraInfo.optimalLevel;
-    var ponyboy = Outsiders["ponyboy"].level;
-    var tp = Number($('#tp').val())/100; 
+    var solomon = data.ancients["solomon"].extraInfo.optimalLevel;
+    var ponyboy = data.outsiders["ponyboy"].level;
+    var tp = data.tp/100; 
     var maxTP = maxTpReward(); // (5% ((+0.5*Borb)%) of your Sacrificed Souls
     
     var multiplier;
@@ -63,7 +62,7 @@ function zoneToHitCap() {
 }
 
 function ascensionZone() {
-    return Number($('#ascensionzone').val()) * 1.05;
+    return data.ascensionZone * 1.05;
 }
 
 function tpCapReached() {
@@ -72,8 +71,8 @@ function tpCapReached() {
 }
 
 function resetOptimalLevels() {
-    for (var k in Ancients) {
-        Ancients[k].extraInfo.optimalLevel = null;
+    for (var k in data.ancients) {
+        data.ancients[k].extraInfo.optimalLevel = null;
     }
 }
 
@@ -83,45 +82,45 @@ function calculate() {
     var tuneAncient;
     
     if(buildMode() == "idle" || buildMode() == "hybrid") {
-        tuneAncient = Ancients["siyalatas"];
+        tuneAncient = data.ancients["siyalatas"];
     } else {
-        tuneAncient = Ancients["fragsworth"];
+        tuneAncient = data.ancients["fragsworth"];
     }
     
     return optimize(tuneAncient);
 }
 
 function computeOptimalLevels(tuneAncient, addLevels) {
-    var alpha = alphaFactor(Wep8k);
+    var alpha = alphaFactor(data.wep8k);
     var transcendent = alpha > 0;
     var atcap = tpCapReached();
     
     var baseLevel = tuneAncient.level + addLevels;
-    for (var k in Ancients) {
-        var oldLevel = Ancients[k].level;
+    for (var k in data.ancients) {
+        var oldLevel = data.ancients[k].level;
         
         if (oldLevel > 0 || k == "soulbank") {
             var goalFun;
             var hybridRatio;
             if (buildMode() == "idle") {
-                goalFun = Ancients[k].extraInfo.goalIdle;
+                goalFun = data.ancients[k].extraInfo.goalIdle;
                 hybridRatio = 1;
             } else if(buildMode() == "hybrid") {
-                goalFun = Ancients[k].extraInfo.goalHybrid;
-                hybridRatio = HybridRatio;
+                goalFun = data.ancients[k].extraInfo.goalHybrid;
+                hybridRatio = data.hybridRatio;
             } else {
-                goalFun = Ancients[k].extraInfo.goalActive;
+                goalFun = data.ancients[k].extraInfo.goalActive;
                 hybridRatio = 1;
             }
             
             if(typeof goalFun === 'string') {
-                goalFun = Ancients[k].extraInfo[goalFun];
+                goalFun = data.ancients[k].extraInfo[goalFun];
             }
             
             if (goalFun) {
-                var g = goalFun(baseLevel, oldLevel, alpha, atcap, transcendent, Wep8k, hybridRatio);
+                var g = goalFun(baseLevel, oldLevel, alpha, atcap, transcendent, data.wep8k, hybridRatio);
                 
-                Ancients[k].extraInfo.optimalLevel = Math.max(Ancients[k].level, Math.ceil(g));
+                data.ancients[k].extraInfo.optimalLevel = Math.max(data.ancients[k].level, Math.ceil(g));
             }
         }
     }
@@ -134,28 +133,28 @@ function computeOptimalLevels(tuneAncient, addLevels) {
  * required. 
  */
 function calculateHSCostToOptimalLevel() {
-    multiplier = Math.pow(0.95, Outsiders["chor'gorloth"].level);
+    multiplier = Math.pow(0.95, data.outsiders["chor'gorloth"].level);
     
     var maxNumSteps = 2500; // Precision of approximation
     
     var totalCost = 0;
-    for (var k in Ancients) {
-        var oldLevel = Ancients[k].level;
-        if (Ancients[k].extraInfo.optimalLevel) {
-            var optimalLevel = Ancients[k].extraInfo.optimalLevel;
+    for (var k in data.ancients) {
+        var oldLevel = data.ancients[k].level;
+        if (data.ancients[k].extraInfo.optimalLevel) {
+            var optimalLevel = data.ancients[k].extraInfo.optimalLevel;
             
             var diff = optimalLevel - oldLevel;
             if (diff <= 0) {
-                Ancients[k].extraInfo.costToLevelToOptimal = 0;
+                data.ancients[k].extraInfo.costToLevelToOptimal = 0;
                 continue;
             }
             
             var thisAncientCost = 0;
             
-            if(Ancients[k].partialCostfn) {
+            if(data.ancients[k].partialCostfn) {
                 // We have defined the partial sum for this level cost formula,
                 // use it instead of iterating
-                thisAncientCost = Ancients[k].partialCostfn(optimalLevel) - Ancients[k].partialCostfn(oldLevel);
+                thisAncientCost = data.ancients[k].partialCostfn(optimalLevel) - data.ancients[k].partialCostfn(oldLevel);
             } else {
                 var numSteps = Math.min(maxNumSteps, diff);
                 var stepSize = diff/numSteps;
@@ -168,7 +167,7 @@ function calculateHSCostToOptimalLevel() {
                     var level = oldLevel + addLevels;
                     var thisStepSize = addLevels - prevAddLevels;
                     
-                    temp += Ancients[k].costfn(level) * thisStepSize;
+                    temp += data.ancients[k].costfn(level) * thisStepSize;
                 }
                 
                 thisAncientCost = temp;
@@ -178,7 +177,7 @@ function calculateHSCostToOptimalLevel() {
                 thisAncientCost = Math.ceil(thisAncientCost * multiplier);
             }
             
-            Ancients[k].extraInfo.costToLevelToOptimal = thisAncientCost;
+            data.ancients[k].extraInfo.costToLevelToOptimal = thisAncientCost;
             totalCost += thisAncientCost; 
         }
     }
@@ -192,20 +191,20 @@ function compute(tuneAncient, addLevels) {
 }
 
 function optimize(tuneAncient) {
-    var hs = Number($("#soulsin").val());
+    var hs = data.heroSouls;
     var baseLevel = tuneAncient.level;
     
-    if (! Ancients["morgulis"].level > 0) {
+    if (! data.ancients["morgulis"].level > 0) {
         // We do not own Morgulis, so activate the soulbank
-        Ancients["soulbank"] = {
+        data.ancients["soulbank"] = {
             "name": "soulbank", 
             "level": 0, 
             "costfn": functions.one,
             "partialCostfn": functions.onePartialSum,
             "extraInfo": {
-                "goalIdle": Ancients["morgulis"].extraInfo.goalIdle,
-                "goalHybrid": Ancients["morgulis"].extraInfo.goalHybrid,
-                "goalActive": Ancients["morgulis"].extraInfo.goalActive,
+                "goalIdle": data.ancients["morgulis"].extraInfo.goalIdle,
+                "goalHybrid": data.ancients["morgulis"].extraInfo.goalHybrid,
+                "goalActive": data.ancients["morgulis"].extraInfo.goalActive,
                 }
         };
     }
@@ -234,11 +233,11 @@ function optimize(tuneAncient) {
     // Level according to RoT and calculate new cost
     spentHS = compute(tuneAncient, left);
     
-    if  (Ancients["soulbank"]) {
+    if  (data.ancients["soulbank"]) {
         // Soul bank was used, subtract number of HS put into soulbank
         // from the number of spent HS.
-        spentHS -= Ancients["soulbank"].extraInfo.optimalLevel;
-        delete Ancients["soulbank"];
+        spentHS -= data.ancients["soulbank"].extraInfo.optimalLevel;
+        delete data.ancients["soulbank"];
     }
     
     return spentHS;
