@@ -106,7 +106,8 @@ var functions = {
         return Math.ceil(param1 * Math.sqrt(param1));
     },
     
-    polynomial1_5PartialSumApprox: function (param1) {
+    /* Approximation */
+    polynomial1_5PartialSum: function (param1) {
         return Math.ceil(2/5 * Math.pow(param1, 5/2) + 1/2 * Math.pow(param1, 3/2) + 1/8 * Math.pow(param1, 1/2) + 1/1920 * Math.pow(param1, -3/2));
     },
 
