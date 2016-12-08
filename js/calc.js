@@ -3,9 +3,9 @@
  */
 
 function buildMode() {
-    if(data.buildMode == "idle") {
+    if(data.settings.buildMode == "idle") {
         return "idle";
-    } else if (data.buildMode == "hybrid") {
+    } else if (data.settings.buildMode == "hybrid") {
         return "hybrid";
     } else {
         return "active";
@@ -91,7 +91,7 @@ function calculate() {
 }
 
 function computeOptimalLevels(tuneAncient, addLevels) {
-    var alpha = alphaFactor(data.wep8k);
+    var alpha = alphaFactor(data.settings.wep8k);
     var transcendent = alpha > 0;
     var atcap = tpCapReached();
     
@@ -118,7 +118,7 @@ function computeOptimalLevels(tuneAncient, addLevels) {
             }
             
             if (goalFun) {
-                var g = goalFun(baseLevel, oldLevel, alpha, atcap, transcendent, data.wep8k, hybridRatio);
+                var g = goalFun(baseLevel, oldLevel, alpha, atcap, transcendent, data.settings.wep8k, hybridRatio);
                 
                 data.ancients[k].extraInfo.optimalLevel = Math.max(data.ancients[k].level, Math.ceil(g));
             }

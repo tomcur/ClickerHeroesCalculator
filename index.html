@@ -328,7 +328,7 @@
         data.ancients[key].ui.change.focus(function() { 
             $(this).val(numberToClickerHeroesPasteableString(data.ancients[key].extraInfo.optimalLevel - data.ancients[key].level));
             $(this).select();
-            if (localStorage['#copyancientlevels'] === 'true' && document.queryCommandSupported('copy')) {
+            if (data.settings.copyAncientLevelsToClipboard && document.queryCommandSupported('copy')) {
               document.execCommand('copy');
             }
         });
@@ -447,12 +447,17 @@
 
         var rawData = $.parseJSON(txtOut);
         
+		// Read on-page settings
+		data.settings = {};
+		data.settings.includeSoulsAfterAscension = $("#addsouls").prop("checked");
+		data.settings.wep8k = $("#wep8k").prop("checked");
+		data.settings.copyAncientLevelsToClipboard = $("#copyancientlevels").prop("checked");
+		data.settings.buildMode = $('input[name="buildmode"]:checked').val();
+		
         // Older saves won't have items.
         data.items = rawData.hasOwnProperty("items") ? rawData.items : {items : {}, slots : {}};
         
         data.heroSoulsSacrificed = Number(rawData.heroSoulsSacrificed);
-        
-        data.wep8k = $("#wep8k").prop("checked");
         
         var heroes = rawData.heroCollection.heroes;
         var ascensionSouls = 0;
@@ -469,7 +474,7 @@
             }
         }
         
-        data.heroSouls = Number(rawData.heroSouls) + Number($("#addsouls").prop("checked") ? ascensionSouls : 0);
+        data.heroSouls = Number(rawData.heroSouls) + Number(data.settings.includeSoulsAfterAscension ? ascensionSouls : 0);
         $("#soulsin").val(numberToString(Math.floor(data.heroSouls)));
         
         for (var k in data.ancients) {
@@ -513,8 +518,6 @@
         $("#astotal").val(data.ancientSoulsTotal);
         
         data.hybridRatio = $('#hybridratio').slider('getValue');
-        
-        data.buildMode = $('input[name="buildmode"]:checked').val();
         
         calculateAndUpdate();
     }
