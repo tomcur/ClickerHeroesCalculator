@@ -15,7 +15,7 @@ function numberToClickerHeroesPasteableString(number) {
         intPart = Math.round(number / Math.pow(10, b-10));
         return intPart + "0".repeat(b-10);
     } else {
-        return ""+number;
+        return ""+Math.round(number);
     }
 }
 
