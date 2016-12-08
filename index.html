@@ -50,6 +50,9 @@
                     <div>
                         <label><input type="checkbox" onclick="Import()" id="wep8k"> Wepwawet will be leveled beyond 8,000</label>
                     </div>
+                    <div>
+                        <label><input type="checkbox" onclick="Import()" id="copyancientlevels"> Copy Ancient change to clipboard when selected</label>
+                    </div>
                     <hr>
                     <div>
                         Build
@@ -187,7 +190,8 @@
 
     var strSettingsCheckBox = [
         "#addsouls",
-        "#wep8k"
+        "#wep8k",
+        "#copyancientlevels"
     ];
 
     var strSettingsRadio = [
@@ -269,6 +273,10 @@
             SaveSettingsCheckBox("#wep8k");
         });
 
+        $('#copyancientlevels').change(function() {
+            SaveSettingsCheckBox('#copyancientlevels');
+        })
+
         $("input[name=buildmode]:radio").change(function() {
             saveBuildMode();
             showHideHybridRatioContainer();
@@ -320,6 +328,9 @@
         data.ancients[key].ui.change.focus(function() { 
             $(this).val(numberToClickerHeroesPasteableString(data.ancients[key].extraInfo.optimalLevel - data.ancients[key].level));
             $(this).select();
+            if (localStorage['#copyancientlevels'] === 'true' && document.queryCommandSupported('copy')) {
+              document.execCommand('copy');
+            }
         });
         
         data.ancients[key].ui.change.focusout(function() { 
