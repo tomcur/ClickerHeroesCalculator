@@ -195,7 +195,7 @@ function compute(tuneAncient, addLevels) {
 }
 
 function optimize(tuneAncient) {
-    var hs = data.heroSouls;
+    var hs = data.heroSoulsForLeveling;
     var baseLevel = tuneAncient.level;
     
     if (! data.ancients["morgulis"].level > 0) {
