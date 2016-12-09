@@ -569,12 +569,6 @@
         // Calculate number of gilds
         data.gilds = (Number(rawData.epicHeroReceivedUpTo)-90)/10 + Number(rawData.extraGildsAwarded);
         
-        // Calculate the amount of souls we will use for leveling
-        data.heroSoulsForLeveling = data.heroSouls;
-        if (data.settings.keepSoulsForRegilding) {
-            data.heroSoulsForLeveling -= data.gilds * 80;
-        }
-        
         for (var k in data.ancients) {
             if (data.ancients.hasOwnProperty(k)) {
                 if (rawData.ancients.ancients[data.ancients[k].id]) {
@@ -621,6 +615,12 @@
     }
     
     function calculateAndUpdate() {
+        // Calculate the amount of souls we will use for leveling
+        data.heroSoulsForLeveling = Number($("#soulsin").val());
+        if (data.settings.keepSoulsForRegilding) {
+            data.heroSoulsForLeveling -= data.gilds * 80;
+        }
+    
         var spentHS = calculate();
         display(spentHS);
     }
