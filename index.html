@@ -573,6 +573,11 @@
             if (data.ancients.hasOwnProperty(k)) {
                 if (rawData.ancients.ancients[data.ancients[k].id]) {
                     data.ancients[k].level = Number(rawData.ancients.ancients[data.ancients[k].id].level);
+                    
+                    // Currently it's possible to own a decimal number of ancients due to a bug.
+                    // The game treats the ancient level as being rounded down (at least for calculating cost).
+                    // So round down the ancient level to be safe:
+                    data.ancients[k].level = Math.floor(data.ancients[k].level);
                 } else {
                     data.ancients[k].level = 0;
                 }
