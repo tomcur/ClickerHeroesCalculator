@@ -107,7 +107,7 @@ function computeOptimalLevels(tuneAncient, addLevels) {
                 hybridRatio = 1;
             } else if(buildMode() == "hybrid") {
                 goalFun = data.ancients[k].extraInfo.goalHybrid;
-                hybridRatio = data.hybridRatio;
+                hybridRatio = data.settings.hybridRatio;
             } else {
                 goalFun = data.ancients[k].extraInfo.goalActive;
                 hybridRatio = 1;
@@ -120,7 +120,11 @@ function computeOptimalLevels(tuneAncient, addLevels) {
             if (goalFun) {
                 var g = goalFun(baseLevel, oldLevel, alpha, atcap, transcendent, data.settings.wep8k, hybridRatio);
                 
-                data.ancients[k].extraInfo.optimalLevel = Math.max(data.ancients[k].level, Math.ceil(g));
+				if(g <= 0) { 
+					delete data.ancients[k].extraInfo.optimalLevel;
+				} else {
+					data.ancients[k].extraInfo.optimalLevel = Math.max(data.ancients[k].level, Math.ceil(g));
+				}
             }
         }
     }

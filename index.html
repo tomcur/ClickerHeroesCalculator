@@ -53,6 +53,9 @@
                     <div>
                         <label><input type="checkbox" onclick="Import()" id="copyancientlevels"> Copy ancient change to clipboard when selected</label>
                     </div>
+					<div>
+						<label><input type="checkbox" id="displayadvancedconfiguration"> Display advanced configuration</label>
+					</div>
                     <hr>
                     <div>
                         Build
@@ -68,6 +71,27 @@
                 </div>
               </div>
             </div>
+			<div id="advancedconfiguration" class="panel panel-primary">
+				<header class="panel-heading">Advanced configuration</header>
+				<div class="panel-body">
+					<div>
+						<label>
+							Level Revolc<br>
+							(0 = not at all, 1 = extremely)<br>
+							<input id="revolcrate" data-slider-id="revolcrateSlider" type="text" data-slider-min="0" data-slider-max="1" data-slider-step="0.1" value="0"/>
+						</label>
+					</div>
+					<div>
+						<label>
+							Level skill ancients<br>
+							(0 = not at all, 1 = extremely)<br>
+							<input id="skillancientsrate" data-slider-id="skillancientsrateSlider" type="text" data-slider-min="0" data-slider-max="1" data-slider-step="0.1" value="0"/>
+						</label>
+					</div>
+				</div>
+			
+			</div>
+			
         </div>
         <div role="tabpanel" id="output">
             <ul class="nav nav-tabs" role="tablist">
@@ -192,7 +216,8 @@
     var strSettingsCheckBox = [
         "#addsouls",
         "#wep8k",
-        "#copyancientlevels"
+        "#copyancientlevels",
+		"#displayadvancedconfiguration"
     ];
 
     var strSettingsRadio = [
@@ -200,7 +225,9 @@
     ];
 
     var strSettingsList = [
-        "#hybridratio"
+        "#hybridratio",
+		"#revolcrate",
+		"#skillancientsrate"
     ];
 
     var strCustomSave = [
@@ -265,6 +292,14 @@
         }
     }
 
+	function showHideAdvancedConfigurationContainer() { 
+        if($("#displayadvancedconfiguration").prop('checked')) {
+            $("#advancedconfiguration").show();
+        } else {
+            $("#advancedconfiguration").hide();
+        }
+    }
+	
     $(function () {
         $('#addsouls').change(function() {
             SaveSettingsCheckBox("#addsouls");
@@ -276,7 +311,11 @@
 
         $('#copyancientlevels').change(function() {
             SaveSettingsCheckBox('#copyancientlevels');
-        })
+        });
+		
+		$('#displayadvancedconfiguration').change(function() {
+            SaveSettingsCheckBox('#displayadvancedconfiguration');
+        });
 
         $("input[name=buildmode]:radio").change(function() {
             saveBuildMode();
@@ -285,6 +324,14 @@
         
         $("#hybridratio").change(function() {
             SaveSettings("#hybridratio");
+        });
+		
+		$("#revolcrate").change(function() {
+            SaveSettings("#revolcrate");
+        });
+		
+		$("#skillancientsrate").change(function() {
+            SaveSettings("#skillancientsrate");
         });
         
         $(window).on("message", function(event) {
@@ -308,8 +355,30 @@
                     },
                     value: Number($('#hybridratio').val())
                 });
-                $('#hybridratio').on("slideStop", function() { Import(); });
+				$('#hybridratio').on("slideStop", function() { Import(); });
                 showHideHybridRatioContainer();
+				
+				// Set up revolc level rate slider
+                $('#revolcrate').slider({
+                    formatter: function(value) {
+                        return value;
+                    },
+                    value: Number($('#revolcrate').val())
+                });
+				$('#revolcrate').on("slideStop", function() { Import(); });
+				
+				// Set up skill ancients level rate slider
+                $('#skillancientsrate').slider({
+                    formatter: function(value) {
+                        return value;
+                    },
+                    value: Number($('#skillancientsrate').val())
+                });
+				$('#skillancientsrate').on("slideStop", function() { Import(); });
+				
+				// Show or hide the advanced configuration container
+				showHideAdvancedConfigurationContainer();
+                
             }
         });
         
@@ -454,6 +523,9 @@
 		data.settings.wep8k = $("#wep8k").prop("checked");
 		data.settings.copyAncientLevelsToClipboard = $("#copyancientlevels").prop("checked");
 		data.settings.buildMode = $('input[name="buildmode"]:checked').val();
+        data.settings.hybridRatio = $('#hybridratio').slider('getValue');
+		data.settings.revolcLevelRate = $('#revolcrate').slider('getValue');
+		data.settings.skillAncientsLevelRate = $('#skillancientsrate').slider('getValue');
 		
         // Older saves won't have items.
         data.items = rawData.hasOwnProperty("items") ? rawData.items : {items : {}, slots : {}};
@@ -517,8 +589,6 @@
 
         data.ancientSoulsTotal = rawData.ancientSoulsTotal
         $("#astotal").val(data.ancientSoulsTotal);
-        
-        data.hybridRatio = $('#hybridratio').slider('getValue');
         
         calculateAndUpdate();
     }
