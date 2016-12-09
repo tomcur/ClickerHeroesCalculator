@@ -182,62 +182,62 @@ var AncientsExtraInfo = {
         "goalHybrid": "goalIdle",
         "goalActive": null
     },
-	"berserker": {
-		"goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
+    "berserker": {
+        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
             baseLevel = Math.max(baseLevel * Math.pow(data.settings.skillAncientsLevelRate, 2), baseLevel * hybridRatio * Math.pow(data.settings.skillAncientsLevelRate, 2));
             return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
         },
-		"goalHybrid": "goalIdle",
+        "goalHybrid": "goalIdle",
         "goalActive": "goalIdle"
-	},
-	"energon": {
-		"goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
+    },
+    "energon": {
+        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
             baseLevel = Math.max(baseLevel * Math.pow(data.settings.skillAncientsLevelRate, 2), baseLevel * hybridRatio * Math.pow(data.settings.skillAncientsLevelRate, 2));
             return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
         },
-		"goalHybrid": "goalIdle",
+        "goalHybrid": "goalIdle",
         "goalActive": "goalIdle"
-	},
-	"hecatoncheir": {
-		"goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
+    },
+    "hecatoncheir": {
+        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
             baseLevel = Math.max(baseLevel * Math.pow(data.settings.skillAncientsLevelRate, 2), baseLevel * hybridRatio * Math.pow(data.settings.skillAncientsLevelRate, 2));
             return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
         },
-		"goalHybrid": "goalIdle",
+        "goalHybrid": "goalIdle",
         "goalActive": "goalIdle"
-	},
-	"kleptos": {
-		"goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
+    },
+    "kleptos": {
+        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
             baseLevel = Math.max(baseLevel * Math.pow(data.settings.skillAncientsLevelRate, 2), baseLevel * hybridRatio * Math.pow(data.settings.skillAncientsLevelRate, 2));
             return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
         },
-		"goalHybrid": "goalIdle",
+        "goalHybrid": "goalIdle",
         "goalActive": "goalIdle"
-	},
-	"revolc": {
-		"goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
+    },
+    "revolc": {
+        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
             baseLevel = Math.max(baseLevel * Math.pow(data.settings.revolcLevelRate, 2), baseLevel * hybridRatio * Math.pow(data.settings.revolcLevelRate, 2));
             return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
         },
-		"goalHybrid": "goalIdle",
+        "goalHybrid": "goalIdle",
         "goalActive": "goalIdle"
-	},
-	"sniperino": {
-		"goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
+    },
+    "sniperino": {
+        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
             baseLevel = Math.max(baseLevel * Math.pow(data.settings.skillAncientsLevelRate, 2), baseLevel * hybridRatio * Math.pow(data.settings.skillAncientsLevelRate, 2));
             return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
         },
-		"goalHybrid": "goalIdle",
+        "goalHybrid": "goalIdle",
         "goalActive": "goalIdle"
-	},
-	"vaagur": {
-		"goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
+    },
+    "vaagur": {
+        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
             baseLevel = Math.max(baseLevel * Math.pow(data.settings.skillAncientsLevelRate, 2), baseLevel * hybridRatio * Math.pow(data.settings.skillAncientsLevelRate, 2));
             return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
         },
-		"goalHybrid": "goalIdle",
+        "goalHybrid": "goalIdle",
         "goalActive": "goalIdle"
-	}
+    }
 };
 
 // Todo, find goals for optimization: 
