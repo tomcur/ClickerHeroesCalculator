@@ -410,13 +410,17 @@
         data.ancients[key].ui.change = $("<input></input>").attr("readonly", "readonly").attr("type", "text").addClass("col_change");
         data.ancients[key].ui.cost = $("<span></span>").text(numberToStringFormatted(0));
         
-        data.ancients[key].ui.change.focus(function() { 
+        var changeSelectFunction = function() { 
             $(this).val(numberToClickerHeroesPasteableString(data.ancients[key].extraInfo.optimalLevel - data.ancients[key].level));
             $(this).select();
             if (data.settings.copyAncientLevelsToClipboard && document.queryCommandSupported('copy')) {
               document.execCommand('copy');
             }
-        });
+        };
+        /* Bind to both the focus and the click event */
+        data.ancients[key].ui.change.focus(changeSelectFunction);
+        data.ancients[key].ui.change.click(changeSelectFunction);
+        
         
         data.ancients[key].ui.change.focusout(function() { 
             $(this).val(numberToStringFormatted(data.ancients[key].extraInfo.optimalLevel - data.ancients[key].level));
