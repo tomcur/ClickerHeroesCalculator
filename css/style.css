@@ -9,7 +9,7 @@ body {
 }
 
 .wrapper {
-    width: 1004px;
+    width: 1054px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 2em;
@@ -18,12 +18,12 @@ body {
 
 
 #input {
-    width: 500px; 
+    width: 490px; 
     display: inline-block;
 }
 
 #output { 
-    width: 500px;
+    width: 560px;
     display: inline-block;
     vertical-align: top;
 }
@@ -47,13 +47,17 @@ body {
 }
 
 #ancienttbl .col1 {
-    width: 18%;
+    width: 17%;
 }
 
-#ancienttbl .col2, .col3 {
-    width: 20%;
+#ancienttbl .col2, .col3, .col5 {
+    width: 19%;
 }
 
+#ancienttbl .col4 {
+    width: 26%;
+}
+    
 table input[type=text] {
     width: 100%;
     padding: 0px;
