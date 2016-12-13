@@ -9,11 +9,12 @@ function numberToString(number) {
  * This function makes sure there are no decimal points in the output.
  */
 function numberToClickerHeroesPasteableString(number) {
+    var precision = 10;
     var b = Math.floor(Math.log(number)/Math.log(10));
-    if(b >= 21) {
+    if(b >= precision) {
         var intPart;
-        intPart = Math.round(number / Math.pow(10, b-10));
-        return intPart + "0".repeat(b-10);
+        intPart = Math.round(number / Math.pow(10, b-precision));
+        return intPart + "e" + (b-precision);
     } else {
         return ""+Math.round(number);
     }
