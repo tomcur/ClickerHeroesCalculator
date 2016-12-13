@@ -11,7 +11,7 @@ function numberToString(number) {
 function numberToClickerHeroesPasteableString(number) {
     var precision = 10;
     var b = Math.floor(Math.log(number)/Math.log(10));
-    if(b >= precision) {
+    if(b > precision) {
         var intPart;
         intPart = Math.round(number / Math.pow(10, b-precision));
         return intPart + "e" + (b-precision);
