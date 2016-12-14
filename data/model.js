@@ -30,7 +30,8 @@ var AncientsExtraInfo = {
             }
         },
         "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
+        "goalActive": "goalIdle",
+        "exclude": null
     },
     "morgulis": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
@@ -38,12 +39,14 @@ var AncientsExtraInfo = {
             return Math.pow(baseLevel, 2); 
         },
         "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
+        "goalActive": "goalIdle",
+        "exclude": null
     },
     "siyalatas": { // Idle
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return baseLevel; },
         "goalHybrid": "goalIdle",
-        "goalActive": null
+        "goalActive": null,
+        "exclude": null
     },
     "argaiv": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
@@ -51,7 +54,8 @@ var AncientsExtraInfo = {
             return baseLevel; 
         },
         "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
+        "goalActive": "goalIdle",
+        "exclude": null
         
     },
     "libertas": { // Idle
@@ -63,7 +67,8 @@ var AncientsExtraInfo = {
             } 
         },
         "goalHybrid": "goalIdle",
-        "goalActive": null
+        "goalActive": null,
+        "exclude": null
     },
     "mammon": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
@@ -75,7 +80,8 @@ var AncientsExtraInfo = {
             }
         },
         "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
+        "goalActive": "goalIdle",
+        "exclude": null
     },
     "mimzee": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
@@ -87,7 +93,8 @@ var AncientsExtraInfo = {
             } 
         },
         "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
+        "goalActive": "goalIdle",
+        "exclude": null
     },
     "dora": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
@@ -95,7 +102,8 @@ var AncientsExtraInfo = {
             return 2.877 * Math.log(baseLevel) - 1.4365 * Math.log(100/99 - Math.exp(-0.002 * oldLevel)) - 9.63; 
         },
         "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
+        "goalActive": "goalIdle",
+        "exclude": null
     },
     "atman": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
@@ -108,7 +116,8 @@ var AncientsExtraInfo = {
             }
         },
         "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
+        "goalActive": "goalIdle",
+        "exclude": null
     },
     "kumawakamaru": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
@@ -121,7 +130,8 @@ var AncientsExtraInfo = {
             }
         },
         "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
+        "goalActive": "goalIdle",
+        "exclude": null
     },
     "dogcog": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
@@ -129,7 +139,8 @@ var AncientsExtraInfo = {
             return 2.844 * Math.log(baseLevel) - 1.422 * Math.log(1/99 + Math.exp(-0.01 * oldLevel)) - 7.232; 
         },
         "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
+        "goalActive": "goalIdle",
+        "exclude": null
     },
     "fortuna": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
@@ -137,7 +148,8 @@ var AncientsExtraInfo = {
             return 2.875 * Math.log(baseLevel) - 1.4375 * Math.log(10/9 - Math.exp(-0.0025 * oldLevel)) - 9.3; 
         },
         "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
+        "goalActive": "goalIdle",
+        "exclude": null
     },
     "bubos": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
@@ -145,7 +157,8 @@ var AncientsExtraInfo = {
             return 2.8 * Math.log(baseLevel) - 1.4 * Math.log(1 + Math.exp(-0.02 * oldLevel)) - 5.94; 
         },
         "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
+        "goalActive": "goalIdle",
+        "exclude": null
     },
     "chronos": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
@@ -153,22 +166,26 @@ var AncientsExtraInfo = {
             return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
         },
         "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
+        "goalActive": "goalIdle",
+        "exclude": null
     },
     "fragsworth": { // Active
         "goalIdle": null,
         "goalHybrid": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return hybridRatio * baseLevel; },
-        "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return baseLevel; }
+        "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return baseLevel; },
+        "exclude": null
     },
     "bhaal": { // Active
         "goalIdle": null,
         "goalHybrid": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return hybridRatio * baseLevel; },
-        "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return baseLevel; }
+        "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return baseLevel; },
+        "exclude": null
     },
     "juggernaut": { // Active
         "goalIdle": null,
         "goalHybrid": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return Math.pow(hybridRatio * baseLevel, 0.8); },
-        "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return Math.pow(baseLevel, 0.8); }
+        "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return Math.pow(baseLevel, 0.8); },
+        "exclude": null
     },
     "nogardnit": { // Idle
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) {
@@ -180,7 +197,8 @@ var AncientsExtraInfo = {
             }
         },
         "goalHybrid": "goalIdle",
-        "goalActive": null
+        "goalActive": null,
+        "exclude": null
     },
     "berserker": {
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
@@ -188,7 +206,10 @@ var AncientsExtraInfo = {
             return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
         },
         "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
+        "goalActive": "goalIdle",
+        "exclude": function() {
+            return data.settings.skillAncientsLevelRate <= 0;
+        }
     },
     "energon": {
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
@@ -196,7 +217,10 @@ var AncientsExtraInfo = {
             return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
         },
         "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
+        "goalActive": "goalIdle",
+        "exclude": function() {
+            return data.settings.skillAncientsLevelRate <= 0;
+        }
     },
     "hecatoncheir": {
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
@@ -204,7 +228,10 @@ var AncientsExtraInfo = {
             return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
         },
         "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
+        "goalActive": "goalIdle",
+        "exclude": function() {
+            return data.settings.skillAncientsLevelRate <= 0;
+        }
     },
     "kleptos": {
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
@@ -212,7 +239,10 @@ var AncientsExtraInfo = {
             return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
         },
         "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
+        "goalActive": "goalIdle",
+        "exclude": function() {
+            return data.settings.skillAncientsLevelRate <= 0;
+        }
     },
     "revolc": {
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
@@ -220,7 +250,10 @@ var AncientsExtraInfo = {
             return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
         },
         "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
+        "goalActive": "goalIdle",
+        "exclude": function() {
+            return data.settings.revolcLevelRate <= 0;
+        }
     },
     "sniperino": {
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
@@ -228,7 +261,10 @@ var AncientsExtraInfo = {
             return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
         },
         "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
+        "goalActive": "goalIdle",
+        "exclude": function() {
+            return data.settings.skillAncientsLevelRate <= 0;
+        }
     },
     "vaagur": {
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
@@ -236,7 +272,10 @@ var AncientsExtraInfo = {
             return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
         },
         "goalHybrid": "goalIdle",
-        "goalActive": "goalIdle"
+        "goalActive": "goalIdle",
+        "exclude": function() {
+            return data.settings.skillAncientsLevelRate <= 0;
+        }
     }
 };
 

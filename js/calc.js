@@ -97,6 +97,11 @@ function computeOptimalLevels(tuneAncient, addLevels) {
     
     var baseLevel = tuneAncient.level + addLevels;
     for (var k in data.ancients) {
+        // Test if this ancient is to be excluded
+        if (data.ancients[k].extraInfo.exclude && data.ancients[k].extraInfo.exclude()) {
+            continue;
+        }
+        
         var oldLevel = data.ancients[k].level;
         
         if (oldLevel > 0 || k == "soulbank") {
@@ -120,11 +125,8 @@ function computeOptimalLevels(tuneAncient, addLevels) {
             if (goalFun) {
                 var g = goalFun(baseLevel, oldLevel, alpha, atcap, transcendent, data.settings.wep8k, hybridRatio);
                 
-                if(g <= 0) { 
-                    delete data.ancients[k].extraInfo.optimalLevel;
-                } else {
-                    data.ancients[k].extraInfo.optimalLevel = Math.max(data.ancients[k].level, Math.ceil(g));
-                }
+                
+                data.ancients[k].extraInfo.optimalLevel = Math.max(data.ancients[k].level, Math.ceil(g));
             }
         }
     }
@@ -214,7 +216,11 @@ function optimize(tuneAncient) {
     }
     
     var left = -baseLevel;
-    var right = Math.ceil(Math.sqrt(hs + baseLevel * (baseLevel + 1))) - baseLevel;
+    if (hs > 0) {
+        var right = Math.ceil(Math.sqrt(hs + baseLevel * (baseLevel + 1))) - baseLevel;
+    } else {
+        var right = 0;
+    }
     var spentHS;
     
     // Iterate until we have converged, or until we are very close to convergence.
