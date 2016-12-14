@@ -534,7 +534,11 @@
             txtOut = atob(txtOut);
         }
 
-        var rawData = $.parseJSON(txtOut);
+        try {
+            var rawData = $.parseJSON(txtOut);
+        } catch(e) {
+            alert('Could not decode the save game data.');
+        }
         
         // Read on-page settings
         data.settings = {};
