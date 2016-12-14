@@ -357,7 +357,7 @@
         // Load game data
         $.ajax('data/ClickerHeroes_v8448.js', {
             complete: function(xhr) {
-                window.data = JSON.parse(xhr.responseText);
+                window.data = $.parseJSON(xhr.responseText);
                 createObjects(data);
                 window.Items = {items : {}, slots : {}};    // No relics.
                 ShowTables();
