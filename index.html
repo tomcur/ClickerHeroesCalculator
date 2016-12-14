@@ -636,7 +636,7 @@
     
     function display(spentHS) {
         $("#soulsgoal").text(numberToStringFormatted(Math.floor(data.heroSouls - spentHS)));
-        $("#soulschange").text("-" + numberToStringFormatted(spentHS));
+        $("#soulschange").text((spentHS > 0 ? "-" : "") + numberToStringFormatted(spentHS));
         
         for (var k in data.ancients) {
             var ancient = data.ancients[k];
