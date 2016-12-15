@@ -95,7 +95,7 @@ function computeOptimalLevels(tuneAncient, addLevels) {
     var transcendent = alpha > 0;
     var atcap = tpCapReached();
     
-    var baseLevel = tuneAncient.level + addLevels;
+    var baseLevel = tuneAncient.level.plus(addLevels);
     for (var k in data.ancients) {
         // Test if this ancient is to be excluded
         if (data.ancients[k].extraInfo.exclude && data.ancients[k].extraInfo.exclude()) {
@@ -126,7 +126,7 @@ function computeOptimalLevels(tuneAncient, addLevels) {
                 var g = goalFun(baseLevel, oldLevel, alpha, atcap, transcendent, data.settings.wep8k, hybridRatio);
                 
                 
-                data.ancients[k].extraInfo.optimalLevel = Math.max(data.ancients[k].level, Math.ceil(g));
+                data.ancients[k].extraInfo.optimalLevel = Decimal.max(data.ancients[k].level, g.ceil());
             }
         }
     }
@@ -143,15 +143,15 @@ function calculateHSCostToOptimalLevel() {
     
     var maxNumSteps = 2500; // Precision of approximation
     
-    var totalCost = 0;
+    var totalCost = new Decimal(0);
     for (var k in data.ancients) {
         var oldLevel = data.ancients[k].level;
         if (data.ancients[k].extraInfo.optimalLevel) {
             var optimalLevel = data.ancients[k].extraInfo.optimalLevel;
             
-            var diff = optimalLevel - oldLevel;
+            var diff = optimalLevel.minus(oldLevel);
             if (diff <= 0) {
-                data.ancients[k].extraInfo.costToLevelToOptimal = 0;
+                data.ancients[k].extraInfo.costToLevelToOptimal = new Decimal(0);
                 continue;
             }
             
@@ -160,31 +160,31 @@ function calculateHSCostToOptimalLevel() {
             if(data.ancients[k].partialCostfn) {
                 // We have defined the partial sum for this level cost formula,
                 // use it instead of iterating
-                thisAncientCost = data.ancients[k].partialCostfn(optimalLevel) - data.ancients[k].partialCostfn(oldLevel);
+                thisAncientCost = data.ancients[k].partialCostfn(optimalLevel).minus(data.ancients[k].partialCostfn(oldLevel));
             } else {
-                var numSteps = Math.min(maxNumSteps, diff);
-                var stepSize = diff/numSteps;
+                var numSteps = Decimal.min(maxNumSteps, diff);
+                var stepSize = diff.dividedBy(numSteps);
                 
                 var temp = 0;
                 for(var step = 1; step <= numSteps; step++) {
-                    var prevAddLevels = Math.ceil((step - 1) * stepSize);
-                    var addLevels = Math.ceil(step * stepSize);
+                    var prevAddLevels = step.minus(1).times(stepSize).ceil();
+                    var addLevels = step.times(stepSize).ceil();
                     
-                    var level = oldLevel + addLevels;
-                    var thisStepSize = addLevels - prevAddLevels;
+                    var level = oldLevel.plus(addLevels);
+                    var thisStepSize = addLevels.minus(prevAddLevels);
                     
-                    temp += data.ancients[k].costfn(level) * thisStepSize;
+                    temp = temp.plus(data.ancients[k].costfn(level).times(thisStepSize));
                 }
                 
                 thisAncientCost = temp;
             }
             
             if (k != "soulbank") {
-                thisAncientCost = Math.ceil(thisAncientCost * multiplier);
+                thisAncientCost = thisAncientCost.times(multiplier).ceil();
             }
             
             data.ancients[k].extraInfo.costToLevelToOptimal = thisAncientCost;
-            totalCost += thisAncientCost; 
+            totalCost = totalCost.plus(thisAncientCost); 
         }
     }
     
@@ -200,11 +200,11 @@ function optimize(tuneAncient) {
     var hs = data.heroSoulsForLeveling;
     var baseLevel = tuneAncient.level;
     
-    if (! data.ancients["morgulis"].level > 0) {
+    if (! data.ancients["morgulis"].level.greaterThan(0)) {
         // We do not own Morgulis, so activate the soulbank
         data.ancients["soulbank"] = {
             "name": "soulbank", 
-            "level": 0, 
+            "level": new Decimal(0), 
             "costfn": functions.one,
             "partialCostfn": functions.onePartialSum,
             "extraInfo": {
@@ -215,11 +215,11 @@ function optimize(tuneAncient) {
         };
     }
     
-    var left = -baseLevel;
+    var left = baseLevel.times(-1);
     if (hs > 0) {
-        var right = Math.ceil(Math.sqrt(hs + baseLevel * (baseLevel + 1))) - baseLevel;
+        var right = hs.plus(baseLevel.times(baseLevel.plus(1))).sqrt().ceil().minus(baseLevel);
     } else {
-        var right = 0;
+        var right = new Decimal(0);
     }
     var spentHS;
     
@@ -227,13 +227,13 @@ function optimize(tuneAncient) {
     // Converging exactly has run-time complexity in O(log(hs)), which, though sub-
     // polynomial in hs, is still very slow (as hs is basically exponential 
     // in play-time). As such, we'll make do with an approximation.
-    var initialDiff = right - left;
-    while ((right - left) > 1 && (right - left) / initialDiff > 0.00001) {
-        var mid = Math.floor((right + left) / 2);
+    var initialDiff = right.minus(left);
+    while (right.minus(left).greaterThan(1) && right.minus(left).dividedBy(initialDiff).greaterThan(0.00001)) {
+        var mid = right.plus(left).dividedBy(2).floor();
         
         // Level according to RoT and calculate new cost
         spentHS = compute(tuneAncient, mid);
-        if (spentHS <= hs) {
+        if (spentHS.lessThan(hs)) {
             left = mid;
         } else { 
             right = mid;
@@ -246,7 +246,7 @@ function optimize(tuneAncient) {
     if  (data.ancients["soulbank"]) {
         // Soul bank was used, subtract number of HS put into soulbank
         // from the number of spent HS.
-        spentHS -= data.ancients["soulbank"].extraInfo.optimalLevel;
+        spentHS = spentHs.minus(data.ancients["soulbank"].extraInfo.optimalLevel);
         delete data.ancients["soulbank"];
     }
     

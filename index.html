@@ -16,6 +16,7 @@
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.1.0/bootstrap-slider.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js"></script>
+        <script src="js/decimal.min.js"></script>
         <script src="data/functions.js?v=4"></script>
         <script src="data/model.js?v=4"></script>
         <script src="js/calc.js?v=4"></script>
@@ -426,7 +427,14 @@
             }
         });
         
+        configureDecimal();
     });
+    
+    function configureDecimal() {
+        Decimal.config({
+            precision: 20
+        });
+    }
 
     function AddAncient(key) {
         data.ancients[key].ui = {};
@@ -553,15 +561,16 @@
         // Older saves won't have items.
         data.items = rawData.hasOwnProperty("items") ? rawData.items : {items : {}, slots : {}};
         
-        data.heroSoulsSacrificed = Number(rawData.heroSoulsSacrificed);
+        data.heroSoulsSacrificed = new Decimal(rawData.heroSoulsSacrificed);
         
         var heroes = rawData.heroCollection.heroes;
         var ascensionSouls = 0;
         for (var k in heroes) {
             var id = parseInt(k, 10);
-            ascensionSouls += Number(heroes[k].level);
+            ascensionSouls += new Decimal(heroes[k].level);
         }
-        ascensionSouls = Math.floor(ascensionSouls / 2000) + Number(rawData.primalSouls);
+        ascensionSouls = Math.floor(ascensionSouls / 2000) + new Decimal(rawData.primalSouls);
+        data.ascensionSouls = ascensionSouls;
         
         var levels = {};
         for (var i = data.ancientMin; i <= data.ancientMax; i++) {
@@ -570,7 +579,11 @@
             }
         }
         
-        data.heroSouls = Number(rawData.heroSouls) + Number(data.settings.includeSoulsAfterAscension ? ascensionSouls : 0);
+        
+        data.heroSouls = new Decimal(rawData.heroSouls);
+        if (data.settings.includeSoulsAfterAscension) {
+            data.heroSouls = data.heroSouls.plus(data.ascensionSouls);
+        }
         $("#soulsin").val(numberToString(Math.floor(data.heroSouls)));
         
         // Calculate number of gilds
@@ -579,14 +592,14 @@
         for (var k in data.ancients) {
             if (data.ancients.hasOwnProperty(k)) {
                 if (rawData.ancients.ancients[data.ancients[k].id]) {
-                    data.ancients[k].level = Number(rawData.ancients.ancients[data.ancients[k].id].level);
+                    data.ancients[k].level = new Decimal(rawData.ancients.ancients[data.ancients[k].id].level);
                     
                     // Currently it's possible to own a decimal number of ancients due to a bug.
                     // The game treats the ancient level as being rounded down (at least for calculating cost).
                     // So round down the ancient level to be safe:
-                    data.ancients[k].level = Math.floor(data.ancients[k].level);
+                    data.ancients[k].level = data.ancients[k].level.floor();
                 } else {
-                    data.ancients[k].level = 0;
+                    data.ancients[k].level = new Decimal(0);
                 }
                 data.ancients[k].ui.level.text(numberToStringFormatted(data.ancients[k].level));
             }
@@ -628,7 +641,7 @@
     
     function calculateAndUpdate() {
         // Calculate the amount of souls we will use for leveling
-        data.heroSoulsForLeveling = Number($("#soulsin").val());
+        data.heroSoulsForLeveling = new Decimal($("#soulsin").val());
         if (data.settings.keepSoulsForRegilding) {
             data.heroSoulsForLeveling -= data.gilds * 80;
         }
@@ -677,12 +690,12 @@
             var ancient = data.ancients[k];
             if (ancient.extraInfo.optimalLevel) {
                 rawData.ancients.ancients[ancient.id].level = ancient.extraInfo.optimalLevel + 0.0000001;
-                rawData.ancients.ancients[ancient.id].spentHeroSouls = Number(rawData.ancients.ancients[ancient.id].spentHeroSouls) + ancient.extraInfo.costToLevelToOptimal;
+                rawData.ancients.ancients[ancient.id].spentHeroSouls = new Decimal(rawData.ancients.ancients[ancient.id].spentHeroSouls).plus(ancient.extraInfo.costToLevelToOptimal);
             }
         }
         
         // Set hero soul count
-        rawData.heroSouls = Math.floor(data.heroSouls - spentHS);
+        rawData.heroSouls = data.heroSouls.minus(spentHS).floor();
         
         // Output save game
         $('#generatedsavedata').val(encodeSaveGame(rawData));

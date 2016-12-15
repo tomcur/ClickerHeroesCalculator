@@ -1,9 +1,9 @@
 var goallinear = function(baseLevel, oldLevel) { return base; }
-var goallinearhalf = function(base, gold) { return base/2; }
-var goallinearfifth = function(base, gold) { return base/5; }
-var goalgold = function(base, gold) { return base*gold; }
-var goalJuggernaut = function(base, gold) { return Math.pow(base, 0.8); }
-var goalMorgulis = function(base, gold) { return Math.pow(base+2+Math.min(base, 100)/5, 2); }
+var goallinearhalf = function(base, gold) { return base.dividedBy(2); }
+var goallinearfifth = function(base, gold) { return base.dividedBy(5); }
+var goalgold = function(base, gold) { return base.times(gold); }
+var goalJuggernaut = function(base, gold) { return base.pow(0.8); }
+var goalMorgulis = function(base, gold) { return base.plus(2).plus(Decimal.min(base, 100).dividedBy(5)).pow(2); }
 
 var EmptyExtraInfo = {
     "goalEval": null,
@@ -19,13 +19,13 @@ var EmptyExtraInfo = {
 var AncientsExtraInfo = {
     "solomon": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
-            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
+            baseLevel = Decimal.max(baseLevel, baseLevel * hybridRatio);
             if(transcended) {
-                return Math.pow(baseLevel, 0.8) / Math.pow(alpha, 0.4); 
+                return baseLevel.pow(0.8).dividedBy(new Decimal(alpha).pow(0.4));
             } else {
-                return Math.min(
+                return Decimal.min(
                     baseLevel,
-                    1.15 * Math.pow(Math.log(3.25 * Math.pow(baseLevel, 2)), 0.4) * Math.pow(baseLevel, 0.8)
+                    baseLevel.pow(2).times(3.25).ln().pow(0.4).times(baseLevel.pow(0.8)).times(1.15)
                 ); 
             }
         },
@@ -35,8 +35,8 @@ var AncientsExtraInfo = {
     },
     "morgulis": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
-            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
-            return Math.pow(baseLevel, 2); 
+            baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
+            return baseLevel.pow(2); 
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
@@ -50,7 +50,7 @@ var AncientsExtraInfo = {
     },
     "argaiv": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
-            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
+            baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
             return baseLevel; 
         },
         "goalHybrid": "goalIdle",
@@ -61,9 +61,9 @@ var AncientsExtraInfo = {
     "libertas": { // Idle
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
             if(wepwawetLeveledBeyond8k) {
-                return 0.905*baseLevel; 
+                return baseLevel.times(0.905); 
             } else {
-                return 0.926*baseLevel; 
+                return baseLevel.times(0.926); 
             } 
         },
         "goalHybrid": "goalIdle",
@@ -72,11 +72,11 @@ var AncientsExtraInfo = {
     },
     "mammon": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
-            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
+            baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
             if(wepwawetLeveledBeyond8k) {
-                return 0.905*baseLevel; 
+                return baseLevel.times(0.905); 
             } else {
-                return 0.926*baseLevel; 
+                return baseLevel.times(0.926); 
             }
         },
         "goalHybrid": "goalIdle",
@@ -85,11 +85,11 @@ var AncientsExtraInfo = {
     },
     "mimzee": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
-            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
+            baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
             if(wepwawetLeveledBeyond8k) {
-                return 0.905*baseLevel; 
+                return baseLevel.times(0.905); 
             } else {
-                return 0.926*baseLevel; 
+                return baseLevel.times(0.926); 
             } 
         },
         "goalHybrid": "goalIdle",
@@ -98,8 +98,8 @@ var AncientsExtraInfo = {
     },
     "dora": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
-            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
-            return 2.877 * Math.log(baseLevel) - 1.4365 * Math.log(100/99 - Math.exp(-0.002 * oldLevel)) - 9.63; 
+            baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
+            return baseLevel.ln().times(2.877).minus(Decimal.div(100, 99).minus(oldLevel.times(-0.002).exp()).ln().times(1.4365)).minus(9.63);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
@@ -107,12 +107,12 @@ var AncientsExtraInfo = {
     },
     "atman": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
-            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
+            baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
             if(transcended) {
-                return 2.832 * Math.log(baseLevel) - 1.416 * Math.log(alpha) - 1.416 * Math.log(4/3 - Math.exp(-0.013 * oldLevel)) - 6.613; 
+                return baseLevel.ln().times(2.832).minus(new Decimal(alpha).ln().times(1.416)).minus(Decimal.div(4, 3).minus(oldLevel.times(-0.013).exp()).ln().times(1.416)).minus(6.613);
             } else {
                 // Todo: need RoT for this
-                return Math.log(baseLevel)/Math.log(2);
+                return baseLevel.ln().dividedBy(new Decimal(2).ln());
             }
         },
         "goalHybrid": "goalIdle",
@@ -121,12 +121,12 @@ var AncientsExtraInfo = {
     },
     "kumawakamaru": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
-            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
+            baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
             if(transcended) {
-                return 2.844 * Math.log(baseLevel) - 1.422 * Math.log(alpha) - 1.422 * Math.log(1/4 + Math.exp(-0.01 * oldLevel)) - 7.014; 
+                return baseLevel.ln().times(2.844).minus(new Decimal(alpha).ln().times(1.422)).minus(Decimal.div(1, 4).plus(oldLevel.times(-0.01).exp()).ln().times(1.422)).minus(7.014);
             } else {
                 // Todo: need RoT for this
-                return Math.log(baseLevel)/Math.log(2);
+                return baseLevel.ln().dividedBy(new Decimal(2).ln());
             }
         },
         "goalHybrid": "goalIdle",
@@ -135,8 +135,8 @@ var AncientsExtraInfo = {
     },
     "dogcog": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
-            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
-            return 2.844 * Math.log(baseLevel) - 1.422 * Math.log(1/99 + Math.exp(-0.01 * oldLevel)) - 7.232; 
+            baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
+            return baseLevel.ln().times(2.844).minus(Decimal.div(1, 99).plus(oldLevel.times(-0.01).exp()).ln().times(1.422)).minus(7.232);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
@@ -144,8 +144,8 @@ var AncientsExtraInfo = {
     },
     "fortuna": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
-            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
-            return 2.875 * Math.log(baseLevel) - 1.4375 * Math.log(10/9 - Math.exp(-0.0025 * oldLevel)) - 9.3; 
+            baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
+            return baseLevel.ln().times(2.875).minus(Decimal.div(10, 9).minus(oldLevel.times(-0.0025).exp()).ln().times(1.4375)).minus(9.3);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
@@ -153,8 +153,8 @@ var AncientsExtraInfo = {
     },
     "bubos": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
-            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
-            return 2.8 * Math.log(baseLevel) - 1.4 * Math.log(1 + Math.exp(-0.02 * oldLevel)) - 5.94; 
+            baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
+            return baseLevel.ln().times(2.8).minus(new Decimal(1).plus(oldLevel.times(-0.02).exp()).ln().times(1.4)).minus(5.94);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
@@ -162,8 +162,8 @@ var AncientsExtraInfo = {
     },
     "chronos": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
-            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
-            return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
+            baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
+            return baseLevel.ln().times(2.75).minus(new Decimal(2).minus(oldLevel.times(-0.034).exp()).ln().times(1.375)).minus(5.1);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
@@ -171,29 +171,29 @@ var AncientsExtraInfo = {
     },
     "fragsworth": { // Active
         "goalIdle": null,
-        "goalHybrid": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return hybridRatio * baseLevel; },
+        "goalHybrid": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return baseLevel.times(hybridRatio); },
         "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return baseLevel; },
         "exclude": null
     },
     "bhaal": { // Active
         "goalIdle": null,
-        "goalHybrid": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return hybridRatio * baseLevel; },
+        "goalHybrid": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return baseLevel.times(hybridRatio); },
         "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return baseLevel; },
         "exclude": null
     },
     "juggernaut": { // Active
         "goalIdle": null,
-        "goalHybrid": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return Math.pow(hybridRatio * baseLevel, 0.8); },
-        "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return Math.pow(baseLevel, 0.8); },
+        "goalHybrid": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return baseLevel.times(hybridRatio).pow(0.8); },
+        "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return baseLevel.pow(0.8); },
         "exclude": null
     },
     "nogardnit": { // Idle
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) {
-            baseLevel = Math.max(baseLevel, baseLevel * hybridRatio);
+            baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
             if(wepwawetLeveledBeyond8k) {
-                return Math.pow(0.905*baseLevel, 0.8);
+                return baseLevel.times(0.905).pow(0.8);
             } else {
-                return Math.pow(0.926*baseLevel, 0.8);
+                return baseLevel.times(0.926).pow(0.8);
             }
         },
         "goalHybrid": "goalIdle",
@@ -202,8 +202,11 @@ var AncientsExtraInfo = {
     },
     "berserker": {
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
-            baseLevel = Math.max(baseLevel * Math.pow(data.settings.skillAncientsLevelRate, 2), baseLevel * hybridRatio * Math.pow(data.settings.skillAncientsLevelRate, 2));
-            return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
+            baseLevel = Decimal.max(
+                baseLevel.times(new Decimal(data.settings.skillAncientsLevelRate).pow(2)), 
+                baseLevel.times(hybridRatio).times(new Decimal(data.settings.skillAncientsLevelRate).pow(2))
+            );
+            return baseLevel.ln().times(2.75).minus(new Decimal(2).minus(oldLevel.times(-0.034).exp()).ln().times(1.375)).minus(5.1);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
@@ -213,8 +216,11 @@ var AncientsExtraInfo = {
     },
     "energon": {
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
-            baseLevel = Math.max(baseLevel * Math.pow(data.settings.skillAncientsLevelRate, 2), baseLevel * hybridRatio * Math.pow(data.settings.skillAncientsLevelRate, 2));
-            return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
+            baseLevel = Decimal.max(
+                baseLevel.times(new Decimal(data.settings.skillAncientsLevelRate).pow(2)), 
+                baseLevel.times(hybridRatio).times(new Decimal(data.settings.skillAncientsLevelRate).pow(2))
+            );
+            return baseLevel.ln().times(2.75).minus(new Decimal(2).minus(oldLevel.times(-0.034).exp()).ln().times(1.375)).minus(5.1);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
@@ -224,8 +230,11 @@ var AncientsExtraInfo = {
     },
     "hecatoncheir": {
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
-            baseLevel = Math.max(baseLevel * Math.pow(data.settings.skillAncientsLevelRate, 2), baseLevel * hybridRatio * Math.pow(data.settings.skillAncientsLevelRate, 2));
-            return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
+            baseLevel = Decimal.max(
+                baseLevel.times(new Decimal(data.settings.skillAncientsLevelRate).pow(2)), 
+                baseLevel.times(hybridRatio).times(new Decimal(data.settings.skillAncientsLevelRate).pow(2))
+            );
+            return baseLevel.ln().times(2.75).minus(new Decimal(2).minus(oldLevel.times(-0.034).exp()).ln().times(1.375)).minus(5.1);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
@@ -235,8 +244,11 @@ var AncientsExtraInfo = {
     },
     "kleptos": {
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
-            baseLevel = Math.max(baseLevel * Math.pow(data.settings.skillAncientsLevelRate, 2), baseLevel * hybridRatio * Math.pow(data.settings.skillAncientsLevelRate, 2));
-            return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
+            baseLevel = Decimal.max(
+                baseLevel.times(new Decimal(data.settings.skillAncientsLevelRate).pow(2)), 
+                baseLevel.times(hybridRatio).times(new Decimal(data.settings.skillAncientsLevelRate).pow(2))
+            );
+            return baseLevel.ln().times(2.75).minus(new Decimal(2).minus(oldLevel.times(-0.034).exp()).ln().times(1.375)).minus(5.1);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
@@ -246,8 +258,11 @@ var AncientsExtraInfo = {
     },
     "revolc": {
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
-            baseLevel = Math.max(baseLevel * Math.pow(data.settings.revolcLevelRate, 2), baseLevel * hybridRatio * Math.pow(data.settings.revolcLevelRate, 2));
-            return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
+            baseLevel = Decimal.max(
+                baseLevel.times(new Decimal(data.settings.revolcLevelRate).pow(2)), 
+                baseLevel.times(hybridRatio).times(new Decimal(data.settings.revolcLevelRate).pow(2))
+            );
+            return baseLevel.ln().times(2.75).minus(new Decimal(2).minus(oldLevel.times(-0.034).exp()).ln().times(1.375)).minus(5.1);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
@@ -257,8 +272,11 @@ var AncientsExtraInfo = {
     },
     "sniperino": {
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
-            baseLevel = Math.max(baseLevel * Math.pow(data.settings.skillAncientsLevelRate, 2), baseLevel * hybridRatio * Math.pow(data.settings.skillAncientsLevelRate, 2));
-            return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
+            baseLevel = Decimal.max(
+                baseLevel.times(new Decimal(data.settings.skillAncientsLevelRate).pow(2)), 
+                baseLevel.times(hybridRatio).times(new Decimal(data.settings.skillAncientsLevelRate).pow(2))
+            );
+            return baseLevel.ln().times(2.75).minus(new Decimal(2).minus(oldLevel.times(-0.034).exp()).ln().times(1.375)).minus(5.1);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
@@ -268,8 +286,11 @@ var AncientsExtraInfo = {
     },
     "vaagur": {
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
-            baseLevel = Math.max(baseLevel * Math.pow(data.settings.skillAncientsLevelRate, 2), baseLevel * hybridRatio * Math.pow(data.settings.skillAncientsLevelRate, 2));
-            return 2.75 * Math.log(baseLevel) - 1.375 * Math.log(2 - Math.exp(-0.034 * oldLevel)) - 5.1; 
+            baseLevel = Decimal.max(
+                baseLevel.times(new Decimal(data.settings.skillAncientsLevelRate).pow(2)), 
+                baseLevel.times(hybridRatio).times(new Decimal(data.settings.skillAncientsLevelRate).pow(2))
+            );
+            return baseLevel.ln().times(2.75).minus(new Decimal(2).minus(oldLevel.times(-0.034).exp()).ln().times(1.375)).minus(5.1);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
