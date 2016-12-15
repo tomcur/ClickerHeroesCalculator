@@ -216,7 +216,7 @@ function optimize(tuneAncient) {
     }
     
     var left = baseLevel.times(-1);
-    if (hs > 0) {
+    if (hs.greaterThan(0)) {
         var right = hs.plus(baseLevel.times(baseLevel.plus(1))).sqrt().ceil().minus(baseLevel);
     } else {
         var right = new Decimal(0);

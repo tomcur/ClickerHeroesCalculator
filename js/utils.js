@@ -1,6 +1,5 @@
 function numberToString(number) {
-    var r = Math.round(number * 1000) / 1000;
-    return ""+r;
+    return (new Decimal(number)).round(3).toString();
 }
 
 /**
@@ -9,14 +8,17 @@ function numberToString(number) {
  * This function makes sure there are no decimal points in the output.
  */
 function numberToClickerHeroesPasteableString(number) {
-    var precision = 10;
-    var b = Math.floor(Math.log(number)/Math.log(10));
+    number = new Decimal(number);
+    var precision = new Decimal(10);
+    var ten = new Decimal(10);
+    
+    var b = number.log(10).floor();
     if(b > precision) {
         var intPart;
-        intPart = Math.round(number / Math.pow(10, b-precision));
-        return intPart + "e" + (b-precision);
+        intPart = number.dividedBy(ten.pow(b.minus(precision))).round();
+        return intPart + "e" + (b.minus(precision));
     } else {
-        return ""+Math.round(number);
+        return ""+number.round();
     }
 }
 
@@ -34,12 +36,12 @@ function addCommas(nStr)
 }
 
 function numberToStringFormatted(number) { 
-    var number = Number(number);
-    if(number > 1000000) {
+    var number = new Decimal(number);
+    if(number.greaterThan(1000000)) {
         return number.toPrecision(3);
     } else {
-        number = Math.round(number * 1000) / 1000;
-        return addCommas(number);
+        number = number.round(3);
+        return addCommas(number.toString());
     }
 }
 

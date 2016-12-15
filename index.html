@@ -448,7 +448,7 @@
         data.ancients[key].ui.cost = $("<span></span>").text(numberToStringFormatted(0));
         
         var changeSelectFunction = function() { 
-            $(this).val(numberToClickerHeroesPasteableString(data.ancients[key].extraInfo.optimalLevel - data.ancients[key].level));
+            $(this).val(numberToClickerHeroesPasteableString(data.ancients[key].extraInfo.optimalLevel.minus(data.ancients[key].level)));
             $(this).select();
             if (data.settings.copyAncientLevelsToClipboard && document.queryCommandSupported('copy')) {
               document.execCommand('copy');
@@ -460,7 +460,7 @@
         
         
         data.ancients[key].ui.change.focusout(function() { 
-            $(this).val(numberToStringFormatted(data.ancients[key].extraInfo.optimalLevel - data.ancients[key].level));
+            $(this).val(numberToStringFormatted(data.ancients[key].extraInfo.optimalLevel.minus(data.ancients[key].level)));
         });
         
         tr  .append($("<td></td>").addClass("col2").append(data.ancients[key].ui.level))
@@ -564,12 +564,12 @@
         data.heroSoulsSacrificed = new Decimal(rawData.heroSoulsSacrificed);
         
         var heroes = rawData.heroCollection.heroes;
-        var ascensionSouls = 0;
+        var ascensionSouls = new Decimal(0);
         for (var k in heroes) {
             var id = parseInt(k, 10);
-            ascensionSouls += new Decimal(heroes[k].level);
+            ascensionSouls = ascensionSouls.plus(new Decimal(heroes[k].level));
         }
-        ascensionSouls = Math.floor(ascensionSouls / 2000) + new Decimal(rawData.primalSouls);
+        ascensionSouls = ascensionSouls.dividedBy(2000).floor().plus(new Decimal(rawData.primalSouls));
         data.ascensionSouls = ascensionSouls;
         
         var levels = {};
@@ -584,10 +584,10 @@
         if (data.settings.includeSoulsAfterAscension) {
             data.heroSouls = data.heroSouls.plus(data.ascensionSouls);
         }
-        $("#soulsin").val(numberToString(Math.floor(data.heroSouls)));
+        $("#soulsin").val(numberToString(data.heroSouls.floor()));
         
         // Calculate number of gilds
-        data.gilds = (Number(rawData.epicHeroReceivedUpTo)-90)/10 + Number(rawData.extraGildsAwarded);
+        data.gilds = new Decimal((Number(rawData.epicHeroReceivedUpTo)-90)/10 + Number(rawData.extraGildsAwarded));
         
         for (var k in data.ancients) {
             if (data.ancients.hasOwnProperty(k)) {
@@ -643,23 +643,23 @@
         // Calculate the amount of souls we will use for leveling
         data.heroSoulsForLeveling = new Decimal($("#soulsin").val());
         if (data.settings.keepSoulsForRegilding) {
-            data.heroSoulsForLeveling -= data.gilds * 80;
+            data.heroSoulsForLeveling = data.heroSoulsForLeveling.minus(data.gilds.times(80));
         }
-    
+        
         var spentHS = calculate();
         display(spentHS);
         generateSaveGame(spentHS);
     }
     
     function display(spentHS) {
-        $("#soulsgoal").text(numberToStringFormatted(Math.floor(data.heroSouls - spentHS)));
+        $("#soulsgoal").text(numberToStringFormatted(data.heroSouls.minus(spentHS).floor()));
         $("#soulschange").text((spentHS > 0 ? "-" : "") + numberToStringFormatted(spentHS));
         
         for (var k in data.ancients) {
             var ancient = data.ancients[k];
             if (ancient.extraInfo.optimalLevel) {
                 ancient.ui.goal.text(numberToStringFormatted(ancient.extraInfo.optimalLevel));
-                ancient.ui.change.val(numberToStringFormatted(ancient.extraInfo.optimalLevel - ancient.level));
+                ancient.ui.change.val(numberToStringFormatted(ancient.extraInfo.optimalLevel.minus(ancient.level)));
                 ancient.ui.cost.text(numberToStringFormatted(ancient.extraInfo.costToLevelToOptimal));
                 ancient.ui.targetBox.show();
             } else {
@@ -689,7 +689,7 @@
         for (var k in data.ancients) {
             var ancient = data.ancients[k];
             if (ancient.extraInfo.optimalLevel) {
-                rawData.ancients.ancients[ancient.id].level = ancient.extraInfo.optimalLevel + 0.0000001;
+                rawData.ancients.ancients[ancient.id].level = ancient.extraInfo.optimalLevel.plus(0.0000001);
                 rawData.ancients.ancients[ancient.id].spentHeroSouls = new Decimal(rawData.ancients.ancients[ancient.id].spentHeroSouls).plus(ancient.extraInfo.costToLevelToOptimal);
             }
         }
