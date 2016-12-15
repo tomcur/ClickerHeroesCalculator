@@ -19,7 +19,7 @@ var EmptyExtraInfo = {
 var AncientsExtraInfo = {
     "solomon": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
-            baseLevel = Decimal.max(baseLevel, baseLevel * hybridRatio);
+            baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
             if(transcended) {
                 return baseLevel.pow(0.8).dividedBy(new Decimal(alpha).pow(0.4));
             } else {
