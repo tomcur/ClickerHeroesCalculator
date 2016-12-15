@@ -671,7 +671,6 @@
         }
         
         var rawData = decodeSaveGame($("#savedata").val());
-        console.log(rawData);
         
         // Set ancient levels
         for (var k in data.ancients) {
@@ -682,13 +681,11 @@
             }
         }
         
+        // Set hero soul count
         rawData.heroSouls = Math.floor(data.heroSouls - spentHS);
         
-        // Set hero soul count
-        
-        console.log(rawData);
+        // Output save game
         $('#generatedsavedata').val(encodeSaveGame(rawData));
-        
     }
     
     /* Enables save-game generation.
