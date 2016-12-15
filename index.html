@@ -608,9 +608,9 @@
         for (var k in data.outsiders) {
             if (data.outsiders.hasOwnProperty(k)) {
                 if (rawData.outsiders.outsiders[data.outsiders[k].id]) {
-                    data.outsiders[k].level = rawData.outsiders.outsiders[data.outsiders[k].id].level;
+                    data.outsiders[k].level = new Decimal(rawData.outsiders.outsiders[data.outsiders[k].id].level);
                 } else {
-                    data.outsiders[k].level = 0;
+                    data.outsiders[k].level = new Decimal(0);
                 }
                 data.outsiders[k].ui.level.text(numberToStringFormatted(data.outsiders[k].level));
             }

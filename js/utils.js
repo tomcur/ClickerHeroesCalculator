@@ -1,5 +1,5 @@
 function numberToString(number) {
-    return (new Decimal(number)).round(3).toString();
+    return new Decimal(number).toNearest(0.001);
 }
 
 /**
@@ -40,8 +40,7 @@ function numberToStringFormatted(number) {
     if(number.greaterThan(1000000)) {
         return number.toPrecision(3);
     } else {
-        number = number.round(3);
-        return addCommas(number.toString());
+        return addCommas(number.toNearest(0.001));
     }
 }
 

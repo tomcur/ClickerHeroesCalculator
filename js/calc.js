@@ -13,7 +13,7 @@ function buildMode() {
 }
 
 function maxTpReward() { 
-    return (0.05 + data.outsiders["borb"].level * 0.005) * data.heroSoulsSacrificed;
+    return new Decimal(0.05 + data.outsiders["borb"].level * 0.005).times(data.heroSoulsSacrificed);
 }
  
 function hpScaleFactor() { 
@@ -104,7 +104,7 @@ function computeOptimalLevels(tuneAncient, addLevels) {
         
         var oldLevel = data.ancients[k].level;
         
-        if (oldLevel > 0 || k == "soulbank") {
+        if (oldLevel.greaterThan(0) || k == "soulbank") {
             var goalFun;
             var hybridRatio;
             if (buildMode() == "idle") {
@@ -150,12 +150,12 @@ function calculateHSCostToOptimalLevel() {
             var optimalLevel = data.ancients[k].extraInfo.optimalLevel;
             
             var diff = optimalLevel.minus(oldLevel);
-            if (diff <= 0) {
+            if (diff.lessThan(0)) {
                 data.ancients[k].extraInfo.costToLevelToOptimal = new Decimal(0);
                 continue;
             }
             
-            var thisAncientCost = 0;
+            var thisAncientCost = new Decimal(0);
             
             if(data.ancients[k].partialCostfn) {
                 // We have defined the partial sum for this level cost formula,
