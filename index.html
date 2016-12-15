@@ -15,6 +15,7 @@
         <script src="//chlist.github.io/decoder/assets/js/md5.js"></script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.1.0/bootstrap-slider.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js"></script>
         <script src="data/functions.js?v=4"></script>
         <script src="data/model.js?v=4"></script>
         <script src="js/calc.js?v=4"></script>
@@ -93,6 +94,18 @@
                     </div>
                 </div>
             
+            </div>
+            <div id="generatedsavedatacontainer" class="panel panel-primary">
+                <header class="panel-heading">Save game output</header>
+                <div class="panel-body">
+                    <label>Import this into Clicker Heroes:
+                    <textarea id="generatedsavedata" style="width: 100%; height: 50px" onclick="this.select()" autofocus></textarea></label></label>
+                    <div class="panel-settings">
+                        <div>
+                            <label><input type="checkbox" onclick="toggleGenerateSaveGameData()" id="generatesavedata"> Enable save-game generation</label>
+                        </div>
+                    </div>
+                </div>
             </div>
             
         </div>
@@ -223,7 +236,8 @@
         "#wep8k",
         "#copyancientlevels",
         "#displayadvancedconfiguration",
-        "#keepsoulsforregilding"
+        "#keepsoulsforregilding",
+        "#generatesavedata"
     ];
 
     var strSettingsRadio = [
@@ -306,6 +320,14 @@
         }
     }
     
+    function showHideGeneratedSaveGameContainer() {
+        if($("#generatesavedata").prop('checked')) {
+            $("#generatedsavedatacontainer").show();
+        } else {
+            $("#generatedsavedatacontainer").hide();
+        }
+    }
+    
     $(function () {
         $('#addsouls').change(function() {
             SaveSettingsCheckBox("#addsouls");
@@ -346,6 +368,11 @@
         
         $('#keepsoulsforregilding').change(function() {
             SaveSettingsCheckBox("#keepsoulsforregilding");
+        });
+        
+        $('#generatesavedata').change(function() {
+            SaveSettingsCheckBox("#generatesavedata");
+            showHideGeneratedSaveGameContainer();
         });
         
         
@@ -394,6 +421,8 @@
                 // Show or hide the advanced configuration container
                 showHideAdvancedConfigurationContainer();
                 
+                // Show or hide the generated save game container
+                showHideGeneratedSaveGameContainer()
             }
         });
         
@@ -506,39 +535,9 @@
         }
         return cnt;
     }
-
-    var ANTI_CHEAT_CODE = "Fe12NAfA3R6z4k0z";
-    var SALT = "af0ik392jrmt0nsfdghy0";
+    
     function Import() {
-        var txtIn = $("#savedata").val();
-        var txtOut="";
-
-        if (txtIn.search("ClickerHeroesAccountSO") != -1) {
-            var start = 53;
-            txtOut = txtIn.substr(start, txtIn.length - start - 1);
-        } else {
-            txtIn = txtIn.trim();
-            if (txtIn=="") {
-                return;
-            }
-            if (txtIn.search(ANTI_CHEAT_CODE) != -1) {
-                var result = txtIn.split(ANTI_CHEAT_CODE);
-                for (var i = 0; i < result[0].length; i += 2) {
-                    txtOut += result[0][i];
-                }
-                if (CryptoJS.MD5(txtOut + SALT) != result[1]) {
-                    alert("Bad hash");
-                    return;
-                }
-            }
-            txtOut = atob(txtOut);
-        }
-
-        try {
-            var rawData = $.parseJSON(txtOut);
-        } catch(e) {
-            alert('Could not decode the save game data.');
-        }
+        var rawData = decodeSaveGame($("#savedata").val());
         
         // Read on-page settings
         data.settings = {};
@@ -636,6 +635,7 @@
     
         var spentHS = calculate();
         display(spentHS);
+        generateSaveGame(spentHS);
     }
     
     function display(spentHS) {
@@ -662,6 +662,43 @@
         });
         
         $("#tprewardcapzone").val(numberToStringFormatted(zoneToHitCap()));
+    }
+    
+    function generateSaveGame(spentHS) {
+        // Only do this if save-game generation is enabled.
+        if (!$('#generatesavedata').prop('checked')) {
+            return;
+        }
+        
+        var rawData = decodeSaveGame($("#savedata").val());
+        console.log(rawData);
+        
+        // Set ancient levels
+        for (var k in data.ancients) {
+            var ancient = data.ancients[k];
+            if (ancient.extraInfo.optimalLevel) {
+                rawData.ancients.ancients[ancient.id].level = ancient.extraInfo.optimalLevel + 0.0000001;
+                rawData.ancients.ancients[ancient.id].spentHeroSouls = Number(rawData.ancients.ancients[ancient.id].spentHeroSouls) + ancient.extraInfo.costToLevelToOptimal;
+            }
+        }
+        
+        rawData.heroSouls = Math.floor(data.heroSouls - spentHS);
+        
+        // Set hero soul count
+        
+        console.log(rawData);
+        $('#generatedsavedata').val(encodeSaveGame(rawData));
+        
+    }
+    
+    /* Enables save-game generation.
+     */
+    function enableSaveGameGeneration() {
+        console.log("Now enabling generation of save-game output.");
+        console.log("Using this functionality can be considered cheating. Please do not publicly distribute instructions on how to enable this feature.");
+        console.log("This functionality is experimental. Use it at your own risk. Always remember to back up your saves.");
+        $('#generatesavedata').prop('checked', true);
+        $('#generatesavedata').change();
     }
     </script>
     
