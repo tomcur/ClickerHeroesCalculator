@@ -630,7 +630,7 @@
         data.tp = Decimal.max(tpAncientSoulsPart.plus(tpPhandoryssPart), new Decimal(1));
         
         if(! rawData.transcendent) {
-            data.tp = 0;
+            data.tp = new Decimal(0);
         }
         
         $("#tp").val(numberToString(data.tp));
