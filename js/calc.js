@@ -251,7 +251,7 @@ function optimize(tuneAncient) {
     if  (data.ancients["soulbank"]) {
         // Soul bank was used, subtract number of HS put into soulbank
         // from the number of spent HS.
-        spentHS = spentHs.minus(data.ancients["soulbank"].extraInfo.optimalLevel);
+        spentHS = spentHS.minus(data.ancients["soulbank"].extraInfo.optimalLevel);
         delete data.ancients["soulbank"];
     }
     
