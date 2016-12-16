@@ -246,6 +246,8 @@ function optimize(tuneAncient) {
             var mid = left.plus(interval.dividedBy(2)).plus(interval.times(modifier).dividedBy(2)).floor();
             */
             
+            // If the (log of) the number of the percentage of spent hero souls is very 
+            // large or very small, place the new search point off-center.
             if (fitIndicator.lessThan(-0.1)) {
                 var mid = left.plus(interval.dividedBy(1.25)).floor();
             } else if (fitIndicator.greaterThan(0.1)) {
