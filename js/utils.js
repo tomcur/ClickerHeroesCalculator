@@ -13,7 +13,8 @@ function numberToClickerHeroesPasteableString(number) {
     var ten = new Decimal(10);
     
     var b = number.log(10).floor();
-    if(b > precision) {
+    
+    if(b.greaterThan(precision)) {
         var intPart;
         intPart = number.dividedBy(ten.pow(b.minus(precision))).round();
         return intPart + "e" + (b.minus(precision));
