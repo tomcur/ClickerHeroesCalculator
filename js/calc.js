@@ -18,16 +18,17 @@ function maxTpReward() {
  
 function hpScaleFactor() { 
     var zone = data.ascensionZone;
-    var i = Math.floor(zone/500);
-    var scale = 1.145+i*0.005;
+    var i = zone.dividedBy(500).floor();
+    var scale = i.times(0.005).plus(1.145);
     return scale;
 }
 
 function alphaFactor(wepwawetLeveledBeyond8k) { 
     if(wepwawetLeveledBeyond8k) {
-        return 1.1085 * Math.log(1 + data.tp/100) / Math.log(hpScaleFactor());
+        return data.tp.dividedBy(100).plus(1).ln().times(1.1085).dividedBy(hpScaleFactor().ln());
     } else {
-        return 1.4067 * Math.log(1 + data.tp/100) / Math.log(hpScaleFactor());
+        return data.tp.dividedBy(100).plus(1).ln().times(1.4067).dividedBy(hpScaleFactor().ln());
+        
     }
 }
 

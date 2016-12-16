@@ -21,7 +21,7 @@ var AncientsExtraInfo = {
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
             baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
             if(transcended) {
-                return baseLevel.pow(0.8).dividedBy(new Decimal(alpha).pow(0.4));
+                return baseLevel.pow(0.8).dividedBy(alpha.pow(0.4));
             } else {
                 return Decimal.min(
                     baseLevel,
@@ -109,7 +109,7 @@ var AncientsExtraInfo = {
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
             baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
             if(transcended) {
-                return baseLevel.ln().times(2.832).minus(new Decimal(alpha).ln().times(1.416)).minus(Decimal.div(4, 3).minus(oldLevel.times(-0.013).exp()).ln().times(1.416)).minus(6.613);
+                return baseLevel.ln().times(2.832).minus(alpha.ln().times(1.416)).minus(Decimal.div(4, 3).minus(oldLevel.times(-0.013).exp()).ln().times(1.416)).minus(6.613);
             } else {
                 // Todo: need RoT for this
                 return baseLevel.ln().dividedBy(new Decimal(2).ln());
@@ -123,7 +123,7 @@ var AncientsExtraInfo = {
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
             baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
             if(transcended) {
-                return baseLevel.ln().times(2.844).minus(new Decimal(alpha).ln().times(1.422)).minus(Decimal.div(1, 4).plus(oldLevel.times(-0.01).exp()).ln().times(1.422)).minus(7.014);
+                return baseLevel.ln().times(2.844).minus(alpha.ln().times(1.422)).minus(Decimal.div(1, 4).plus(oldLevel.times(-0.01).exp()).ln().times(1.422)).minus(7.014);
             } else {
                 // Todo: need RoT for this
                 return baseLevel.ln().dividedBy(new Decimal(2).ln());
