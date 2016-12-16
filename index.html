@@ -132,7 +132,7 @@
                     <tbody>
                         <tr class="odd_row">
                             <td class="col1">Hero Souls</td>
-                            <td class="col2"><input type="text" id="soulsin" value="0" onblur="calculateAndUpdate()"></td>
+                            <td class="col2"><input type="text" id="soulsin" value="0" onblur="manualHeroSoulEntry();"></td>
                             <td class="col3"><span id="soulsgoal"></span></td>
                             <td class="col4"><span id="soulschange"></span></td>
                             <td class="col5"></td>
@@ -637,12 +637,18 @@
         
         $("#gilds").val(data.gilds);
         
+        data.useSoulsEnteredManually = false;
         calculateAndUpdate();
     }
     
     function calculateAndUpdate() {
         // Calculate the amount of souls we will use for leveling
-        data.heroSoulsForLeveling = new Decimal($("#soulsin").val());
+        if (data.useSoulsEnteredManually) {
+            data.heroSoulsForLeveling = new Decimal($("#soulsin").val());
+        } else {
+            data.heroSoulsForLeveling = data.heroSouls;
+        }
+        
         if (data.settings.keepSoulsForRegilding) {
             data.heroSoulsForLeveling = data.heroSoulsForLeveling.minus(data.gilds.times(80));
         }
@@ -650,6 +656,11 @@
         var spentHS = calculate();
         display(spentHS);
         generateSaveGame(spentHS);
+    }
+    
+    function manualHeroSoulEntry() {
+        data.useSoulsEnteredManually = true;
+        calculateAndUpdate();
     }
     
     function display(spentHS) {
@@ -681,6 +692,11 @@
     function generateSaveGame(spentHS) {
         // Only do this if save-game generation is enabled.
         if (!$('#generatesavedata').prop('checked')) {
+            return;
+        }
+        
+        if(data.useSoulsEnteredManually) {
+            $('#generatedsavedata').val("");
             return;
         }
         
