@@ -690,13 +690,13 @@
         for (var k in data.ancients) {
             var ancient = data.ancients[k];
             if (ancient.extraInfo.optimalLevel) {
-                rawData.ancients.ancients[ancient.id].level = ancient.extraInfo.optimalLevel.plus(0.0000001);
-                rawData.ancients.ancients[ancient.id].spentHeroSouls = new Decimal(rawData.ancients.ancients[ancient.id].spentHeroSouls).plus(ancient.extraInfo.costToLevelToOptimal);
+                rawData.ancients.ancients[ancient.id].level = ancient.extraInfo.optimalLevel.floor().toString();
+                rawData.ancients.ancients[ancient.id].spentHeroSouls = new Decimal(rawData.ancients.ancients[ancient.id].spentHeroSouls).plus(ancient.extraInfo.costToLevelToOptimal).toString();
             }
         }
         
         // Set hero soul count
-        rawData.heroSouls = data.heroSouls.minus(spentHS).floor();
+        rawData.heroSouls = data.heroSouls.minus(spentHS).floor().toString();
         
         // Output save game
         $('#generatedsavedata').val(encodeSaveGame(rawData));
