@@ -99,7 +99,7 @@
             <div id="generatedsavedatacontainer" class="panel panel-primary">
                 <header class="panel-heading">Save-game output</header>
                 <div class="panel-body">
-                    <p>This feature is experimental. Always backup your original save-game. If you notice problems, please notify me as soon as possible.</p>
+                    <p>This functionality is experimental. Always backup your original save-game. If you notice problems, please notify me as soon as possible.</p>
                     <label>Import this into Clicker Heroes:
                     <textarea id="generatedsavedata" style="width: 100%; height: 50px" onclick="this.select()" autofocus></textarea></label></label>
                     <div class="panel-settings">
@@ -722,9 +722,13 @@
     /* Enables save-game generation.
      */
     function enableSaveGameGeneration() {
-        console.log("Now enabling generation of save-game output.");
-        console.log("Using this functionality can be considered cheating. Please do not publicly distribute instructions on how to enable this feature.");
-        console.log("This functionality is experimental. Use it at your own risk. Always remember to back up your saves.");
+        var msg = "Now enabling generation of save-game output.\n\n"
+            + "Using this functionality can be considered cheating. Please do not publicly distribute instructions on how to enable this feature.\n\n"
+            + "This functionality is experimental. Use it at your own risk. Always remember to back up your saves.";
+    
+        console.log(msg);
+        alert(msg);
+        
         $('#generatesavedata').prop('checked', true);
         $('#generatesavedata').change();
     }
