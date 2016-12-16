@@ -63,7 +63,7 @@ function bossToHitCap() {
 }
 
 function zoneToHitCap() {
-    return bossToHitCap().times(5).plus(100);
+    return Decimal.min(bossToHitCap().times(5).plus(100), new Decimal(105));
 }
 
 function ascensionZone() {
