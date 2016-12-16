@@ -35,38 +35,43 @@ function alphaFactor(wepwawetLeveledBeyond8k) {
  * See: https://www.reddit.com/r/ClickerHeroes/comments/4n80r5/boss_level_to_hit_cap/
  */
 function bossToHitCap() {
-    var solomon = data.ancients["solomon"].extraInfo.optimalLevel;
+    if (data.ancients["solomon"].extraInfo.optimalLevel) {
+        var solomon = data.ancients["solomon"].extraInfo.optimalLevel
+    } else {
+        var solomon = data.ancients["solomon"].level;
+    }
+    
     var ponyboy = data.outsiders["ponyboy"].level;
-    var tp = data.tp/100; 
+    var tp = data.tp.dividedBy(100); 
     var maxTP = maxTpReward(); // (5% ((+0.5*Borb)%) of your Sacrificed Souls
     
     var multiplier;
-    if (solomon < 21) {
-        multiplier = 1 + (1 + ponyboy) * (solomon * 0.05);
-    } else if (solomon < 41) {
-        multiplier = 1 + (1 + ponyboy) * (1 + (solomon - 20) * 0.04);
-    } else if (solomon < 61) {
-        multiplier = 1 + (1 + ponyboy) * (1.8 + (solomon - 40) * 0.03);
-    } else if (solomon < 81) {
-        multiplier = 1 + (1 + ponyboy) * (2.4 + (solomon - 60) * 0.02);
+    if (solomon.lessThan(21)) {
+        multiplier = ponyboy.plus(1).times(solomon.times(0.05)).plus(1);
+    } else if (solomon.lessThan(41)) {
+        multiplier = ponyboy.plus(1).times(solomon.minus(20).times(0.04).plus(1)).plus(1);
+    } else if (solomon.lessThan(61)) {
+        multiplier = ponyboy.plus(1).times(solomon.minus(40).times(0.03).plus(1.8)).plus(1);
+    } else if (solomon.lessThan(81)) {
+        multiplier = ponyboy.plus(1).times(solomon.minus(60).times(0.02).plus(2.4)).plus(1);
     } else {
-        multiplier = 1 + (1 + ponyboy) * (2.8 + (solomon - 80) * 0.01);
+        multiplier = ponyboy.plus(1).times(solomon.minus(80).times(0.01).plus(2.8)).plus(1);
     }
     
-    var bossNumber = Math.ceil(Math.log(maxTP/(20*multiplier))/Math.log(1+tp));
+    var bossNumber = maxTP.dividedBy(multiplier.times(20)).ln().dividedBy(tp.plus(1).ln()).ceil();
     return bossNumber;
 }
 
 function zoneToHitCap() {
-    return bossToHitCap() * 5 + 100;
+    return bossToHitCap().times(5).plus(100);
 }
 
 function ascensionZone() {
-    return data.ascensionZone * 1.05;
+    return data.ascensionZone.times(1.05);
 }
 
 function tpCapReached() {
-    var boss = (ascensionZone() * 1.05 - 100)/5;
+    var boss = ascensionZone().times(1.05).minus(100).dividedBy(5);
     return boss >= bossToHitCap();
 }
 
@@ -139,7 +144,7 @@ function computeOptimalLevels(tuneAncient, addLevels) {
  * required. 
  */
 function calculateHSCostToOptimalLevel() {
-    multiplier = Math.pow(0.95, data.outsiders["chor'gorloth"].level);
+    multiplier = Decimal.pow(0.95, data.outsiders["chor'gorloth"].level);
     
     var maxNumSteps = 2500; // Precision of approximation
     

@@ -616,8 +616,15 @@
             }
         }
         
-        data.tp = Math.max(50-49 * Math.exp(-rawData.ancientSoulsTotal/10000) + 50 * (1 - Math.exp(- data.outsiders["phandoryss"].level / 1000)), 1.0);
+        data.ascensionZone = new Decimal(rawData.highestFinishedZonePersist);
+        $("#ascensionzone").val(data.ascensionZone);
         
+        data.ancientSoulsTotal = new Decimal(rawData.ancientSoulsTotal);
+        $("#astotal").val(data.ancientSoulsTotal);
+        
+        var tpAncientSoulsPart = new Decimal(50).minus(new Decimal(49).times(data.ancientSoulsTotal.dividedBy(10000).times(-1).exp()));
+        var tpPhandoryssPart = new Decimal(50).times(new Decimal(1).minus(data.outsiders["phandoryss"].level.dividedBy(1000).times(-1).exp()));
+        data.tp = Decimal.max(tpAncientSoulsPart.plus(tpPhandoryssPart), new Decimal(1));
         
         if(! rawData.transcendent) {
             data.tp = 0;
@@ -625,14 +632,8 @@
         
         $("#tp").val(numberToString(data.tp));
         
-        data.ascensionZone = Number(rawData.highestFinishedZonePersist);
-        $("#ascensionzone").val(data.ascensionZone);
-        
         data.capReached = tpCapReached();
         $("#capreached").prop("checked", data.capReached);
-
-        data.ancientSoulsTotal = rawData.ancientSoulsTotal
-        $("#astotal").val(data.ancientSoulsTotal);
         
         $("#gilds").val(data.gilds);
         
