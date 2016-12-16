@@ -235,7 +235,25 @@ function optimize(tuneAncient) {
     // in play-time). As such, we'll make do with an approximation.
     var initialDiff = right.minus(left);
     while (right.minus(left).greaterThan(1) && right.minus(left).dividedBy(initialDiff).greaterThan(0.00001)) {
-        var mid = right.plus(left).dividedBy(2).floor();
+        if(typeof spentHS === 'undefined') {
+            var mid = right.plus(left).dividedBy(2).floor();
+        } else { 
+            var fitIndicator = spentHS.dividedBy(hs).ln();
+            var interval = right.minus(left);
+            
+            /*
+            var modifier = Decimal.max(Decimal.min(fitIndicator.neg().dividedBy(10), 0.5), -0.5);
+            var mid = left.plus(interval.dividedBy(2)).plus(interval.times(modifier).dividedBy(2)).floor();
+            */
+            
+            if (fitIndicator.lessThan(-0.1)) {
+                var mid = left.plus(interval.dividedBy(1.25)).floor();
+            } else if (fitIndicator.greaterThan(0.1)) {
+                var mid = left.plus(interval.dividedBy(4)).floor();
+            } else {
+                var mid = right.plus(left).dividedBy(2).floor();
+            }
+        }
         
         // Level according to RoT and calculate new cost
         spentHS = compute(tuneAncient, mid);
