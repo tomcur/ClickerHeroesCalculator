@@ -223,7 +223,12 @@ function optimize(tuneAncient) {
     
     var left = baseLevel.times(-1);
     if (hs.greaterThan(0)) {
-        var right = hs.plus(baseLevel.times(baseLevel.plus(1))).sqrt().ceil().minus(baseLevel);
+        // Ancient cost discount multiplier
+        var multiplier = Decimal.pow(0.95, data.outsiders["chor'gorloth"].level);
+        // If all hs were to be spent on Siya (or Frags), we would have the following cost equation, 
+        // where bf and bi are the final and current level of Siya (or Frags) respectively:
+        // (1/2 bf^2 - 1/2 bi^2) * multiplier = hs. Solve for bf and you get the following equation:
+        var right = hs.dividedBy(multiplier).times(2).plus(baseLevel.pow(2)).sqrt().ceil();
     } else {
         var right = new Decimal(0);
     }
