@@ -2366,6 +2366,16 @@
             "fileName": "madzi",
             "id": 233,
             "version": 0
+        },
+		"234": {
+            "folder": "monsters",
+            "pivotY": 0,
+            "fileExtension": "swf",
+            "pivotX": 0,
+            "name": "Hexmas Tree",
+            "fileName": "hexmas_tree",
+            "id": 234,
+            "version": 0
         }
     },
     "zones": {
@@ -2497,6 +2507,17 @@
             "name": "Titan Zone",
             "bossId": 1,
             "id": 12,
+            "subBossId": 1,
+            "framesTotal": 1,
+            "minLevel": 1
+        },
+		 "13": {
+            "background": 15,
+            "monsterIds": "1",
+            "tile": 9,
+            "name": "Mini Game Zone",
+            "bossId": 1,
+            "id": 13,
             "subBossId": 1,
             "framesTotal": 1,
             "minLevel": 1
@@ -11105,6 +11126,34 @@
             "mobileAsset": "easter_droid",
             "mobileSize": "1",
             "id": 137
+        },
+        "138": {
+            "baseLife": "1.0e1",
+            "lifeFormula": "monsterLifeFormula1",
+            "name": "Hexmas Tree",
+            "description": "Monster",
+            "goldFormula": "monsterGoldFormula1",
+            "baseSize": ".75",
+            "baseGold": "50",
+            "dieSoundId": "31",
+            "assetId": "234",
+            "mobileAsset": "hexmas_tree_mobile",
+            "mobileSize": "1",
+            "id": 138
+        },
+        "139": {
+            "baseLife": "1.0e1",
+            "lifeFormula": "monsterLifeFormula1",
+            "name": "Santa Droid",
+            "description": "Monster",
+            "goldFormula": "monsterGoldFormula1",
+            "baseSize": "1",
+            "baseGold": "50",
+            "dieSoundId": "31",
+            "assetId": "234",
+            "mobileAsset": "santa_droid_sack",
+            "mobileSize": "1",
+            "id": 139
         }
     },
     "orders": {
