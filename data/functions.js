@@ -114,6 +114,16 @@ var functions = {
             .plus(Decimal.div(1, 2).times(param1.pow(Decimal.div(3, 2))))
             .plus(Decimal.div(1, 8).times(param1.pow(Decimal.div(1, 2))))
             .plus(Decimal.div(1, 1920).times(param1.pow(Decimal.div(-3, 2)))).ceil();
+        /*
+        param1 = param1.plus(1);
+        var _loc2_ = param1.sqrt();
+        var _loc3_ = param1.times(_loc2_);
+        var _loc4_ = param1.times(_loc3_).times(0.4);
+        var _loc5_ = _loc3_.times(0.5);
+        var _loc6_ = _loc2_.times(0.125);
+        var _loc7_ = new Decimal(0.00052).dividedBy(_loc3_);
+        return _loc4_.minus(_loc5_).plus(_loc6_).minus(_loc7_).ceil();
+        */
     },
 
     quadratic: function (param1) {
