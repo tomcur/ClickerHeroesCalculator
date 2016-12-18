@@ -171,7 +171,7 @@ function calculateHSCostToOptimalLevel() {
                 var numSteps = Decimal.min(maxNumSteps, diff);
                 var stepSize = diff.dividedBy(numSteps);
                 
-                var temp = 0;
+                var temp = new Decimal(0);
                 for(var step = 1; step <= numSteps; step++) {
                     var prevAddLevels = step.minus(1).times(stepSize).ceil();
                     var addLevels = step.times(stepSize).ceil();
