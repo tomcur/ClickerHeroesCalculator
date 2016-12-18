@@ -22,10 +22,20 @@ body {
     display: inline-block;
 }
 
+.panel-settings {
+    margin-top: 1em;
+}
+
 #output { 
     width: 560px;
     display: inline-block;
     vertical-align: top;
+}
+
+#input textarea,
+#generatedsavedatacontainer textarea {
+    width: 100%;
+    resize: vertical;
 }
 
 .odd_row {

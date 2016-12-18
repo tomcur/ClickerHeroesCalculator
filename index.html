@@ -39,8 +39,8 @@
             <div class="panel panel-primary">
               <header class="panel-heading">Data</header>
               <div class="panel-body">
-                <label>Paste your game file here:
-                <textarea id="savedata" style="width: 100%; height: 50px" onclick="this.select()" autofocus></textarea></label>
+                <label for="savedata">Paste your game file here:</label>
+                <textarea id="savedata" style="width: 100%; height: 50px" onclick="this.select()" autofocus></textarea>
                 <div style="float: right; margin-top: 10px;">
                     <button type="button" id="update" onclick="calculateAndUpdate()" class="btn btn-default">Update</button>
                     <button type="button" onclick="Import()" class="btn btn-primary" style="float: right;">Import</button>
@@ -66,9 +66,10 @@
                         <label><input type="radio" name="buildmode" onclick="Import()" value="active"> Active</label>
                     </div>
                     <div id="hybridratiocontainer">
-                        <label>Ratio Fragsworth/Siyalatas (default: 0.5)<br>
-                        <input id="hybridratio" data-slider-id="hybridratioSlider" type="text" data-slider-min="0.05" data-slider-max="5" data-slider-step="0.05" data-slider-scale="logarithmic" value="0.5"/>
-                        </label>
+                        <label for="hybridratio">Ratio Fragsworth/Siyalatas (default: 0.5)</label>
+                        <div>
+                            <input id="hybridratio" data-slider-id="hybridratioSlider" type="text" data-slider-min="0.05" data-slider-max="5" data-slider-step="0.05" data-slider-scale="logarithmic" value="0.5"/>
+                        </div>
                     </div>
                 </div>
               </div>
@@ -77,19 +78,27 @@
                 <header class="panel-heading">Advanced configuration</header>
                 <div class="panel-body">
                     <div>
-                        <label>
+                        <label for="revolcrate">
                             Level Revolc<br>
-                            (0 = not at all, 1 = extremely)<br>
+                            (0 = not at all, 1 = extremely)
+                        </label>
+                        <div>
                             <input id="revolcrate" data-slider-id="revolcrateSlider" type="text" data-slider-min="0" data-slider-max="1" data-slider-step="0.1" value="0"/>
-                        </label>
+                        </div>
+                        
                     </div>
+                    <hr>
                     <div>
-                        <label>
+                        <label for="skillancientsrate">
                             Level skill ancients<br>
-                            (0 = not at all, 1 = extremely)<br>
-                            <input id="skillancientsrate" data-slider-id="skillancientsrateSlider" type="text" data-slider-min="0" data-slider-max="1" data-slider-step="0.1" value="0"/>
+                            (0 = not at all, 1 = extremely)
                         </label>
+                        <div>
+                            <input id="skillancientsrate" data-slider-id="skillancientsrateSlider" type="text" data-slider-min="0" data-slider-max="1" data-slider-step="0.1" value="0"/>
+                        </div>
+                        
                     </div>
+                    <hr>
                     <div>
                         <label><input type="checkbox" onclick="Import()" id="keepsoulsforregilding"> Reserve hero souls for regilding</label>
                     </div>
@@ -100,8 +109,9 @@
                 <header class="panel-heading">Save-game output</header>
                 <div class="panel-body">
                     <p>This functionality is experimental. Always backup your original save-game. If you notice problems, please notify me as soon as possible.</p>
-                    <label>Import this into Clicker Heroes:
-                    <textarea id="generatedsavedata" style="width: 100%; height: 50px" onclick="this.select()" autofocus></textarea></label></label>
+                    <label for="generatedsavedata">Import this into Clicker Heroes:</label>
+                    <textarea id="generatedsavedata" style="width: 100%; height: 50px" onclick="this.select()" autofocus></textarea>
+                    <hr>
                     <div class="panel-settings">
                         <div>
                             <label><input type="checkbox" onclick="toggleGenerateSaveGameData()" id="generatesavedata"> Enable save-game generation</label>
