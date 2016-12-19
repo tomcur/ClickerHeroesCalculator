@@ -214,6 +214,20 @@ var AncientsExtraInfo = {
             return data.settings.skillAncientsLevelRate <= 0;
         }
     },
+    "chawedo": {
+        "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
+            baseLevel = Decimal.max(
+                baseLevel.times(new Decimal(data.settings.skillAncientsLevelRate).pow(2)), 
+                baseLevel.times(hybridRatio).times(new Decimal(data.settings.skillAncientsLevelRate).pow(2))
+            );
+            return baseLevel.ln().times(2.75).minus(new Decimal(2).minus(oldLevel.times(-0.034).exp()).ln().times(1.375)).minus(5.1);
+        },
+        "goalHybrid": "goalIdle",
+        "goalActive": "goalIdle",
+        "exclude": function() {
+            return data.settings.skillAncientsLevelRate <= 0;
+        }
+    },
     "energon": {
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
             baseLevel = Decimal.max(
