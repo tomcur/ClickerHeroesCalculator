@@ -709,10 +709,17 @@
             return;
         }
         
-        // Only do this if the user did not enter souls manually.
-        if(data.useSoulsEnteredManually) {
+        // Only do this if the user did not enter souls manually 
+        // and the user is not including souls that would be gained
+        // after ascending.
+        if(data.useSoulsEnteredManually 
+            || data.settings.includeSoulsAfterAscension) {
             $('#generatedsavedata').val("");
             return;
+        }
+        
+        if(data.settings.includeSoulsAfterAscension) {
+            
         }
         
         var rawData = decodeSaveGame($("#savedata").val());
