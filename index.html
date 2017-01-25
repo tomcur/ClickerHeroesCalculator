@@ -600,7 +600,7 @@
         $("#soulsin").val(numberToString(data.heroSouls.floor()));
         
         // Calculate number of gilds
-        data.gilds = new Decimal((Number(rawData.epicHeroReceivedUpTo)-90)/10 + Number(rawData.extraGildsAwarded));
+        data.gilds = new Decimal(Math.max((Number(rawData.epicHeroReceivedUpTo)-90)/10, 0) + Number(rawData.extraGildsAwarded));
         
         for (var k in data.ancients) {
             if (data.ancients.hasOwnProperty(k)) {
