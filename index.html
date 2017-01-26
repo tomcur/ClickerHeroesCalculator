@@ -164,6 +164,17 @@
                     <tr><td><label for="astotal">Ancient Souls Total</label></td><td><input type="text" id="astotal" disabled></td></tr>
                     <tr><td><label for="gilds">Number of Gilds</label></td><td><input type="text" id="gilds" disabled></td></tr>
                 </table>
+                
+                <div class="as-planner">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr><th>Gain</th><th>By sacrificing</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>0 AS</td><td>0 HS</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
           </div>
         </div>
@@ -634,6 +645,7 @@
         
         data.ancientSoulsTotal = new Decimal(rawData.ancientSoulsTotal);
         $("#astotal").val(data.ancientSoulsTotal);
+        console.log(rawData);
         
         var tpAncientSoulsPart = new Decimal(50).minus(new Decimal(49).times(data.ancientSoulsTotal.dividedBy(10000).times(-1).exp()));
         var tpPhandoryssPart = new Decimal(50).times(new Decimal(1).minus(data.outsiders["phandoryss"].level.dividedBy(1000).times(-1).exp()));
@@ -701,7 +713,46 @@
         });
         
         $("#tprewardcapzone").val(numberToStringFormatted(zoneToHitCap()));
+        initializeAncientSoulPlanner();
+        ancientSoulPlanner();
     }
+    
+    function initializeAncientSoulPlanner() {
+        var table = $('.as-planner table');
+        table.find('tbody').empty();
+        table.data('as', 0);
+    }
+    
+    function ancientSoulPlanner(add = 20) {
+        var table = $('.as-planner table');
+        
+        // AS = floor(5 * log10(HS))
+        var curAS = data.heroSoulsSacrificed.log(10).times(5).floor();
+        var plannedTo = table.data('as');
+        
+        for (var n = 1; n <= add; n++) {
+            var planTo = new Decimal(plannedTo + n);
+            var totalAS = planTo.plus(curAS);
+            
+            // HS = 10^(AS / 5)
+            var cost = Decimal.pow(10, totalAS.dividedBy(5)).minus(data.heroSoulsSacrificed);
+            
+            table.find('tbody:last-child').append('<tr><td>+' + planTo + ' AS</td><td>' + numberToStringFormatted(cost) + ' HS</td></tr>');
+            
+        }
+        
+        table.data('as', plannedTo + add);
+    }
+    
+    // Bind to the AS planner window scroll event to add more rows when we
+    // (nearly) reach the bottom of the window
+    jQuery(function($) {
+        $('.as-planner').on('scroll', function() {
+            if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight - 20) {
+                ancientSoulPlanner(5);
+            }
+        })
+    });
     
     function generateSaveGame(spentHS) {
         // Only do this if save-game generation is enabled.
