@@ -1,5 +1,5 @@
-function numberToString(number) {
-    return new Decimal(number).toNearest(0.001);
+function numberToString(number, decimals = 3) {
+    return new Decimal(number).toNearest(1 / Math.pow(10, decimals));
 }
 
 /**
@@ -7,9 +7,9 @@ function numberToString(number) {
  * output (when number > 1e21) and Clicker Heroes' input formatting. 
  * This function makes sure there are no decimal points in the output.
  */
-function numberToClickerHeroesPasteableString(number) {
+function numberToClickerHeroesPasteableString(number, precision = 10) {
     number = new Decimal(number);
-    var precision = new Decimal(10);
+    var precision = new Decimal(precision);
     var ten = new Decimal(10);
     
     var b = number.log(10).floor();
@@ -36,12 +36,12 @@ function addCommas(nStr)
     return x1 + x2;
 }
 
-function numberToStringFormatted(number) { 
+function numberToStringFormatted(number, decimals = 2) { 
     var number = new Decimal(number);
     if(number.greaterThan(1000000)) {
-        return number.toPrecision(3);
+        return number.toPrecision(decimals+1);
     } else {
-        return addCommas(number.toNearest(0.001));
+        return addCommas(number.toNearest(1 / Math.pow(10, decimals)));
     }
 }
 

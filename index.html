@@ -745,7 +745,7 @@
             // HS = 10^(AS / 5)
             var cost = Decimal.pow(10, totalAS.dividedBy(5)).minus(data.totalHSEarned);
             
-            table.find('tbody:last-child').append('<tr><td>+' + planTo + ' AS</td><td>' + numberToStringFormatted(cost) + ' HS</td></tr>');
+            table.find('tbody:last-child').append('<tr><td>+' + planTo + ' AS</td><td>' + numberToStringFormatted(cost, 4) + ' HS</td></tr>');
             
         }
         
