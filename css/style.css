@@ -85,3 +85,11 @@ table input[type=text] {
     max-height: 350px;
     overflow-y: auto;
 }
+
+.as-planner table .col1 {
+    width: 25%;
+}
+
+.as-planner table .col2, .as-planner table .col3 {
+    width: 37.5%;
+}
