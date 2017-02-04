@@ -160,7 +160,8 @@
                 <table class="table table-striped">
                     <tr><td><label for="tp">Transcendent Power</label></td><td><input type="text" id="tp" disabled></td></tr>
                     <tr><td><label for="ascensionzone">Highest Zone Reached</td><td><input type="text" id="ascensionzone" disabled></td></tr>
-                    <tr><td><label for="tprewardcapzone">TP Reward Cap Zone</label></td><td><input type="text" id="tprewardcapzone" disabled></td></tr>
+                    <tr><td><label for="tprewardcapzone">Current TP Reward Cap Zone</label></td><td><input type="text" id="tprewardcapzone" disabled></td></tr>
+                    <tr><td><label for="tprewardcapzonenew">New TP Reward Cap Zone</label></td><td><input type="text" id="tprewardcapzonenew" disabled></td></tr>
                     <tr><td><label for="astotal">Ancient Souls Total</label></td><td><input type="text" id="astotal" disabled></td></tr>
                     <tr><td><label for="gilds">Number of Gilds</label></td><td><input type="text" id="gilds" disabled></td></tr>
                 </table>
@@ -672,6 +673,8 @@
         
         $("#gilds").val(data.gilds);
         
+        $("#tprewardcapzone").val(numberToStringFormatted(zoneToHitCap(false)));
+        
         data.useSoulsEnteredManually = false;
         calculateAndUpdate();
     }
@@ -722,7 +725,7 @@
             }
         });
         
-        $("#tprewardcapzone").val(numberToStringFormatted(zoneToHitCap()));
+        $("#tprewardcapzonenew").val(numberToStringFormatted(zoneToHitCap(true)));
         initializeAncientSoulPlanner();
         ancientSoulPlanner();
     }

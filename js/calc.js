@@ -35,8 +35,8 @@ function alphaFactor(wepwawetLeveledBeyond8k) {
 /**
  * See: https://www.reddit.com/r/ClickerHeroes/comments/4n80r5/boss_level_to_hit_cap/
  */
-function bossToHitCap() {
-    if (data.ancients["solomon"].extraInfo.optimalLevel) {
+function bossToHitCap(afterLeveling = true) {
+    if (afterLeveling && data.ancients["solomon"].extraInfo.optimalLevel) {
         var solomon = data.ancients["solomon"].extraInfo.optimalLevel
     } else {
         var solomon = data.ancients["solomon"].level;
@@ -63,17 +63,17 @@ function bossToHitCap() {
     return bossNumber;
 }
 
-function zoneToHitCap() {
-    return Decimal.max(bossToHitCap().times(5).plus(100), new Decimal(105));
+function zoneToHitCap(afterLeveling = true) {
+    return Decimal.max(bossToHitCap(afterLeveling).times(5).plus(100), new Decimal(105));
 }
 
 function ascensionZone() {
     return data.ascensionZone.times(1.05);
 }
 
-function tpCapReached() {
+function tpCapReached(afterLeveling = true) {
     var boss = ascensionZone().times(1.05).minus(100).dividedBy(5);
-    return boss >= bossToHitCap();
+    return boss >= bossToHitCap(afterLeveling);
 }
 
 function resetOptimalLevels() {
