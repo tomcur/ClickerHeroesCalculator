@@ -588,6 +588,12 @@
         
         data.heroSoulsSacrificed = new Decimal(rawData.heroSoulsSacrificed);
         
+        // Calculate total HS earned
+        data.totalHSEarned = data.heroSoulsSacrificed.plus(new Decimal(rawData.heroSouls));
+        for (var k in rawData.ancients.ancients) {
+            data.totalHSEarned = data.totalHSEarned.plus(new Decimal(rawData.ancients.ancients[k].spentHeroSouls));
+        }
+        
         var heroes = rawData.heroCollection.heroes;
         var ascensionSouls = new Decimal(0);
         for (var k in heroes) {
@@ -646,7 +652,6 @@
         
         data.ancientSoulsTotal = new Decimal(rawData.ancientSoulsTotal);
         $("#astotal").val(data.ancientSoulsTotal);
-        console.log(rawData);
         
         var tpAncientSoulsPart = new Decimal(50).minus(new Decimal(49).times(data.ancientSoulsTotal.dividedBy(10000).times(-1).exp()));
         var tpPhandoryssPart = new Decimal(50).times(new Decimal(1).minus(data.outsiders["phandoryss"].level.dividedBy(1000).times(-1).exp()));
@@ -729,14 +734,16 @@
         
         // AS = floor(5 * log10(HS))
         var curAS = data.heroSoulsSacrificed.log(10).times(5).floor();
+        
+        var curASGain = data.totalHSEarned.log(10).times(5).floor().minus(curAS);
         var plannedTo = table.data('as');
         
         for (var n = 1; n <= add; n++) {
-            var planTo = new Decimal(plannedTo + n);
+            var planTo = curASGain.plus(plannedTo).plus(n);
             var totalAS = planTo.plus(curAS);
             
             // HS = 10^(AS / 5)
-            var cost = Decimal.pow(10, totalAS.dividedBy(5)).minus(data.heroSoulsSacrificed);
+            var cost = Decimal.pow(10, totalAS.dividedBy(5)).minus(data.totalHSEarned);
             
             table.find('tbody:last-child').append('<tr><td>+' + planTo + ' AS</td><td>' + numberToStringFormatted(cost) + ' HS</td></tr>');
             
