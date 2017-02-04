@@ -168,10 +168,10 @@
                 <div class="as-planner">
                     <table class="table table-striped">
                         <thead>
-                            <tr><th>Gain</th><th>By sacrificing</th></tr>
+                            <tr><th>Gain</th><th>By sacrificing a total of</th><th>Change</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td>0 AS</td><td>0 HS</td></tr>
+                            <tr><td>0 AS</td><td>0 HS</td><td>0 HS</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -745,7 +745,17 @@
             // HS = 10^(AS / 5)
             var cost = Decimal.pow(10, totalAS.dividedBy(5)).minus(data.totalHSEarned);
             
-            table.find('tbody:last-child').append('<tr><td>+' + planTo + ' AS</td><td>' + numberToStringFormatted(cost, 4) + ' HS</td></tr>');
+            var deltaCost = cost;
+            if (n > 1) {
+                var deltaCost = deltaCost.minus(Decimal.pow(10, totalAS.minus(1).dividedBy(5)).minus(data.totalHSEarned));
+            }
+            
+            table.find('tbody:last-child').append('<tr>\
+                <td>+' + planTo + ' AS</td>\
+                <td>' + numberToStringFormatted(cost, 4) + ' HS</td>\
+                <td>' + numberToStringFormatted(deltaCost, 4) + '</td>\
+                </tr>'
+            );
             
         }
         
