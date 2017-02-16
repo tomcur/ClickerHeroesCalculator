@@ -94,6 +94,6 @@ table input[type=text] {
     width: 37.5%;
 }
 
-#hybridratioSlider div.slider-tick {
+div.slider-tick {
     display: none;
 }
