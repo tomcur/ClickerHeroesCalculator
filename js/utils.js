@@ -1,4 +1,7 @@
-function numberToString(number, decimals = 3) {
+function numberToString(number, decimals) {
+    // decimals = 3 default
+    decimals = defaultFor(decimals, 3);
+    
     return new Decimal(number).toNearest(1 / Math.pow(10, decimals));
 }
 
@@ -7,7 +10,10 @@ function numberToString(number, decimals = 3) {
  * output (when number > 1e21) and Clicker Heroes' input formatting. 
  * This function makes sure there are no decimal points in the output.
  */
-function numberToClickerHeroesPasteableString(number, precision = 10) {
+function numberToClickerHeroesPasteableString(number, precision) {
+    // precision = 10 default
+    precision = defaultFor(precision, 10);
+    
     number = new Decimal(number);
     var precision = new Decimal(precision);
     var ten = new Decimal(10);
@@ -36,7 +42,10 @@ function addCommas(nStr)
     return x1 + x2;
 }
 
-function numberToStringFormatted(number, decimals = 2) { 
+function numberToStringFormatted(number, decimals) { 
+    // decimals = 2 default
+    decimals = defaultFor(decimals, 2);
+
     var number = new Decimal(number);
     if(number.greaterThan(1000000)) {
         return number.toPrecision(decimals+1);
@@ -113,4 +122,11 @@ function getHash(string) {
     charaters.sort();
     var sortedCharaters = charaters.join();
     return CryptoJS.MD5(sortedCharaters + SALT);
+}
+
+/*
+ * Return arg if arg is defined, or val if arg is undefined.
+ */
+function defaultFor(arg, val) {
+    return typeof arg !== 'undefined' ? arg : val;
 }

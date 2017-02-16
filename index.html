@@ -736,7 +736,10 @@
         table.data('as', 0);
     }
     
-    function ancientSoulPlanner(add = 20) {
+    function ancientSoulPlanner(add) {
+        // add = 20 default
+        add = defaultFor(add, 20);
+    
         var table = $('.as-planner table');
         
         // AS = floor(5 * log10(HS))
