@@ -93,3 +93,7 @@ table input[type=text] {
 .as-planner table .col2, .as-planner table .col3 {
     width: 37.5%;
 }
+
+#hybridratioSlider div.slider-tick {
+    display: none;
+}
