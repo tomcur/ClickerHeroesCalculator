@@ -746,7 +746,12 @@
         // AS = floor(5 * log10(HS))
         var curAS = data.heroSoulsSacrificed.log(10).times(5).floor();
         
-        var curASGain = data.totalHSEarned.log(10).times(5).floor().minus(curAS);
+        var hs = data.totalHSEarned;
+        if (data.settings.includeSoulsAfterAscension) {
+            hs = hs.plus(data.ascensionSouls);
+        }
+        
+        var curASGain = hs.log(10).times(5).floor().minus(curAS);
         var plannedTo = table.data('as');
         
         for (var n = 1; n <= add; n++) {
@@ -754,11 +759,11 @@
             var totalAS = planTo.plus(curAS);
             
             // HS = 10^(AS / 5)
-            var cost = Decimal.pow(10, totalAS.dividedBy(5)).minus(data.totalHSEarned);
+            var cost = Decimal.pow(10, totalAS.dividedBy(5)).minus(hs);
             
             var deltaCost = cost;
             if (n > 1) {
-                var deltaCost = deltaCost.minus(Decimal.pow(10, totalAS.minus(1).dividedBy(5)).minus(data.totalHSEarned));
+                var deltaCost = deltaCost.minus(Decimal.pow(10, totalAS.minus(1).dividedBy(5)).minus(hs));
             }
             
             table.find('tbody:last-child').append('<tr>\
