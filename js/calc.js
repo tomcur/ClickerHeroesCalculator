@@ -112,6 +112,11 @@ function computeOptimalLevels(tuneAncient, addLevels) {
     
     var baseLevel = tuneAncient.level.plus(addLevels);
     for (var k in data.ancients) {
+        // Test if the ancient is to be ignored
+        if (data.settings.ignoreMinimizedAncients && data.ancients[k].minimized) {
+            continue;
+        }
+        
         // Test if this ancient is to be excluded
         if (data.ancients[k].extraInfo.exclude && data.ancients[k].extraInfo.exclude()) {
             continue;

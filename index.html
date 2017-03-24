@@ -101,6 +101,9 @@
                     <div>
                         <label><input type="checkbox" onclick="Import()" id="keepsoulsforregilding"> Reserve hero souls for regilding</label>
                     </div>
+                    <div>
+                        <label><input type="checkbox" onclick="Import()" id="ignoreminimizedancients"> Ignore minimized ancients</label>
+                    </div>
                 </div>
             
             </div>
@@ -225,6 +228,7 @@
                             <tr><th>Date</th><th>Change</th></tr>
                         </thead>
                         <tbody>
+                            <tr><td>2017/03/24</td><td>Added option to ignore ancients that are minimized in the game.</td></tr>
                             <tr><td>2017/02/16</td><td>Support some older browsers.</td></tr>
                             <tr><td>2017/02/07</td><td>Removed the unnecessary &quot;update&quot; button. Changing a setting already automatically triggered an update.</td></tr>
                             <tr><td>2017/01/26</td><td>Added ancient soul planner.</td></tr>
@@ -269,6 +273,7 @@
         "#copyancientlevels",
         "#displayadvancedconfiguration",
         "#keepsoulsforregilding",
+        "#ignoreminimizedancients",
         "#generatesavedata"
     ];
 
@@ -400,6 +405,10 @@
         
         $('#keepsoulsforregilding').change(function() {
             SaveSettingsCheckBox("#keepsoulsforregilding");
+        });
+        
+        $('#ignoreminimizedancients').change(function() {
+            SaveSettingsCheckBox("#ignoreminimizedancients");
         });
         
         $('#generatesavedata').change(function() {
@@ -588,6 +597,7 @@
         data.settings.revolcLevelRate = $('#revolcrate').slider('getValue');
         data.settings.skillAncientsLevelRate = $('#skillancientsrate').slider('getValue');
         data.settings.keepSoulsForRegilding = $("#keepsoulsforregilding").prop("checked");
+        data.settings.ignoreMinimizedAncients = $("#ignoreminimizedancients").prop("checked");
         
         // Older saves won't have items.
         data.items = rawData.hasOwnProperty("items") ? rawData.items : {items : {}, slots : {}};
@@ -638,6 +648,10 @@
                 } else {
                     data.ancients[k].level = new Decimal(0);
                 }
+                
+                // Check whether the ancient is minimized in the game or not
+                data.ancients[k].minimized = rawData.ancientEntrySizes.hasOwnProperty(data.ancients[k].id);
+                
                 data.ancients[k].ui.level.text(numberToStringFormatted(data.ancients[k].level));
             }
         }
