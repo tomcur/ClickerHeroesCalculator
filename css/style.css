@@ -9,7 +9,6 @@ body {
 }
 
 .wrapper {
-    max-width: 1054px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 2em;
@@ -20,16 +19,6 @@ body {
 #input {
     width: 100%;
     display: inline-block;
-}
-
-header {
-    display: table;
-    width: 100%;
-}
-
-header > span {
-    display: table-cell;
-    width: 50%;
 }
 
 .panel-heading-left {
@@ -53,8 +42,8 @@ header > span {
 #input textarea,
 #generatedsavedatacontainer textarea {
     width: 100%;
-    min-height: 75px;
     resize: vertical;
+    margin: .5em 0;
 }
 
 .odd_row {
@@ -86,11 +75,8 @@ header > span {
 #ancienttbl .col4 {
     width: 25%;
 }
-    
-table input[type=text] {
-    width: 100%;
-    padding: 0px;
-}
+
+
 
 #about .tab-pane {
     border-left: 1px solid #ddd;
@@ -117,14 +103,97 @@ div.slider-tick {
     display: none;
 }
 
+header {
+    display: table;
+    width: 100%;
+}
 
+header > span {
+    display: table-cell;
+    width: 50%;
+}
+
+.wrapper input[type=radio] {
+    margin-left: 1em;
+}
+
+
+/* TODO: Clean these up, make sure nothing is used unnecessarily and sort */
 /**
  * Media Queries
  */
 
- /*Make wrapper full width at sm and xs*/
-@media screen and (max-width: 991px){
+/**
+ * See http://getbootstrap.com/css/#grid
+ */
+
+/* Large */
+@media (min-width: 1200px) {
     .wrapper {
-        width: 100%;
+        max-width: 1200px !important;
     }
 }
+
+/* Medium */
+/* TODO: Figure out why this isn't working right... */
+@media (min-width: 992px) {
+    .wrapper {
+        max-width: 992px;
+    }
+
+    .io:first-child {
+        padding-right: 0;
+    }
+
+    .io:last-child {
+        padding-left: 0;
+    }
+}
+
+@media (min-width: 768px){
+    #input textarea,
+    #generatedsavedatacontainer textarea {
+        width: 100%;
+        resize: vertical;
+        margin: 0;
+        min-height: 0 !important;
+    }
+}
+
+.wrapper.container {
+        font-size: 100%;
+        width: 100%;
+}
+
+    #ancienttbl td {
+        vertical-align: middle;
+        height: 100%;
+    }
+
+    #ancienttbl td input[type=text] {
+        width: 92.5%;
+        zoom: 1;
+        margin: .625em 0;
+    }
+
+    #input input {
+        margin: .25em 0;
+    }
+
+    .io {
+        padding: auto;
+    }
+
+    .wrapper label {
+        line-height: 2;
+        vertical-align: middle;
+    }
+
+    .wrapper input, .wrapper a.btn[data-toggle="collapse"], .wrapper button {
+        zoom: 1.15;
+    }
+
+    #input textarea,
+    #generatedsavedatacontainer textarea {
+        min-height: 75px;
+    }
