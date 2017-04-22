@@ -9,7 +9,7 @@ body {
 }
 
 .wrapper {
-    width: 1054px;
+    max-width: 1054px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 2em;
@@ -18,16 +18,34 @@ body {
 
 
 #input {
-    width: 490px; 
+    width: 100%;
     display: inline-block;
+}
+
+header {
+    display: table;
+    width: 100%;
+}
+
+header > span {
+    display: table-cell;
+    width: 50%;
+}
+
+.panel-heading-left {
+    text-align: left;
+}
+
+.panel-heading-right {
+    text-align: right;
 }
 
 .panel-settings {
     margin-top: 1em;
 }
 
-#output { 
-    width: 560px;
+#output {
+    width: 100%;
     display: inline-block;
     vertical-align: top;
 }
@@ -35,6 +53,7 @@ body {
 #input textarea,
 #generatedsavedatacontainer textarea {
     width: 100%;
+    min-height: 75px;
     resize: vertical;
 }
 
@@ -57,7 +76,7 @@ body {
 }
 
 #ancienttbl .col1 {
-    width: 17%;
+    width: 18%;
 }
 
 #ancienttbl .col2, .col3, .col5 {
@@ -65,7 +84,7 @@ body {
 }
 
 #ancienttbl .col4 {
-    width: 26%;
+    width: 25%;
 }
     
 table input[type=text] {
@@ -96,4 +115,16 @@ table input[type=text] {
 
 div.slider-tick {
     display: none;
+}
+
+
+/**
+ * Media Queries
+ */
+
+ /*Make wrapper full width at sm and xs*/
+@media screen and (max-width: 991px){
+    .wrapper {
+        width: 100%;
+    }
 }
