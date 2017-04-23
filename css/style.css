@@ -1,3 +1,7 @@
+html {
+    font-size: .9em;
+}
+
 html, body {
     margin: 0;
     padding: 0;
@@ -5,7 +9,7 @@ html, body {
 
 body {
     font-family: "Open Sans", sans-serif;
-    font-size: 1.5em;
+    font-size: 85%;
 }
 
 .wrapper {
@@ -13,6 +17,10 @@ body {
     margin-right: auto;
     margin-top: 2em;
     margin-bottom: 2em;
+}
+
+#tab-ancients {
+    overflow-x: auto;
 }
 
 
@@ -56,6 +64,8 @@ body {
 
 #ancienttbl {
     table-layout: fixed;
+    width: 100%;
+    min-width: 500px;
 }
 
 #ancienttbl td, #ancienttbl th {
@@ -91,13 +101,13 @@ body {
     overflow-y: auto;
 }
 
-.as-planner table .col1 {
-    width: 25%;
-}
+/*.as-planner table .col1 {*/
+    /*width: 25%;*/
+/*}*/
 
-.as-planner table .col2, .as-planner table .col3 {
-    width: 37.5%;
-}
+/*.as-planner table .col2, .as-planner table .col3 {*/
+    /*width: 37.5%;*/
+/*}*/
 
 div.slider-tick {
     display: none;
@@ -106,6 +116,7 @@ div.slider-tick {
 header {
     display: table;
     width: 100%;
+    font-size: 125%;
 }
 
 header > span {
@@ -113,8 +124,8 @@ header > span {
     width: 50%;
 }
 
-.wrapper input[type=radio] {
-    margin-left: 1em;
+.wrapper #input input[type=radio] {
+    margin-left:1.5em;
 }
 
 
@@ -135,8 +146,12 @@ header > span {
 }
 
 /* Medium */
-/* TODO: Figure out why this isn't working right... */
 @media (min-width: 992px) {
+    body {
+        font-size: 100%;
+        letter-spacing: 0;
+    }
+
     .wrapper {
         max-width: 992px;
     }
@@ -161,7 +176,6 @@ header > span {
 }
 
 .wrapper.container {
-        font-size: 100%;
         width: 100%;
 }
 
