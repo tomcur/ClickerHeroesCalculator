@@ -65,7 +65,7 @@ body {
 #ancienttbl {
     table-layout: fixed;
     width: 100%;
-    min-width: 500px;
+    min-width: 450px;
 }
 
 #ancienttbl td, #ancienttbl th {
@@ -157,11 +157,11 @@ header > span {
     }
 
     .io:first-child {
-        padding-right: 0;
+        padding-right: .125em;
     }
 
     .io:last-child {
-        padding-left: 0;
+        padding-left: .125em;
     }
 }
 
