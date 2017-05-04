@@ -1,9 +1,0 @@
-# Created by .ignore support plugin (hsz.mobi)
-.idea
-
-_sass
-/bower.json
-bower_components/
-/config.rb
-/css/style.css.bak
-/.sass-cache/
