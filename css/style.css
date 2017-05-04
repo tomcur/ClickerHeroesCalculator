@@ -173,6 +173,11 @@ div.slider-tick {
   .wrapper .io:last-child {
     padding-left: .125rem;
   }
+
+  .panel-body {
+    display: block;
+    height: auto !important;
+  }
 }
 /* Small+ */
 @media (min-width: 768px) {
