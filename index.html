@@ -59,7 +59,7 @@
         </div>
     </div>
     <div class="row" id="io-panel">
-        <div class="col-xs-12 col-md-5 io">
+        <div class="col-xs-12 col-md-5">
             <div id="input" class="panel-group">
                 <div class="panel panel-primary">
                     <header class="panel-heading">
@@ -182,7 +182,7 @@
 
             </div>
         </div>
-        <div class="col-xs-12 col-md-7 io">
+        <div class="col-xs-12 col-md-7">
             <div role="tabpanel" id="output">
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#tab-ancients" aria-controls="tab-ancients"
@@ -958,6 +958,11 @@
 
         data.useSoulsEnteredManually = false;
         calculateAndUpdate();
+
+        // collapse if small
+        if($("#input-collapse-btn").is(":visible") && $("#input-collapse").is(":visible")){
+            $("#input-collapse").collapse('hide');
+        }
     }
 
     function calculateAndUpdate() {
@@ -993,9 +998,11 @@
                 ancient.ui.goal.text(numberToStringFormatted(ancient.extraInfo.optimalLevel));
                 ancient.ui.change.val(numberToStringFormatted(ancient.extraInfo.optimalLevel.minus(ancient.level)));
                 ancient.ui.cost.text(numberToStringFormatted(ancient.extraInfo.costToLevelToOptimal));
-                ancient.ui.targetBox.show();
+
+                ancient.ui.targetBox.attr("style","display:auto;");
+
             } else {
-                ancient.ui.targetBox.hide();
+                ancient.ui.targetBox.attr("style","display:none");
             }
         }
 
