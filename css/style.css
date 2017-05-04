@@ -7,42 +7,60 @@ body, html {
   padding: 0;
 }
 
+/* Table Reset */
+table {
+  display: table;
+}
+
+thead {
+  display: table-header-group;
+}
+
+tbody {
+  display: table-row-group;
+}
+
+tr {
+  display: table-row;
+}
+
+th, td {
+  display: table-cell;
+}
+
+/* Wrapper */
 .wrapper {
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   margin-top: 2rem;
   margin-bottom: 2rem;
-  width: 100%;
 }
 .wrapper label {
   line-height: 2;
   vertical-align: middle;
 }
-@media (min-width: 1200px) {
-  .wrapper {
-    max-width: 1200px;
-  }
-}
-@media (min-width: 991px) {
-  .wrapper {
-    max-width: 991px;
-  }
-  .wrapper .io:first-child {
-    padding-right: .125rem;
-  }
-  .wrapper .io:last-child {
-    padding-left: .125rem;
-  }
-}
 
-.io {
+/* io-panel */
+.io-panel > div {
   padding: auto;
 }
 
-.panel-settings {
+/* about-panel */
+#about .tab-pane {
+  padding: 15px;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  border-radius: 0px 0px 4px 4px;
+}
+
+/* panel-body */
+.panel-body .panel-settings {
   margin-top: 1rem;
 }
 
+/* header elements (for panels) */
 header {
   display: table;
   width: 100%;
@@ -62,6 +80,7 @@ header .panel-heading-right {
   text-align: right;
 }
 
+/* input portion of io-panel */
 #input {
   width: 100%;
   display: inline-block;
@@ -79,17 +98,12 @@ header .panel-heading-right {
   margin: .5rem 0;
   min-height: 75px;
 }
-@media (min-width: 768px) {
-  #input textarea, #generatedsavedatacontainer textarea {
-    min-height: 0;
-    margin: 0;
-  }
-}
 
 div.slider-tick {
   display: none;
 }
 
+/* output portion of io-panel */
 #output {
   width: 100%;
   display: inline-block;
@@ -120,6 +134,54 @@ div.slider-tick {
 #ancienttbl .col4 {
   width: 25%;
 }
+
+.as-planner {
+  max-height: 350px;
+  overflow-y: auto;
+}
+.as-planner table .col1 {
+  width: 25%;
+}
+.as-planner table .col2, .as-planner table .col3 {
+  width: 37.5%;
+}
+
+/* table styles */
+.odd_row {
+  background-color: #f9f9f9;
+}
+
+.col_change {
+  font-weight: bold;
+}
+
+/* Media Styles */
+/* Large+ */
+@media (min-width: 1200px) {
+  .wrapper {
+    max-width: 1200px;
+  }
+}
+/* Medium+ */
+@media (min-width: 991px) {
+  .wrapper {
+    max-width: 991px;
+  }
+  .wrapper .io:first-child {
+    padding-right: .125rem;
+  }
+  .wrapper .io:last-child {
+    padding-left: .125rem;
+  }
+}
+/* Small+ */
+@media (min-width: 768px) {
+  #input textarea, #generatedsavedatacontainer textarea {
+    min-height: 0;
+    margin: 0;
+  }
+}
+/* Small- */
 @media (max-width: 768px) {
   #ancienttbl table, #ancienttbl th, #ancienttbl thead, #ancienttbl tbody, #ancienttbl td, #ancienttbl tr {
     display: block;
@@ -150,11 +212,11 @@ div.slider-tick {
     line-height: 1;
     padding-top: 0.625rem;
     padding-bottom: 0.625rem;
-    width: 45%;
     padding-right: 0.625rem;
     white-space: nowrap;
     font-weight: bold;
     vertical-align: middle;
+    width: 45%;
   }
   #ancienttbl td:nth-of-type(1)::before {
     content: "Ancient";
@@ -171,31 +233,4 @@ div.slider-tick {
   #ancienttbl td:nth-of-type(5)::before {
     content: "Cost(HS)";
   }
-}
-
-.odd_row {
-  background-color: #f9f9f9;
-}
-
-.col_change {
-  font-weight: bold;
-}
-
-#about .tab-pane {
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  border-radius: 0px 0px 4px 4px;
-  padding: 15px;
-}
-
-.as-planner {
-  max-height: 350px;
-  overflow-y: auto;
-}
-.as-planner table .col1 {
-  width: 25%;
-}
-.as-planner table .col2, .as-planner table .col3 {
-  width: 37.5%;
 }
