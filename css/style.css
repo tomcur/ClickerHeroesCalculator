@@ -1,99 +1,241 @@
-html, body {
-    margin: 0;
-    padding: 0;
+html {
+  font-size: 1rem;
 }
 
-body {
-    font-family: "Open Sans", sans-serif;
-    font-size: 1.5em;
+body, html {
+  margin: 0;
+  padding: 0;
 }
 
+/* Table Reset */
+table {
+  display: table;
+}
+
+thead {
+  display: table-header-group;
+}
+
+tbody {
+  display: table-row-group;
+}
+
+tr {
+  display: table-row;
+}
+
+th, td {
+  display: table-cell;
+}
+
+/* Wrapper */
 .wrapper {
-    width: 1054px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 2em;
-    margin-bottom: 2em;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.wrapper label {
+  line-height: 2;
+  vertical-align: middle;
 }
 
-
-#input {
-    width: 490px; 
-    display: inline-block;
+/* io-panel */
+.io-panel > div {
+  padding: auto;
 }
 
-.panel-settings {
-    margin-top: 1em;
-}
-
-#output { 
-    width: 560px;
-    display: inline-block;
-    vertical-align: top;
-}
-
-#input textarea,
-#generatedsavedatacontainer textarea {
-    width: 100%;
-    resize: vertical;
-}
-
-.odd_row {
-    background-color: #f9f9f9;
-}
-
-.col_change {
-    font-weight: bold;
-}
-
-#ancienttbl {
-    table-layout: fixed;
-}
-
-#ancienttbl td, #ancienttbl th {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-#ancienttbl .col1 {
-    width: 17%;
-}
-
-#ancienttbl .col2, .col3, .col5 {
-    width: 19%;
-}
-
-#ancienttbl .col4 {
-    width: 26%;
-}
-    
-table input[type=text] {
-    width: 100%;
-    padding: 0px;
-}
-
+/* about-panel */
 #about .tab-pane {
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    border-radius: 0px 0px 4px 4px;
-    padding: 15px;
+  padding: 15px;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  border-radius: 0px 0px 4px 4px;
 }
 
-.as-planner {
-    max-height: 350px;
-    overflow-y: auto;
+/* panel-body */
+.panel-body .panel-settings {
+  margin-top: 1rem;
 }
 
-.as-planner table .col1 {
-    width: 25%;
+/* header elements (for panels) */
+header {
+  display: table;
+  width: 100%;
+}
+header a.btn[data-toggle="collapse"] {
+  display: inline;
+  line-height: 2;
+}
+header > span {
+  display: table-cell;
+  width: 50%;
+}
+header .panel-heading-left {
+  text-align: left;
+}
+header .panel-heading-right {
+  text-align: right;
 }
 
-.as-planner table .col2, .as-planner table .col3 {
-    width: 37.5%;
+/* input portion of io-panel */
+#input {
+  width: 100%;
+  display: inline-block;
+}
+#input input {
+  margin: .25rem 0;
+}
+#input input[type=radio] {
+  margin-left: 1.5rem;
+}
+
+#input textarea, #generatedsavedatacontainer textarea {
+  width: 100%;
+  resize: vertical;
+  margin: .5rem 0;
+  min-height: 75px;
 }
 
 div.slider-tick {
-    display: none;
+  display: none;
+}
+
+/* output portion of io-panel */
+#output {
+  width: 100%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+#ancienttbl {
+  table-layout: fixed;
+  width: 100%;
+}
+#ancienttbl td {
+  vertical-align: middle;
+}
+#ancienttbl td input[type=text] {
+  width: 90%;
+}
+#ancienttbl th, #ancienttbl td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#ancienttbl .col1 {
+  width: 18%;
+}
+#ancienttbl .col2, #ancienttbl .col3, #ancienttbl .col5 {
+  width: 19%;
+}
+#ancienttbl .col4 {
+  width: 25%;
+}
+
+.as-planner {
+  max-height: 350px;
+  overflow-y: auto;
+}
+.as-planner table .col1 {
+  width: 25%;
+}
+.as-planner table .col2, .as-planner table .col3 {
+  width: 37.5%;
+}
+
+/* table styles */
+.odd_row {
+  background-color: #f9f9f9;
+}
+
+.col_change {
+  font-weight: bold;
+}
+
+/* Media Styles */
+/* Large+ */
+@media (min-width: 1200px) {
+  .wrapper {
+    max-width: 1200px;
+  }
+}
+/* Medium+ */
+@media (min-width: 991px) {
+  .wrapper {
+    max-width: 991px;
+  }
+  .wrapper .io:first-child {
+    padding-right: .125rem;
+  }
+  .wrapper .io:last-child {
+    padding-left: .125rem;
+  }
+
+  .panel-body {
+    display: block;
+    height: auto !important;
+  }
+}
+/* Small+ */
+@media (min-width: 768px) {
+  #input textarea, #generatedsavedatacontainer textarea {
+    min-height: 0;
+    margin: 0;
+  }
+}
+/* Small- */
+@media (max-width: 768px) {
+  #ancienttbl table, #ancienttbl th, #ancienttbl thead, #ancienttbl tbody, #ancienttbl td, #ancienttbl tr {
+    display: block;
+  }
+  #ancienttbl thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  #ancienttbl tr {
+    border: 1px solid #ccc;
+  }
+  #ancienttbl td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+    min-height: 2.25rem;
+    width: 100% !important;
+  }
+  #ancienttbl td input {
+    line-height: .925;
+  }
+  #ancienttbl td::before {
+    position: absolute;
+    top: 0;
+    left: .375rem;
+    line-height: 1;
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+    padding-right: 0.625rem;
+    white-space: nowrap;
+    font-weight: bold;
+    vertical-align: middle;
+    width: 45%;
+  }
+  #ancienttbl td:nth-of-type(1)::before {
+    content: "Ancient";
+  }
+  #ancienttbl td:nth-of-type(2)::before {
+    content: "Current";
+  }
+  #ancienttbl td:nth-of-type(3)::before {
+    content: "Goal";
+  }
+  #ancienttbl td:nth-of-type(4)::before {
+    content: "Change";
+  }
+  #ancienttbl td:nth-of-type(5)::before {
+    content: "Cost(HS)";
+  }
 }
