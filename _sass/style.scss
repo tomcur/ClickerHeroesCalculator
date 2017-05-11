@@ -1,4 +1,4 @@
-$small: 768px; $medium: 991px; $large: 1200px;
+$small: 768px; $medium: 992px; $large: 1200px; $maxwidth: 1280px;
 
 html {
     font-size: 1rem; @extend body;
@@ -34,6 +34,7 @@ th, td {
 
 .wrapper {
     width: 100%;
+    max-width: $maxwidth;
     margin-left: auto;
     margin-right: auto;
     margin-top: 2rem;
@@ -175,18 +176,9 @@ div.slider-tick {
 
 /* Media Styles */
 
-/* Large+ */
-@media (min-width: $large) {
-    .wrapper {
-        max-width: $large;
-    }
-}
-
 /* Medium+ */
 @media (min-width: $medium) {
     .wrapper {
-        max-width: $medium;
-        
         .io:first-child {
             padding-right: .125rem;
         }
@@ -204,15 +196,8 @@ div.slider-tick {
     }
 }
 
-/* Small+ */
-@media (min-width: $small) {
-    #input textarea, #generatedsavedatacontainer textarea {
-        min-height: 0; margin: 0;
-    }
-}
-
 /* Small- */
-@media (max-width: $small) {
+@media (max-width: ($small - 1)) {
 
     #ancienttbl {
         table, th, thead, tbody, td, tr {

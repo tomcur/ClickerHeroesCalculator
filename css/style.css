@@ -31,6 +31,7 @@ th, td {
 /* Wrapper */
 .wrapper {
   width: 100%;
+  max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 2rem;
@@ -156,17 +157,8 @@ div.slider-tick {
 }
 
 /* Media Styles */
-/* Large+ */
-@media (min-width: 1200px) {
-  .wrapper {
-    max-width: 1200px;
-  }
-}
 /* Medium+ */
-@media (min-width: 991px) {
-  .wrapper {
-    max-width: 991px;
-  }
+@media (min-width: 992px) {
   .wrapper .io:first-child {
     padding-right: .125rem;
   }
@@ -179,15 +171,8 @@ div.slider-tick {
     height: auto !important;
   }
 }
-/* Small+ */
-@media (min-width: 768px) {
-  #input textarea, #generatedsavedatacontainer textarea {
-    min-height: 0;
-    margin: 0;
-  }
-}
 /* Small- */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   #ancienttbl table, #ancienttbl th, #ancienttbl thead, #ancienttbl tbody, #ancienttbl td, #ancienttbl tr {
     display: block;
   }
