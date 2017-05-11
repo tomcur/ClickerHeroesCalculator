@@ -65,13 +65,13 @@
                     <header class="panel-heading">
                         <span class="panel-heading-left">Data</span>
                         <span class="panel-heading-right hidden-lg hidden-md">
-                                    <a href="#input-collapse" role="button" class="btn btn-default btn-sm"
-                                       id="input-collapse-btn"
-                                       data-toggle="collapse" aria-expanded="false"
-                                       aria-controls="input-collapse">
-                                                                <span class="glyphicon glyphicon-menu-hamburger"></span>
-                                                            </a>
-                                </span>
+                            <a href="#input-collapse" role="button" class="btn btn-default btn-sm"
+                               id="input-collapse-btn"
+                               data-toggle="collapse" aria-expanded="false"
+                               aria-controls="input-collapse">
+                                <span class="glyphicon glyphicon-menu-hamburger"></span>
+                            </a>
+                        </span>
                     </header>
                     <div class="panel-body collapse in" id="input-collapse">
                         <label for="savedata">Paste your game file here:</label>
@@ -124,8 +124,18 @@
                     </div>
                 </div>
                 <div id="advancedconfiguration" class="panel panel-primary">
-                    <header class="panel-heading">Advanced configuration</header>
-                    <div class="panel-body">
+                    <header class="panel-heading">
+                        <span class="panel-heading-left">Advanced configuration</span>
+                        <span class="panel-heading-right hidden-lg hidden-md">
+                            <a href="#config-collapse" role="button" class="btn btn-default btn-sm"
+                               id="config-collapse-btn"
+                               data-toggle="collapse" aria-expanded="false"
+                               aria-controls="config-collapse">
+                                <span class="glyphicon glyphicon-menu-hamburger"></span>
+                            </a>
+                        </span>
+                    </header>
+                    <div class="panel-body collapse in" id="config-collapse">
                         <div>
                             <label for="revolcrate">
                                 Level Revolc<br>
@@ -160,11 +170,20 @@
                                 minimized ancients</label>
                         </div>
                     </div>
-
                 </div>
                 <div id="generatedsavedatacontainer" class="panel panel-primary">
-                    <header class="panel-heading">Save-game output</header>
-                    <div class="panel-body">
+                    <header class="panel-heading">
+                        <span class="panel-heading-left">Save-game output</span>
+                        <span class="panel-heading-right hidden-lg hidden-md">
+                            <a href="#savegame-collapse" role="button" class="btn btn-default btn-sm"
+                               id="savegame-collapse-btn"
+                               data-toggle="collapse" aria-expanded="false"
+                               aria-controls="savegame-collapse">
+                                <span class="glyphicon glyphicon-menu-hamburger"></span>
+                            </a>
+                        </span>
+                    </header>
+                    <div class="panel-body collapse in" id="savegame-collapse">
                         <p>This functionality is experimental. Always backup your original save-game. If you notice
                             problems, please notify me as soon as possible.</p>
                         <label for="generatedsavedata">Import this into Clicker Heroes:</label>
@@ -966,6 +985,7 @@
         // collapse if small
         if($("#input-collapse-btn").is(":visible") && $("#input-collapse").is(":visible")){
             $("#input-collapse").collapse('hide');
+            $("#config-collapse").collapse('hide');
         }
     }
 
