@@ -172,6 +172,13 @@
                                 Ignore minimized ancients
                             </label>
                         </div>
+                        <hr>
+                        <div>
+                            <label>
+                                <input type="checkbox" id="collapseancienttableonsmallscreens" checked>
+                                Collapse ancient table on small screens
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div id="generatedsavedatacontainer" class="panel panel-primary">
@@ -563,7 +570,8 @@
         "#displayadvancedconfiguration",
         "#keepsoulsforregilding",
         "#ignoreminimizedancients",
-        "#generatesavedata"
+        "#generatesavedata",
+        "#collapseancienttableonsmallscreens"
     ];
 
     var strSettingsRadio = [
@@ -652,6 +660,15 @@
             $("#generatedsavedatacontainer").hide();
         }
     }
+    
+    function doOrDoNotCollapseAncientTableOnSmallScreens() {
+        var checked = $("#collapseancienttableonsmallscreens").prop('checked');
+        if (checked) { 
+            $("#ancienttbl").addClass('verticalize');
+        } else {
+            $("#ancienttbl").removeClass('verticalize');
+        }
+    }
 
     $(function () {
         $('#addsouls').change(function () {
@@ -704,6 +721,10 @@
             showHideGeneratedSaveGameContainer();
         });
 
+        $('#collapseancienttableonsmallscreens').change(function () {
+            SaveSettingsCheckBox("#collapseancienttableonsmallscreens");
+            doOrDoNotCollapseAncientTableOnSmallScreens();
+        });
 
         $(window).on("message", function (event) {
             $("#savedata").val(event.originalEvent.data);
@@ -752,12 +773,15 @@
                 $('#skillancientsrate').on("slideStop", function () {
                     Import();
                 });
-
+                
                 // Show or hide the advanced configuration container
                 showHideAdvancedConfigurationContainer();
 
                 // Show or hide the generated save game container
                 showHideGeneratedSaveGameContainer()
+                
+                // Do or do not collapse the ancient table on small screens
+                doOrDoNotCollapseAncientTableOnSmallScreens();
             }
         });
 

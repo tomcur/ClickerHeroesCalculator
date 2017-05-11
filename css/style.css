@@ -173,18 +173,18 @@ div.slider-tick {
 }
 /* Small- */
 @media (max-width: 767px) {
-  #ancienttbl table, #ancienttbl th, #ancienttbl thead, #ancienttbl tbody, #ancienttbl td, #ancienttbl tr {
+  #ancienttbl.verticalize table, #ancienttbl.verticalize th, #ancienttbl.verticalize thead, #ancienttbl.verticalize tbody, #ancienttbl.verticalize td, #ancienttbl.verticalize tr {
     display: block;
   }
-  #ancienttbl thead tr {
+  #ancienttbl.verticalize thead tr {
     position: absolute;
     top: -9999px;
     left: -9999px;
   }
-  #ancienttbl tr {
+  #ancienttbl.verticalize tr {
     border: 1px solid #ccc;
   }
-  #ancienttbl td {
+  #ancienttbl.verticalize td {
     border: none;
     border-bottom: 1px solid #eee;
     position: relative;
@@ -192,10 +192,10 @@ div.slider-tick {
     min-height: 2.25rem;
     width: 100% !important;
   }
-  #ancienttbl td input {
+  #ancienttbl.verticalize td input {
     line-height: .925;
   }
-  #ancienttbl td::before {
+  #ancienttbl.verticalize td::before {
     position: absolute;
     top: 0;
     left: .375rem;
@@ -208,19 +208,19 @@ div.slider-tick {
     vertical-align: middle;
     width: 45%;
   }
-  #ancienttbl td:nth-of-type(1)::before {
+  #ancienttbl.verticalize td:nth-of-type(1)::before {
     content: "Ancient";
   }
-  #ancienttbl td:nth-of-type(2)::before {
+  #ancienttbl.verticalize td:nth-of-type(2)::before {
     content: "Current";
   }
-  #ancienttbl td:nth-of-type(3)::before {
+  #ancienttbl.verticalize td:nth-of-type(3)::before {
     content: "Goal";
   }
-  #ancienttbl td:nth-of-type(4)::before {
+  #ancienttbl.verticalize td:nth-of-type(4)::before {
     content: "Change";
   }
-  #ancienttbl td:nth-of-type(5)::before {
+  #ancienttbl.verticalize td:nth-of-type(5)::before {
     content: "Cost(HS)";
   }
 }
