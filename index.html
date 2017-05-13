@@ -78,7 +78,7 @@
                         <textarea id="savedata" style="width: 100%; height: 50px" onclick="this.select()"
                                   autofocus></textarea>
                         <div style="float: right; margin-top: 10px;">
-                            <button type="button" onclick="Import()" class="btn btn-primary" style="float: right;">
+                            <button type="button" onclick="Import()" class="btn btn-primary" id="importButton" style="float: right;">
                                 Import
                             </button>
                         </div>
@@ -682,6 +682,13 @@
             Import();
         });
 
+        $('#importButton').click(function(){
+            // collapse if small
+            if($("#input-collapse-btn").is(":visible") && $("#input-collapse").is(":visible")){
+                $("#input-collapse").collapse('hide');
+            }
+        });
+
         // Load game data
         $.ajax('data/ClickerHeroes_v8847.js', {
             complete: function (xhr) {
@@ -959,10 +966,7 @@
         data.useSoulsEnteredManually = false;
         calculateAndUpdate();
 
-        // collapse if small
-        if($("#input-collapse-btn").is(":visible") && $("#input-collapse").is(":visible")){
-            $("#input-collapse").collapse('hide');
-        }
+
     }
 
     function calculateAndUpdate() {
