@@ -78,7 +78,7 @@
                         <textarea id="savedata" style="width: 100%; height: 50px" onclick="this.select()"
                                   autofocus></textarea>
                         <div style="float: right; margin-top: 10px;">
-                            <button type="button" onclick="Import()" class="btn btn-primary" style="float: right;">
+                            <button type="button" onclick="Import()" class="btn btn-primary" id="importButton" style="float: right;">
                                 Import
                             </button>
                         </div>
@@ -660,10 +660,10 @@
             $("#generatedsavedatacontainer").hide();
         }
     }
-    
+
     function doOrDoNotCollapseAncientTableOnSmallScreens() {
         var checked = $("#collapseancienttableonsmallscreens").prop('checked');
-        if (checked) { 
+        if (checked) {
             $("#ancienttbl").addClass('verticalize');
         } else {
             $("#ancienttbl").removeClass('verticalize');
@@ -731,6 +731,13 @@
             Import();
         });
 
+        $('#importButton').click(function(){
+            // collapse if small
+            if($("#input-collapse-btn").is(":visible") && $("#input-collapse").is(":visible")){
+                $("#input-collapse").collapse('hide');
+            }
+        });
+
         // Load game data
         $.ajax('data/ClickerHeroes_v8847.js', {
             complete: function (xhr) {
@@ -773,13 +780,13 @@
                 $('#skillancientsrate').on("slideStop", function () {
                     Import();
                 });
-                
+
                 // Show or hide the advanced configuration container
                 showHideAdvancedConfigurationContainer();
 
                 // Show or hide the generated save game container
                 showHideGeneratedSaveGameContainer()
-                
+
                 // Do or do not collapse the ancient table on small screens
                 doOrDoNotCollapseAncientTableOnSmallScreens();
             }
@@ -1011,11 +1018,7 @@
         data.useSoulsEnteredManually = false;
         calculateAndUpdate();
 
-        // collapse if small
-        if($("#input-collapse-btn").is(":visible") && $("#input-collapse").is(":visible")){
-            $("#input-collapse").collapse('hide');
-            $("#config-collapse").collapse('hide');
-        }
+
     }
 
     function calculateAndUpdate() {
