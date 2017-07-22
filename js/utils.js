@@ -56,17 +56,6 @@ function numberToStringFormatted(number, decimals) {
 
 
 /* Encoding and decoding save games */
-
-/** Turn a base-64 encoded string into a byte array.
- */
-function stringToBinaryArray(str) {
-    var b64Decoded = atob(str);
-    var bytes = b64Decoded.split('').map(function(e) {
-        return e.charCodeAt(0);
-    });
-    return bytes;
-}
-
 /** Decode a zlib deflated, base-64 encoded string
  */
 function decodeSaveGame(str) {
@@ -74,7 +63,7 @@ function decodeSaveGame(str) {
     var strStripped = str.substring(32);
     
     try {
-        var json = pako.inflate(stringToBinaryArray(strStripped), {raw: false, to: 'string'});
+        var json = pako.inflate(atob(strStripped), {raw: false, to: 'string'});
         return $.parseJSON(json);
     } catch(e) {
         alert('Could not decode the save game data.');
