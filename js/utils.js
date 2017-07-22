@@ -72,38 +72,12 @@ function decodeSaveGame(str) {
 }
 
 function encodeSaveGame(rawData) {
-    return "temporarily disabled";
-    /*
+    // MD5 hash of "zlib", to identify zlib was the encoding algorithm
+    var algorithmHeader = "7a990d405d2c6fb93aa8fbb0ec1a3b23";
+    
     var json = JSON.stringify(rawData);
-    var base64String = btoa(json);
-    return sprinkle(base64String) + ANTI_CHEAT_CODE + getHash(base64String);
-    */
-}
-
-/* Thanks to:
- * https://jsfiddle.net/A45327Eq/fr1vmz3x/
- */
-function sprinkle(string) {
-    var characters;
-    var randomIndex;
-    var array = string.split("");
-    var result = [];
-    var counter = 0;
-    while (counter < array.length) {
-        result[counter * 2] = array[counter];
-        characters = CHARACTERS;
-        randomIndex = Math.floor(Math.random() * (characters.length - 1));
-        result[counter * 2 + 1] = characters.substr(randomIndex, 1);
-        counter++;
-    }
-    return result.join("");
-}
-
-function getHash(string) {
-    var charaters = string.split();
-    charaters.sort();
-    var sortedCharaters = charaters.join();
-    return CryptoJS.MD5(sortedCharaters + SALT);
+    var compressed = pako.deflate(json, {to: 'string'});
+    return algorithmHeader + btoa(compressed);
 }
 
 /*
