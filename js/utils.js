@@ -1,3 +1,17 @@
+var hashesAlgos = {
+    "7a990d405d2c6fb93aa8fbb0ec1a3b23": "zlib"
+};
+
+var algosHashes = swapKeysValues(hashesAlgos);
+
+var decodeAlgos = {
+    "zlib": decodeZlib
+};
+
+var encodeAlgos = {
+    "zlib": encodeZlib
+};
+
 function numberToString(number, decimals) {
     // decimals = 3 default
     decimals = defaultFor(decimals, 3);
@@ -56,33 +70,84 @@ function numberToStringFormatted(number, decimals) {
 
 
 /* Encoding and decoding save games */
-/** Decode a zlib deflated, base-64 encoded string
+
+/**
+ * Decode a base-64 encoded string of some JSON encoding
  */
 function decodeSaveGame(str) {
-    // Remove first 32 characters (they are some sort of header)
-    var strStripped = str.substring(32);
+    // Read the first 32 characters (they are the MD5 hash of the used algorithm)
+    var algoHash = str.substring(0,32);
+    
+    // Default to "sprinkle" (old-style encoding)
+    var algo = "sprinkle";
+    
+    // Test if the MD5 hash header corresponds to a known encoding algorithm
+    if (algoHash in hashesAlgos) {
+        algo = hashesAlgos[algoHash];
+    }
     
     try {
-        var json = pako.inflate(atob(strStripped), {raw: false, to: 'string'});
-        return $.parseJSON(json);
+        if (algo == "sprinkle") {
+            alert('Decoding sprinkle-style strings temporarily disabled.');
+        } else {
+            var strStripped = str.substring(32);
+            
+            var json = decodeAlgos[algo](atob(strStripped));
+            return {data: $.parseJSON(json), algo: algo};
+        }
     } catch(e) {
         alert('Could not decode the save game data.');
         return null;
     }
 }
 
-function encodeSaveGame(rawData) {
-    // MD5 hash of "zlib", to identify zlib was the encoding algorithm
-    var algorithmHeader = "7a990d405d2c6fb93aa8fbb0ec1a3b23";
-    
-    var json = JSON.stringify(rawData);
-    var compressed = pako.deflate(json, {to: 'string'});
-    return algorithmHeader + btoa(compressed);
+/**
+ * Decode a zlib deflated string
+ */
+function decodeZlib(str) {
+    return pako.inflate(str, {to: 'string'});
 }
 
-/*
+function encodeSaveGame(rawData, algo) {
+    // Special case old-style sprinkle encoding
+    if (algo == "sprinkle") {
+        alert('Encoding data in sprinkle-style temporarily disabled.');
+    } else {
+        if (!(algo in encodeAlgos)) {
+            alert('Cannot encode using algo: ' + algo);
+        }
+        
+        var algorithmHeader = algosHashes[algo];
+        
+        var json = JSON.stringify(rawData);
+        var compressed = encodeAlgos[algo](json);
+        return algorithmHeader + btoa(compressed);
+    }
+}
+
+/**
+ * Encode a string as zlib
+ */
+function encodeZlib(str) {
+    return pako.deflate(str, {to: 'string'});
+}
+
+/**
  * Return arg if arg is defined, or val if arg is undefined.
  */
 function defaultFor(arg, val) {
     return typeof arg !== 'undefined' ? arg : val;
+}
+
+/**
+ * Swap dictionary keys with values
+ */
+function swapKeysValues(dict) {
+    var swapped = {};
+    
+    for (var key in dict) {
+        swapped[dict[key]] = key;
+    }
+    
+    return swapped;
 }

@@ -912,10 +912,16 @@
     }
 
     function Import() {
-        var rawData = decodeSaveGame($("#savedata").val());
+        var rawDataAlgo = decodeSaveGame($("#savedata").val());
+        var rawData = rawDataAlgo.data;
 
-        // Read on-page settings
+        // Create data structure
         data.settings = {};
+        
+        // Store the save-file encoding algorithm used
+        data.encodeAlgo = rawDataAlgo.algo;
+        
+        // Read on-page settings
         data.settings.includeSoulsAfterAscension = $("#addsouls").prop("checked");
         data.settings.wep8k = $("#wep8k").prop("checked");
         data.settings.copyAncientLevelsToClipboard = $("#copyancientlevels").prop("checked");
@@ -1152,7 +1158,8 @@
 
         }
 
-        var rawData = decodeSaveGame($("#savedata").val());
+        var rawDataAlgo = decodeSaveGame($("#savedata").val());
+        var rawData = rawDataAlgo.data;
 
         // Set ancient levels
         for (var k in data.ancients) {
@@ -1167,7 +1174,7 @@
         rawData.heroSouls = data.heroSouls.minus(spentHS).floor().toString();
 
         // Output save game
-        $('#generatedsavedata').val(encodeSaveGame(rawData));
+        $('#generatedsavedata').val(encodeSaveGame(rawData, data.encodeAlgo));
     }
 
     /* Enables save-game generation.
