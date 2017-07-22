@@ -9,11 +9,11 @@ var hashesAlgos = {
 var algosHashes = swapKeysValues(hashesAlgos);
 
 var decodeAlgos = {
-    "zlib": decodeZlib
+    "zlib": function(str) { return pako.inflate(str, {to: 'string'}); }
 };
 
 var encodeAlgos = {
-    "zlib": encodeZlib
+    "zlib": function(str) { return pako.deflate(str, {to: 'string'}); }
 };
 
 /**********************************************************/
@@ -111,12 +111,8 @@ function decodeSaveGame(str) {
 }
 
 /**
- * Decode a zlib deflated string
+ * Encode a save game using a given algorithm
  */
-function decodeZlib(str) {
-    return pako.inflate(str, {to: 'string'});
-}
-
 function encodeSaveGame(rawData, algo) {
     // Special case old-style sprinkle encoding
     if (algo == "sprinkle") {
@@ -132,13 +128,6 @@ function encodeSaveGame(rawData, algo) {
         var compressed = encodeAlgos[algo](json);
         return algorithmHeader + btoa(compressed);
     }
-}
-
-/**
- * Encode a string as zlib
- */
-function encodeZlib(str) {
-    return pako.deflate(str, {to: 'string'});
 }
 
 /**********************************************************/
