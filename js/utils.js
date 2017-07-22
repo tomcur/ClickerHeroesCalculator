@@ -56,36 +56,26 @@ function numberToStringFormatted(number, decimals) {
 
 
 /* Encoding and decoding save games */
-var ANTI_CHEAT_CODE = "Fe12NAfA3R6z4k0z";
-var SALT = "af0ik392jrmt0nsfdghy0";
-var CHARACTERS = '1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
-function decodeSaveGame(txtIn) {
-    var txtOut="";
 
-    if (txtIn.search("ClickerHeroesAccountSO") != -1) {
-        var start = 53;
-        txtOut = txtIn.substr(start, txtIn.length - start - 1);
-    } else {
-        txtIn = txtIn.trim();
-        if (txtIn=="") {
-            return;
-        }
-        if (txtIn.search(ANTI_CHEAT_CODE) != -1) {
-            var result = txtIn.split(ANTI_CHEAT_CODE);
-            for (var i = 0; i < result[0].length; i += 2) {
-                txtOut += result[0][i];
-            }
-            if (CryptoJS.MD5(txtOut + SALT) != result[1]) {
-                alert("Bad hash");
-                return;
-            }
-        }
-        txtOut = atob(txtOut);
-    }
+/** Turn a base-64 encoded string into a byte array.
+ */
+function stringToBinaryArray(str) {
+    var b64Decoded = atob(str);
+    var bytes = b64Decoded.split('').map(function(e) {
+        return e.charCodeAt(0);
+    });
+    return bytes;
+}
 
+/** Decode a zlib deflated, base-64 encoded string
+ */
+function decodeSaveGame(str) {
+    // Remove first 32 characters (they are some sort of header)
+    var strStripped = str.substring(32);
+    
     try {
-        var rawData = $.parseJSON(txtOut);
-        return rawData;
+        var json = pako.inflate(stringToBinaryArray(strStripped), {raw: false, to: 'string'});
+        return $.parseJSON(json);
     } catch(e) {
         alert('Could not decode the save game data.');
         return null;
@@ -93,9 +83,12 @@ function decodeSaveGame(txtIn) {
 }
 
 function encodeSaveGame(rawData) {
+    return "temporarily disabled";
+    /*
     var json = JSON.stringify(rawData);
     var base64String = btoa(json);
     return sprinkle(base64String) + ANTI_CHEAT_CODE + getHash(base64String);
+    */
 }
 
 /* Thanks to:
