@@ -185,20 +185,20 @@ var AncientsExtraInfo = {
     },
     "fragsworth": { // Active
         "goalIdle": null,
-        "goalHybrid": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return baseLevel.times(hybridRatio); },
-        "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return baseLevel; },
+        "goalHybrid": "goalActive",
+        "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return baseLevel.times(hybridRatio); },
         "exclude": null
     },
     "bhaal": { // Active
         "goalIdle": null,
-        "goalHybrid": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return baseLevel.times(hybridRatio); },
-        "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return baseLevel; },
+        "goalHybrid": "goalActive",
+        "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return baseLevel.times(hybridRatio); },
         "exclude": null
     },
     "juggernaut": { // Active
         "goalIdle": null,
-        "goalHybrid": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return baseLevel.times(hybridRatio).pow(0.8); },
-        "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return baseLevel.pow(0.8); },
+        "goalHybrid": "goalActive",
+        "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { return baseLevel.times(hybridRatio).pow(0.8); },
         "exclude": null
     },
     "nogardnit": { // Idle
