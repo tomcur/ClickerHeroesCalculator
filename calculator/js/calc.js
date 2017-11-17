@@ -1,3 +1,6 @@
+var Decimal = require('decimal.js');
+var utils = require(__dirname + '/utils.js');
+
 /**
  * See: https://www.reddit.com/r/ClickerHeroes/comments/4naohc/math_and_transcendance/
  */
@@ -37,7 +40,7 @@ function alphaFactor(wepwawetLeveledBeyond8k) {
  */
 function bossToHitCap(afterLeveling) {
     // afterLeveling = true default
-    afterLeveling = defaultFor(afterLeveling, true);
+    afterLeveling = utils.defaultFor(afterLeveling, true);
     
     if (afterLeveling && data.ancients["solomon"].extraInfo.optimalLevel) {
         var solomon = data.ancients["solomon"].extraInfo.optimalLevel
@@ -66,20 +69,20 @@ function bossToHitCap(afterLeveling) {
     return bossNumber;
 }
 
-function zoneToHitCap(afterLeveling) {
+export function zoneToHitCap(afterLeveling) {
     // afterLeveling = true default
-    afterLeveling = defaultFor(afterLeveling, true);
+    afterLeveling = utils.defaultFor(afterLeveling, true);
     
     return Decimal.max(bossToHitCap(afterLeveling).times(5).plus(100), new Decimal(105));
 }
 
-function ascensionZone() {
+export function ascensionZone() {
     return data.ascensionZone.times(1.05);
 }
 
-function tpCapReached(afterLeveling) {
+export function tpCapReached(afterLeveling) {
     // afterLeveling = true default
-    afterLeveling = defaultFor(afterLeveling, true);
+    afterLeveling = utils.defaultFor(afterLeveling, true);
     
     var boss = ascensionZone().times(1.05).minus(100).dividedBy(5);
     return boss >= bossToHitCap(afterLeveling);
@@ -91,7 +94,7 @@ function resetOptimalLevels() {
     }
 }
 
-function calculate() {
+export function calculate() {
     resetOptimalLevels();
     
     var tuneAncient;
@@ -159,7 +162,7 @@ function computeOptimalLevels(tuneAncient, addLevels) {
  * required. 
  */
 function calculateHSCostToOptimalLevel() {
-    multiplier = Decimal.pow(0.95, data.outsiders["chor'gorloth"].level);
+    var multiplier = Decimal.pow(0.95, data.outsiders["chor'gorloth"].level);
     
     var maxNumSteps = 2500; // Precision of approximation
     

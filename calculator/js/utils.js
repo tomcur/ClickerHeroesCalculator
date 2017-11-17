@@ -1,3 +1,6 @@
+var Decimal = require('decimal.js');
+var pako = require('pako');
+
 /**********************************************************/
 /* Encoding and decoding algorithm configuration          */
 /**********************************************************/
@@ -20,7 +23,7 @@ var encodeAlgos = {
 /* Number formatting utilities                            */
 /**********************************************************/
 
-function numberToString(number, decimals) {
+export function numberToString(number, decimals) {
     // decimals = 3 default
     decimals = defaultFor(decimals, 3);
     
@@ -32,7 +35,7 @@ function numberToString(number, decimals) {
  * output (when number > 1e21) and Clicker Heroes' input formatting. 
  * This function makes sure there are no decimal points in the output.
  */
-function numberToClickerHeroesPasteableString(number, precision) {
+export function numberToClickerHeroesPasteableString(number, precision) {
     // precision = 10 default
     precision = defaultFor(precision, 10);
     
@@ -53,9 +56,9 @@ function numberToClickerHeroesPasteableString(number, precision) {
 
 function addCommas(nStr) {
     nStr += '';
-    x = nStr.split('.');
-    x1 = x[0];
-    x2 = x.length > 1 ? '.' + x[1] : '';
+    var x = nStr.split('.');
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
     var rgx = /(\d+)(\d{3})/;
     while (rgx.test(x1)) {
         x1 = x1.replace(rgx, '$1' + ',' + '$2');
@@ -63,7 +66,7 @@ function addCommas(nStr) {
     return x1 + x2;
 }
 
-function numberToStringFormatted(number, decimals) { 
+export function numberToStringFormatted(number, decimals) { 
     // decimals = 2 default
     decimals = defaultFor(decimals, 2);
 
@@ -82,7 +85,7 @@ function numberToStringFormatted(number, decimals) {
 /**
  * Decode a base-64 encoded string of some JSON encoding
  */
-function decodeSaveGame(str) {
+export function decodeSaveGame(str) {
     // Read the first 32 characters (they are the MD5 hash of the used algorithm)
     var algoHash = str.substring(0,32);
     
@@ -105,7 +108,6 @@ function decodeSaveGame(str) {
             return {data: $.parseJSON(json), algo: algo};
         }
     } catch(e) {
-        alert('Could not decode the save game data.');
         return null;
     }
 }
@@ -113,7 +115,7 @@ function decodeSaveGame(str) {
 /**
  * Encode a save game using a given algorithm
  */
-function encodeSaveGame(rawData, algo) {
+export function encodeSaveGame(rawData, algo) {
     // Special case old-style sprinkle encoding
     if (algo == "sprinkle") {
         return encodeSprinkle(rawData);
@@ -208,14 +210,14 @@ function getHash(string) {
 /**
  * Return arg if arg is defined, or val if arg is undefined.
  */
-function defaultFor(arg, val) {
+export function defaultFor(arg, val) {
     return typeof arg !== 'undefined' ? arg : val;
 }
 
 /**
  * Swap dictionary keys with values
  */
-function swapKeysValues(dict) {
+export function swapKeysValues(dict) {
     var swapped = {};
     
     for (var key in dict) {

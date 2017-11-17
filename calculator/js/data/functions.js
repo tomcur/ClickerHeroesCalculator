@@ -1,4 +1,6 @@
-var functions = {
+var Decimal = require('decimal.js');
+
+module.exports = {
     one: function (param1) {
         return 1;
     },

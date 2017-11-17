@@ -1,9 +1,7 @@
-var goallinear = function(baseLevel, oldLevel) { return base; }
-var goallinearhalf = function(base, gold) { return base.dividedBy(2); }
-var goallinearfifth = function(base, gold) { return base.dividedBy(5); }
-var goalgold = function(base, gold) { return base.times(gold); }
-var goalJuggernaut = function(base, gold) { return base.pow(0.8); }
-var goalMorgulis = function(base, gold) { return base.plus(2).plus(Decimal.min(base, 100).dividedBy(5)).pow(2); }
+var Decimal = require('decimal.js');
+var functions = require(__dirname + '/functions.js');
+
+exports.createObjects = createObjects;
 
 var EmptyExtraInfo = {
     "goalEval": null,
