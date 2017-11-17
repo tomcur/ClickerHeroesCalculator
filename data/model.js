@@ -96,6 +96,20 @@ var AncientsExtraInfo = {
         "goalActive": "goalIdle",
         "exclude": null
     },
+    "pluto": { // Active
+        // TODO: As Pluto is a skill ancient, perhaps we should take the skillAncientLevelRate into account.
+        "goalIdle": null,
+        "goalHybrid": "goalActive",
+        "goalActive": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) {
+            baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
+            if(wepwawetLeveledBeyond8k) {
+                return baseLevel.times(0.905); 
+            } else {
+                return baseLevel.times(0.926); 
+            }
+        },
+        "exclude": null
+    },
     "dora": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, tpcap, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
             baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
