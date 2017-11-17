@@ -2,18 +2,18 @@
 	"outsiders": {
 		"5": {
 			"iconId": 5,
-			"levelCostFormula": "one",
+			"levelCostFormula": "linear1",
 			"maxLevel": 0,
-			"effectDescription": "+%1% effectiveness of Solomon",
+			"effectDescription": "+%1% Primal Hero Souls",
 			"name": "Ponyboy",
 			"title": "",
 			"flavorText": "",
 			"id": 5,
-			"levelAmountFormula": "linear100"
+			"levelAmountFormula": "ponyboyValue"
 		},
 		"2": {
 			"iconId": 3,
-			"levelCostFormula": "linear10th",
+			"levelCostFormula": "linear1",
 			"maxLevel": 150,
 			"effectDescription": "-%1% Ancient cost.",
 			"name": "Chor'gorloth",
@@ -24,36 +24,91 @@
 		},
 		"3": {
 			"iconId": 1,
-			"levelCostFormula": "linear1",
+			"levelCostFormula": "one",
 			"maxLevel": 0,
-			"effectDescription": "+%1% Transcendent Power (Additive).",
+			"effectDescription": "+%1% DPS.",
 			"name": "Phandoryss",
 			"title": "",
 			"flavorText": "",
 			"id": 3,
-			"levelAmountFormula": "phandoryssValue"
+			"levelAmountFormula": "linear100"
 		},
 		"1": {
 			"iconId": 2,
-			"levelCostFormula": "one",
+			"levelCostFormula": "linear1",
 			"maxLevel": 0,
 			"effectDescription": "+%1% effectiveness of all Idle bonuses.",
 			"name": "Xyliqil",
 			"title": "The Legion of Beelphegor",
 			"flavorText": "",
 			"id": 1,
-			"levelAmountFormula": "linear100"
+			"levelAmountFormula": "exponential"
 		},
 		"4": {
 			"iconId": 4,
-			"levelCostFormula": "one",
+			"levelCostFormula": "linear1",
 			"maxLevel": 0,
 			"effectDescription": "+%1% maximum transcendent primal soul reward.",
 			"name": "Borb",
 			"title": "",
 			"flavorText": "",
 			"id": 4,
+			"levelAmountFormula": "exponential"
+		},
+		"6": {
+			"iconId": 4,
+			"levelCostFormula": "linear1",
+			"maxLevel": 0,
+			"effectDescription": "+%1% effectiveness of Kumawakamaru.",
+			"name": "Borb",
+			"title": "",
+			"flavorText": "",
+			"id": 6,
 			"levelAmountFormula": "linear10"
+		},
+		"7": {
+			"iconId": 8,
+			"levelCostFormula": "linear1",
+			"maxLevel": 0,
+			"effectDescription": "+%1% effectiveness of Atman.",
+			"name": "Rhageist",
+			"title": "",
+			"flavorText": "",
+			"id": 7,
+			"levelAmountFormula": "linear25"
+		},
+		"8": {
+			"iconId": 9,
+			"levelCostFormula": "linear1",
+			"maxLevel": 0,
+			"effectDescription": "+%1% effectiveness of Bubos.",
+			"name": "K'Ariqua",
+			"title": "",
+			"flavorText": "",
+			"id": 8,
+			"levelAmountFormula": "linear50"
+		},
+		"9": {
+			"iconId": 6,
+			"levelCostFormula": "linear1",
+			"maxLevel": 0,
+			"effectDescription": "+%1% effectiveness of Chronos.",
+			"name": "Orphalas",
+			"title": "",
+			"flavorText": "",
+			"id": 9,
+			"levelAmountFormula": "linear75"
+		},
+		"10": {
+			"iconId": 10,
+			"levelCostFormula": "linear1",
+			"maxLevel": 0,
+			"effectDescription": "+%1% effectiveness of Dora.",
+			"name": "Sen-Akhan",
+			"title": "",
+			"flavorText": "",
+			"id": 10,
+			"levelAmountFormula": "linear100"
 		}
 	},
     "assets": {
@@ -2376,6 +2431,56 @@
             "fileName": "hexmas_tree",
             "id": 234,
             "version": 0
+        },
+        "235": {
+            "folder": "heroes",
+            "pivotY": -33,
+            "fileExtension": "png",
+            "pivotX": -20,
+            "name": "Cadu",
+            "fileName": "snake_man_1",
+            "id": 235,
+            "version": 0
+        },
+        "236": {
+            "folder": "heroes",
+            "pivotY": -20,
+            "fileExtension": "png",
+            "pivotX": -20,
+            "name": "Ceus",
+            "fileName": "snake_man_2",
+            "id": 236,
+            "version": 0
+        },
+        "237": {
+            "folder": "heroes",
+            "pivotY": -20,
+            "fileExtension": "png",
+            "pivotX": -15,
+            "name": "Maw",
+            "fileName": "bug_overlord",
+            "id": 237,
+            "version": 0
+        },
+        "238": {
+            "folder": "heroes",
+            "pivotY": -20,
+            "fileExtension": "png",
+            "pivotX": -20,
+            "name": "Xavira",
+            "fileName": "faun",
+            "id": 238,
+            "version": 0
+        },
+        "239": {
+            "folder": "heroes",
+            "pivotY": -15,
+            "fileExtension": "png",
+            "pivotX": -20,
+            "name": "Yachiyl",
+            "fileName": "yachiyl",
+            "id": 239,
+            "version": 0
         }
     },
     "zones": {
@@ -4348,7 +4453,7 @@
             "flavorText": "",
             "premiumCurrency": 50,
             "_live": "1",
-            "name": "Enitrely too many skills",
+            "name": "Entirely too many skills",
             "description": "Complete %1 quests for skills.",
             "iconId": 67,
             "checkFunction": "skillQuestsCompleted",
@@ -8622,258 +8727,730 @@
             "id": 207,
             "attribute": 4,
             "upgradeRequired": 214
+        },
+		"216": {
+            "heroLevelRequired": 150000,
+            "isPercentage": 0,
+            "displayOrder": 1,
+            "_live": "1",
+            "name": "Ironwood Staff",
+            "description": "Skogur is impressed\nFourteen thousand Newtons on\nJanka Hardness Scale",
+            "amount": 0,
+            "iconId": 223,
+            "heroId": 46,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "46, 1.0e625",
+            "id": 216,
+            "attribute": 4,
+            "upgradeRequired": 0
+        },
+		"217": {
+            "heroLevelRequired": 185000,
+            "isPercentage": 0,
+            "displayOrder": 2,
+            "_live": "1",
+            "name": "The Enchantress",
+            "description": "She may have the gift\nTo beguile what you perceive\nMaybe we should flee",
+            "amount": 0,
+            "iconId": 224,
+            "heroId": 46,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "46, 1.0e650",
+            "id": 217,
+            "attribute": 4,
+            "upgradeRequired": 0
+        },
+		"218": {
+            "heroLevelRequired": 255000,
+            "isPercentage": 0,
+            "displayOrder": 3,
+            "_live": "1",
+            "name": "Full Bloom",
+            "description": "Spores fill your nostrils\nWould trade ruby or three for\nAntihistamine",
+            "amount": 0,
+            "iconId": 225,
+            "heroId": 46,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "46, 1.0e675",
+            "id": 218,
+            "attribute": 4,
+            "upgradeRequired": 0
+        },
+		"219": {
+            "heroLevelRequired": 290000,
+            "isPercentage": 0,
+            "displayOrder": 4,
+            "_live": "1",
+            "name": "Formidable Frolicking",
+            "description": "Boundlessly leaping\nWho would have thought that such grace\nWould be murderous",
+            "amount": 0,
+            "iconId": 226,
+            "heroId": 46,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "46, 1.0e850",
+            "id": 219,
+            "attribute": 4,
+            "upgradeRequired": 0
+        },
+		"220": {
+            "heroLevelRequired": 336000,
+            "isPercentage": 0,
+            "displayOrder": 5,
+            "_live": "1",
+            "name": "Snaring Bramble",
+            "description": "Ensnared in her net\nYou comply to give her gold\nFor more DPS",
+            "amount": 0,
+            "iconId": 227,
+            "heroId": 46,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "46, 1.0e875",
+            "id": 220,
+            "attribute": 4,
+            "upgradeRequired": 0
+        },
+		"221": {
+            "heroLevelRequired": 58000,
+            "isPercentage": 0,
+            "displayOrder": 1,
+            "_live": "1",
+            "name": "Seal of Wakening",
+            "description": "The rod housed within the tomb is said to wake the slumbering.",
+            "amount": 0,
+            "iconId": 228,
+            "heroId": 47,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "48, 1.0e1000",
+            "id": 221,
+            "attribute": 4,
+            "upgradeRequired": 0
+        },
+		"222": {
+            "heroLevelRequired": 180000,
+            "isPercentage": 0,
+            "displayOrder": 2,
+            "_live": "1",
+            "name": "The Day Watch",
+            "description": "Cadu guards the tomb under the bright veil of sunlight.",
+            "amount": 0,
+            "iconId": 229,
+            "heroId": 47,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "48, 1.0e2300",
+            "id": 222,
+            "attribute": 4,
+            "upgradeRequired": 216
+        },
+		"223": {
+            "heroLevelRequired": 326000,
+            "isPercentage": 0,
+            "displayOrder": 3,
+            "_live": "1",
+            "name": "Twin Snakes (Cadu)",
+            "description": "The pharaoh enshrined within the tomb believed that, just as a snake is renewed through the shedding of its skin, he would someday be reborn into this world.",
+            "amount": 0,
+            "iconId": 230,
+            "heroId": 47,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "48, 1.0e2700",
+            "id": 223,
+            "attribute": 4,
+            "upgradeRequired": 217
+        },
+		"224": {
+            "heroLevelRequired": 495000,
+            "isPercentage": 0,
+            "displayOrder": 4,
+            "_live": "1",
+            "name": "The Sunspear",
+            "description": "\"There cannot exist shadows without light.\"",
+            "amount": 0,
+            "iconId": 231,
+            "heroId": 47,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "48, 1.0e3100",
+            "id": 224,
+            "attribute": 4,
+            "upgradeRequired": 218
+        },
+		"225": {
+            "heroLevelRequired": 116000,
+            "isPercentage": 0,
+            "displayOrder": 1,
+            "_live": "1",
+            "name": "Seal of Slumbering",
+            "description": "The rod housed within the tomb is said to slumber the waking.",
+            "amount": 0,
+            "iconId": 232,
+            "heroId": 48,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "47, 1.0e2100",
+            "id": 225,
+            "attribute": 4,
+            "upgradeRequired": 0
+        },
+		"226": {
+            "heroLevelRequired": 250000,
+            "isPercentage": 0,
+            "displayOrder": 2,
+            "_live": "1",
+            "name": "The Night Watch",
+            "description": "Ceus guards the tomb under the dark cloak of moonlight.",
+            "amount": 0,
+            "iconId": 233,
+            "heroId": 48,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "47, 1.0e2500",
+            "id": 226,
+            "attribute": 4,
+            "upgradeRequired": 220
+        },
+		"227": {
+            "heroLevelRequired": 407500,
+            "isPercentage": 0,
+            "displayOrder": 3,
+            "_live": "1",
+            "name": "Twin Snakes (Ceus)",
+            "description": "The pharoah, however, understood that his fate would be to return to the tomb again, in time, to await a future rebirth.",
+            "amount": 0,
+            "iconId": 234,
+            "heroId": 48,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "47, 1.0e2900",
+            "id": 227,
+            "attribute": 4,
+            "upgradeRequired": 221
+        },
+		"228": {
+            "heroLevelRequired": 588000,
+            "isPercentage": 0,
+            "displayOrder": 4,
+            "_live": "1",
+            "name": "The Shadowblades",
+            "description": "\"There cannot exist light without shadows.\"",
+            "amount": 0,
+            "iconId": 235,
+            "heroId": 48,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "47, 1.0e3300",
+            "id": 228,
+            "attribute": 4,
+            "upgradeRequired": 222
+        },
+		"229": {
+            "heroLevelRequired": 111000,
+            "isPercentage": 0,
+            "displayOrder": 1,
+            "_live": "1",
+            "name": "Endless Appetite",
+            "description": "You search your bags for something to feed it but all you find is a strange assortment of currencies. Thankfully, it only seems interested in consuming gold.",
+            "amount": 0,
+            "iconId": 238,
+            "heroId": 49,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "49, 1.0e2000",
+            "id": 229,
+            "attribute": 4,
+            "upgradeRequired": 0
+        },
+		"230": {
+            "heroLevelRequired": 227500,
+            "isPercentage": 0,
+            "displayOrder": 2,
+            "_live": "1",
+            "name": "Metabolic Juice",
+            "description": "As it eats more and more of your gold, The Maw begins mutate, leaking fluid everywhere. Don't breathe that!",
+            "amount": 0,
+            "iconId": 237,
+            "heroId": 49,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "49, 1.0e2100",
+            "id": 230,
+            "attribute": 4,
+            "upgradeRequired": 229
+        },
+		"231": {
+            "heroLevelRequired": 350000,
+            "isPercentage": 0,
+            "displayOrder": 3,
+            "_live": "1",
+            "name": "Chitinous Spines",
+            "description": "It appears to be evolving. Gross! Yay!",
+            "amount": 0,
+            "iconId": 241,
+            "heroId": 49,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "49, 1.0e2200",
+            "id": 231,
+            "attribute": 4,
+            "upgradeRequired": 230
+        },
+		"232": {
+            "heroLevelRequired": 478000,
+            "isPercentage": 0,
+            "displayOrder": 4,
+            "_live": "1",
+            "name": "Apomorphic Wings",
+            "description": "Pretty doubtful that The Maw can actually fly.",
+            "amount": 0,
+            "iconId": 239,
+            "heroId": 49,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "49, 1.0e2300",
+            "id": 232,
+            "attribute": 4,
+            "upgradeRequired": 231
+        },
+		"233": {
+            "heroLevelRequired": 612500,
+            "isPercentage": 0,
+            "displayOrder": 5,
+            "_live": "1",
+            "name": "Vestigial Legs",
+            "description": "You have no idea if these count towards increasing the average limbs per hero.",
+            "amount": 0,
+            "iconId": 240,
+            "heroId": 49,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "49, 1.0e2400",
+            "id": 233,
+            "attribute": 4,
+            "upgradeRequired": 232
+        },
+		"234": {
+            "heroLevelRequired": 752500,
+            "isPercentage": 0,
+            "displayOrder": 6,
+            "_live": "1",
+            "name": "Progeny",
+            "description": "As it ingests a large pile of gold, the sacks on The Maw's back pop to reveal that it's now The Ma.",
+            "amount": 0,
+            "iconId": 236,
+            "heroId": 49,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "49, 1.0e2500",
+            "id": 234,
+            "attribute": 4,
+            "upgradeRequired": 233
+        },
+		"235": {
+            "heroLevelRequired": 157500,
+            "isPercentage": 0,
+            "displayOrder": 1,
+            "_live": "1",
+            "name": "The Sight",
+            "description": "\"Allow me to show you what I have witnessed through the rise and fall of worlds.\"",
+            "amount": 0,
+            "iconId": 242,
+            "heroId": 50,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "50, 1.0e2800",
+            "id": 235,
+            "attribute": 4,
+            "upgradeRequired": 0
+        },
+		"236": {
+            "heroLevelRequired": 321000,
+            "isPercentage": 0,
+            "displayOrder": 2,
+            "_live": "1",
+            "name": "The Spark",
+            "description": "\"Within all of us exists the essence of heroism: the soul which gives the strength to overcome the difficult challenges ahead.\"",
+            "amount": 0,
+            "iconId": 243,
+            "heroId": 50,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "50, 1.0e2900",
+            "id": 236,
+            "attribute": 4,
+            "upgradeRequired": 235
+        },
+		"237": {
+            "heroLevelRequired": 490000,
+            "isPercentage": 0,
+            "displayOrder": 3,
+            "_live": "1",
+            "name": "The Shield",
+            "description": "\"Using this essence, we can bolster our wills. Ancient urges push us onwards to greater heights.\"",
+            "amount": 0,
+            "iconId": 244,
+            "heroId": 50,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "50, 1.0e3000",
+            "id": 237,
+            "attribute": 4,
+            "upgradeRequired": 236
+        },
+		"238": {
+            "heroLevelRequired": 665000,
+            "isPercentage": 0,
+            "displayOrder": 4,
+            "_live": "1",
+            "name": "The Sword",
+            "description": "\"Even by itself, this essence multiplies our conjoint strength.\"",
+            "amount": 0,
+            "iconId": 245,
+            "heroId": 50,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "50, 1.0e3100",
+            "id": 238,
+            "attribute": 4,
+            "upgradeRequired": 237
+        },
+		"239": {
+            "heroLevelRequired": 846000,
+            "isPercentage": 0,
+            "displayOrder": 5,
+            "_live": "1",
+            "name": "The Succession",
+            "description": "\"A soul acting alone pales to the collective.\"",
+            "amount": 0,
+            "iconId": 246,
+            "heroId": 50,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "50, 1.0e3200",
+            "id": 239,
+            "attribute": 5,
+            "upgradeRequired": 238
+        },
+		"240": {
+            "heroLevelRequired": 1032500,
+            "isPercentage": 0,
+            "displayOrder": 6,
+            "_live": "1",
+            "name": "The Shooting Star",
+            "description": "\"Our aggregation of heroism pushes us faster and faster, amassing a greater strength of wills.\"",
+            "amount": 0,
+            "iconId": 247,
+            "heroId": 50,
+            "upgradeFunction": "upgradeHeroPercent",
+            "upgradeParams": "50, 1.0e3300",
+            "id": 240,
+            "attribute": 6,
+            "upgradeRequired": 239
+        },
+		"241": {
+            "heroLevelRequired": 1225000,
+            "isPercentage": 0,
+            "displayOrder": 7,
+            "_live": "1",
+            "name": "The Sacrifice",
+            "description": "\"All that has life must eventually die, sacrificed for the progress of future generations.\"",
+            "amount": 0,
+            "iconId": 248,
+            "heroId": 50,
+            "upgradeFunction": "upgradeEveryonePercent",
+            "upgradeParams": "11",
+            "id": 241,
+            "attribute": 7,
+            "upgradeRequired": 240
         }
     },
     "soundEffects": {
         "1": {
             "name": "click_4",
             "id": 1,
-            "assetId": 114
+            "assetId": 114,
+			"category": "ui"
         },
         "2": {
             "name": "angry_potato",
             "id": 2,
-            "assetId": 115
+            "assetId": 115,
+			"category": "monster"
         },
         "3": {
             "name": "bluzebleeb",
             "id": 3,
-            "assetId": 116
+            "assetId": 116,
+			"category": "monster"
         },
         "4": {
             "name": "catra",
             "id": 4,
-            "assetId": 117
+            "assetId": 117,
+			"category": "monster"
         },
         "5": {
             "name": "dirge_beetle",
             "id": 5,
-            "assetId": 118
+            "assetId": 118,
+			"category": "monster"
         },
         "6": {
             "name": "fat_bat",
             "id": 6,
-            "assetId": 119
+            "assetId": 119,
+			"category": "monster"
         },
         "7": {
             "name": "flamingogo",
             "id": 7,
-            "assetId": 120
+            "assetId": 120,
+			"category": "monster"
         },
         "8": {
             "name": "floatsie",
             "id": 8,
-            "assetId": 121
+            "assetId": 121,
+			"category": "monster"
         },
         "9": {
             "name": "foomgus",
             "id": 9,
-            "assetId": 122
+            "assetId": 122,
+			"category": "monster"
         },
         "10": {
             "name": "gerbeel",
             "id": 10,
-            "assetId": 123
+            "assetId": 123,
+			"category": "monster"
         },
         "11": {
             "name": "gumpaloaf",
             "id": 11,
-            "assetId": 124
+            "assetId": 124,
+			"category": "monster"
         },
         "12": {
             "name": "impossumble",
             "id": 12,
-            "assetId": 125
+            "assetId": 125,
+			"category": "monster"
         },
         "13": {
             "name": "loggernaut",
             "id": 13,
-            "assetId": 126
+            "assetId": 126,
+			"category": "monster"
         },
         "14": {
             "name": "mage_shroom",
             "id": 14,
-            "assetId": 127
+            "assetId": 127,
+			"category": "monster"
         },
         "15": {
             "name": "mouskawitch",
             "id": 15,
-            "assetId": 128
+            "assetId": 128,
+			"category": "monster"
         },
         "16": {
             "name": "mud_ball",
             "id": 16,
-            "assetId": 129
+            "assetId": 129,
+			"category": "monster"
         },
         "17": {
             "name": "mud_golem",
             "id": 17,
-            "assetId": 130
+            "assetId": 130,
+			"category": "monster"
         },
         "18": {
             "name": "mushrimp",
             "id": 18,
-            "assetId": 131
+            "assetId": 131,
+			"category": "monster"
         },
         "19": {
             "name": "sage_shroom",
             "id": 19,
-            "assetId": 132
+            "assetId": 132,
+			"category": "monster"
         },
         "20": {
             "name": "sasquish",
             "id": 20,
-            "assetId": 133
+            "assetId": 133,
+			"category": "monster"
         },
         "21": {
             "name": "scarecrow",
             "id": 21,
-            "assetId": 134
+            "assetId": 134,
+			"category": "monster"
         },
         "22": {
             "name": "sealed_elemental",
             "id": 22,
-            "assetId": 135
+            "assetId": 135,
+			"category": "monster"
         },
         "23": {
             "name": "snow_ghost",
             "id": 23,
-            "assetId": 136
+            "assetId": 136,
+			"category": "monster"
         },
         "24": {
             "name": "snowkin",
             "id": 24,
-            "assetId": 137
+            "assetId": 137,
+			"category": "monster"
         },
         "25": {
             "name": "snowldier",
             "id": 25,
-            "assetId": 138
+            "assetId": 138,
+			"category": "monster"
         },
         "26": {
             "name": "snowmagus",
             "id": 26,
-            "assetId": 139
+            "assetId": 139,
+			"category": "monster"
         },
         "27": {
             "name": "spit_flower",
             "id": 27,
-            "assetId": 140
+            "assetId": 140,
+			"category": "monster"
         },
         "28": {
             "name": "turtloid",
             "id": 28,
-            "assetId": 141
+            "assetId": 141,
+			"category": "monster"
         },
         "29": {
             "name": "wolfenkinde",
             "id": 29,
-            "assetId": 142
+            "assetId": 142,
+			"category": "monster"
         },
         "30": {
             "name": "yeti",
             "id": 30,
-            "assetId": 143
+            "assetId": 143,
+			"category": "monster"
         },
         "31": {
             "name": "golem",
             "id": 31,
-            "assetId": 144
+            "assetId": 144,
+			"category": "monster"
         },
         "32": {
             "name": "ramicorn",
             "id": 32,
-            "assetId": 145
+            "assetId": 145,
+			"category": "monster"
         },
         "33": {
             "name": "bloop",
             "id": 33,
-            "assetId": 146
+            "assetId": 146,
+			"category": "monster"
         },
         "34": {
             "name": "bug",
             "id": 34,
-            "assetId": 147
+            "assetId": 147,
+			"category": "monster"
         },
         "35": {
             "name": "gerbeelipillar",
             "id": 35,
-            "assetId": 148
+            "assetId": 148,
+			"category": "monster"
         },
         "36": {
             "name": "coin",
             "id": 36,
-            "assetId": 149
+            "assetId": 149,
+			"category": "ui"
         },
         "37": {
             "name": "get_hit",
             "id": 37,
-            "assetId": 150
+            "assetId": 150,
+			"category": "click"
         },
         "38": {
             "name": "sell_item",
             "id": 38,
-            "assetId": 151
+            "assetId": 151,
+			"category": "ui"
         },
         "39": {
             "name": "music",
             "id": 39,
-            "assetId": 152
+            "assetId": 152,
+			"category": "music"
         },
         "40": {
             "name": "level_up_ding",
             "id": 40,
-            "assetId": 153
+            "assetId": 153,
+			"category": "ui"
         },
         "41": {
             "name": "hit_2",
             "id": 41,
-            "assetId": 154
+            "assetId": 154,
+			"category": "click"
         },
         "42": {
             "name": "hit_3",
             "id": 42,
-            "assetId": 155
+            "assetId": 155,
+			"category": "click"
         },
         "43": {
             "name": "level_up",
             "id": 43,
-            "assetId": 156
+            "assetId": 156,
+			"category": "ui"
         },
         "44": {
             "name": "sonic_boom",
             "id": 44,
-            "assetId": 165
+            "assetId": 165,
+			"category": "ui"
         },
         "45": {
             "name": "chest_open",
             "id": 45,
-            "assetId": 166
+            "assetId": 166,
+			"category": "ui"
         },
         "46": {
             "name": "critical_hit_1",
             "id": 46,
-            "assetId": 190
+            "assetId": 190,
+			"category": "click"
         },
         "47": {
             "name": "critical_hit_2",
             "id": 47,
-            "assetId": 191
+            "assetId": 191,
+			"category": "click"
         },
         "48": {
             "name": "critical_hit_3",
             "id": 48,
-            "assetId": 192
+            "assetId": 192,
+			"category": "click"
         },
         "49": {
             "name": "loot_bag_1",
             "id": 49,
-            "assetId": 204
+            "assetId": 204,
+			"category": "ui"
         },
         "50": {
             "name": "outsiders_tab_click",
             "id": 50,
-            "assetId": 228
+            "assetId": 228,
+			"category": "ui"
+        },
+        "51": {
+            "name": "clickable",
+            "id": 51,
+            "assetId": 228,
+			"category": "clickable"
         }
     },
     "premiumItems": {
@@ -8918,6 +9495,12 @@
             "id": 7,
             "description": "(+10 CPS)",
             "cost": 1000
+        },
+		"8": {
+            "name": "Timelapse",
+            "id": 8,
+            "description": "Instantly get 8 hours of offline progress.",
+            "cost": 200
         }
     },
     "ancients": {
@@ -8931,7 +9514,8 @@
 			"flavorText": "The ancients have a lingering, noticeable effect on everyone who approaches them. As you approach Solomon, you can't help but reflect on your recent decisions. What has this world done to you that so many of its creatures deserve to die? Even the monsters in other universes are not safe from your wrath. You realize that you desire to kill them all, and to take all their gold, but you're not entirely sure why... You feel the urge to contemplate many things.",
 			"id": 3,
 			"levelAmountFormula": "solomonRewards",
-			"paramName": ""
+			"paramName": "",
+			"nonTranscendent": true
 		},
 		"4": {
 			"iconId": 2,
@@ -9023,7 +9607,7 @@
 			"id": 10,
 			"levelAmountFormula": "linear30",
 			"paramName": "",
-			"nonTranscendent": true
+			"nonTranscendent": false
 		},
 		"11": {
 			"iconId": 9,
@@ -9036,7 +9620,7 @@
 			"flavorText": "Your heroes unanimously voice a great amount of displeasure at the notion that you might use this ancient.",
 			"id": 11,
 			"levelAmountFormula": "diminishingReturns",
-			"levelAmountParams": "99, -0.01",
+			"levelAmountParams": "99.99999999, -0.01",
 			"paramName": ""
 		},
 		"12": {
@@ -9063,7 +9647,7 @@
 			"itemSuffix": "Souls",
 			"flavorText": "As you approach the monument your skin reacts to a chilly breeze. Hair stands at the back of your neck and you sense a mystical presence in the air.",
 			"id": 13,
-			"levelAmountFormula": "diminishingReturns",
+			"levelAmountFormula": "atmanValue",
 			"levelAmountParams": "75, -0.013",
 			"paramName": ""
 		},
@@ -9072,12 +9656,12 @@
 			"levelCostFormula": "exponential",
 			"levelCostParams": "2",
 			"maxLevel": 0,
-			"effectDescription": "+%1% more Treasure Chests",
+			"effectDescription": "+%1% more Treasure Chests (maximum 9900%)",
 			"name": "Dora, Ancient of Discovery",
 			"itemSuffix": "Discovery",
 			"flavorText": "Your eyes become sharper. You're able to notice many things. ",
 			"id": 14,
-			"levelAmountFormula": "diminishingReturns",
+			"levelAmountFormula": "doraValue",
 			"levelAmountParams": "9900, -0.002",
 			"paramName": ""
 		},
@@ -9116,7 +9700,7 @@
 			"itemSuffix": "Time",
 			"flavorText": "You could spend hours visiting this monument, and when you leave, only minutes will have passed. Your immortal heroes refuse to approach it - but they do not explain why.",
 			"id": 17,
-			"levelAmountFormula": "diminishingReturns",
+			"levelAmountFormula": "chronosValue",
 			"levelAmountParams": "30, -0.034",
 			"paramName": ""
 		},
@@ -9125,13 +9709,13 @@
 			"levelCostFormula": "exponential",
 			"levelCostParams": "2",
 			"maxLevel": 0,
-			"effectDescription": "-%1% Boss Life",
+			"effectDescription": "-%1 Monsters Worth of Boss Life (minimum 5 monsters)",
 			"name": "Bubos, Ancient of Diseases",
 			"itemSuffix": "Diseases",
 			"flavorText": "There is a putrid stench of death and despair wafting in the air. Your stomach turns sour and you cannot stay long.",
 			"id": 18,
-			"levelAmountFormula": "diminishingReturns",
-			"levelAmountParams": "50, -0.02",
+			"levelAmountFormula": "bubosValue",
+			"levelAmountParams": "5, -0.002",
 			"paramName": ""
 		},
 		"19": {
@@ -9166,13 +9750,13 @@
 			"levelCostFormula": "exponential",
 			"levelCostParams": "2",
 			"maxLevel": 0,
-			"effectDescription": "-%1 monsters required to advance to the next level",
+			"effectDescription": "-%1 monsters required to advance to the next zone (minimum 2 monsters per zone)",
 			"name": "Kumawakamaru, Ancient of Shadows",
 			"itemSuffix": "Shadows",
 			"flavorText": "A darkness radiates from the monument, causing many things to become difficult to see. You catch a brief glimpse of movement nearby... was that Abaddon? Upgrading this ancient will allow you to sneak past monsters when exploring.",
 			"id": 21,
-			"levelAmountFormula": "diminishingReturns",
-			"levelAmountParams": "8, -0.01",
+			"levelAmountFormula": "kumaValue",
+			"levelAmountParams": "100, -0.0025",
 			"paramName": ""
 		},
 		"22": {
@@ -9302,7 +9886,7 @@
 			"flavorText": "Forged from a million lucky coins, this monument is the strongest lucky charm in existence. Place your bets, go toe to toe with death, fight with your mother-in-law and live to tell the tale! Nothing can possibly go wrong when you're in the vicinity of Revolc. Your heroes recommend you haul it with you for when you find clickables.",
 			"id": 31,
 			"levelAmountFormula": "diminishingReturns",
-			"levelAmountParams": "100, -0.01",
+			"levelAmountParams": "96, -0.01",
 			"paramName": ""
 		},
 		"32": {
@@ -9310,7 +9894,7 @@
 			"levelCostFormula": "polynomial1_5",
 			"levelCostParams": "1",
 			"maxLevel": 0,
-			"effectDescription": "+%1% Gold per unassigned Auto Clicker when idle (no clicks for 60 seconds).",
+			"effectDescription": "+%1% DPS per unassigned Auto Clicker when idle (no clicks for 60 seconds).",
 			"name": "Nogardnit, Ancient of Moderation",
 			"itemSuffix": "Moderation",
 			"flavorText": "Conventional wisdom suggests that all things should be taken in moderation. Conventional wisdom, however, does not frequently deal with numbers larger than can fit in a 64-bit register.",
@@ -11975,6 +12559,91 @@
             "baseCost": "1.00e8000",
             "_live": "1",
             "id": 45,
+            "clickDamageFormula": "heroClickDamageFormula1",
+            "goldPerSecondFormula": "heroGoldPerSecondFormula"
+        },
+		 "46": {
+            "attackFormula": "heroAttackFormula1",
+            "costFormula": "heroCostFormula46",
+            "specialSkill": "",
+            "specialSkillDescription": "",
+            "name": "Xavira",
+            "description": "Withal she appears\nIs Xavira more human\nOr is she more deer",
+            "assetId": 238,
+            "baseAttack": 6.97e+250,
+            "baseClickDamage": 0,
+            "baseGoldPerSecond": 0,
+            "baseCost": "1.00e14000",
+            "_live": "1",
+            "id": 46,
+            "clickDamageFormula": "heroClickDamageFormula1",
+            "goldPerSecondFormula": "heroGoldPerSecondFormula"
+        },
+		 "47": {
+            "attackFormula": "heroAttackFormula1",
+            "costFormula": "heroCostFormula46",
+            "specialSkill": "",
+            "specialSkillDescription": "",
+            "name": "Cadu, Tomb Guardian",
+            "description": "The elder brother.",
+            "assetId": 235,
+            "baseAttack": 6.97e+250,
+            "baseClickDamage": 0,
+            "baseGoldPerSecond": 0,
+            "baseCost": "1.00e25500",
+            "_live": "1",
+            "id": 47,
+            "clickDamageFormula": "heroClickDamageFormula1",
+            "goldPerSecondFormula": "heroGoldPerSecondFormula"
+        },
+		 "48": {
+            "attackFormula": "heroAttackFormula1",
+            "costFormula": "heroCostFormula1",
+            "specialSkill": "",
+            "specialSkillDescription": "",
+            "name": "Ceus, Tomb Guardian",
+            "description": "The younger brother.",
+            "assetId": 236,
+            "baseAttack": 6.97e+250,
+            "baseClickDamage": 0,
+            "baseGoldPerSecond": 0,
+            "baseCost": "1.00e25500",
+            "_live": "1",
+            "id": 48,
+            "clickDamageFormula": "heroClickDamageFormula1",
+            "goldPerSecondFormula": "heroGoldPerSecondFormula"
+        },
+		 "49": {
+            "attackFormula": "heroAttackFormula1",
+            "costFormula": "heroCostFormula1",
+            "specialSkill": "",
+            "specialSkillDescription": "",
+            "name": "The Maw",
+            "description": "The Maw chitters at you with anticipation. Is it hungry?",
+            "assetId": 237,
+            "baseAttack": 6.97e+250,
+            "baseClickDamage": 0,
+            "baseGoldPerSecond": 0,
+            "baseCost": "1.00e45500",
+            "_live": "1",
+            "id": 49,
+            "clickDamageFormula": "heroClickDamageFormula1",
+            "goldPerSecondFormula": "heroGoldPerSecondFormula"
+        },
+		 "50": {
+            "attackFormula": "heroAttackFormula1",
+            "costFormula": "heroCostFormula1",
+            "specialSkill": "",
+            "specialSkillDescription": "",
+            "name": "Yachiyl, The Primordial Soul",
+            "description": "\"I am Yachiyl, the first soul. Now the cycle is complete, and I am a hero once more.\"",
+            "assetId": 239,
+            "baseAttack": 6.97e+250,
+            "baseClickDamage": 0,
+            "baseGoldPerSecond": 0,
+            "baseCost": "1.00e72000",
+            "_live": "1",
+            "id": 50,
             "clickDamageFormula": "heroClickDamageFormula1",
             "goldPerSecondFormula": "heroGoldPerSecondFormula"
         }
