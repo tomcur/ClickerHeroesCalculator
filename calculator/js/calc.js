@@ -35,57 +35,8 @@ function alphaFactor(wepwawetLeveledBeyond8k) {
     }
 }
 
-/**
- * See: https://www.reddit.com/r/ClickerHeroes/comments/4n80r5/boss_level_to_hit_cap/
- */
-function bossToHitCap(afterLeveling) {
-    // afterLeveling = true default
-    afterLeveling = utils.defaultFor(afterLeveling, true);
-    
-    if (afterLeveling && data.ancients["solomon"].extraInfo.optimalLevel) {
-        var solomon = data.ancients["solomon"].extraInfo.optimalLevel
-    } else {
-        var solomon = data.ancients["solomon"].level;
-    }
-    
-    var ponyboy = data.outsiders["ponyboy"].level;
-    var tp = data.tp.dividedBy(100); 
-    var maxTP = maxTpReward(); // (5% ((+0.5*Borb)%) of your Sacrificed Souls
-    
-    var multiplier;
-    if (solomon.lessThan(21)) {
-        multiplier = ponyboy.plus(1).times(solomon.times(0.05)).plus(1);
-    } else if (solomon.lessThan(41)) {
-        multiplier = ponyboy.plus(1).times(solomon.minus(20).times(0.04).plus(1)).plus(1);
-    } else if (solomon.lessThan(61)) {
-        multiplier = ponyboy.plus(1).times(solomon.minus(40).times(0.03).plus(1.8)).plus(1);
-    } else if (solomon.lessThan(81)) {
-        multiplier = ponyboy.plus(1).times(solomon.minus(60).times(0.02).plus(2.4)).plus(1);
-    } else {
-        multiplier = ponyboy.plus(1).times(solomon.minus(80).times(0.01).plus(2.8)).plus(1);
-    }
-    
-    var bossNumber = maxTP.dividedBy(multiplier.times(20)).ln().dividedBy(tp.plus(1).ln()).ceil();
-    return bossNumber;
-}
-
-export function zoneToHitCap(afterLeveling) {
-    // afterLeveling = true default
-    afterLeveling = utils.defaultFor(afterLeveling, true);
-    
-    return Decimal.max(bossToHitCap(afterLeveling).times(5).plus(100), new Decimal(105));
-}
-
 export function ascensionZone() {
     return data.ascensionZone.times(1.05);
-}
-
-export function tpCapReached(afterLeveling) {
-    // afterLeveling = true default
-    afterLeveling = utils.defaultFor(afterLeveling, true);
-    
-    var boss = ascensionZone().times(1.05).minus(100).dividedBy(5);
-    return boss >= bossToHitCap(afterLeveling);
 }
 
 function resetOptimalLevels() {
@@ -111,7 +62,6 @@ export function calculate() {
 function computeOptimalLevels(tuneAncient, addLevels) {
     var alpha = alphaFactor(data.settings.wep8k);
     var transcendent = alpha > 0;
-    var atcap = tpCapReached();
     
     var baseLevel = tuneAncient.level.plus(addLevels);
     for (var k in data.ancients) {
@@ -146,8 +96,7 @@ function computeOptimalLevels(tuneAncient, addLevels) {
             }
             
             if (goalFun) {
-                var g = goalFun(baseLevel, oldLevel, alpha, atcap, transcendent, data.settings.wep8k, hybridRatio);
-                
+                var g = goalFun(baseLevel, oldLevel, alpha, transcendent, data.settings.wep8k, hybridRatio);
                 
                 data.ancients[k].extraInfo.optimalLevel = Decimal.max(data.ancients[k].level, g.ceil());
             }

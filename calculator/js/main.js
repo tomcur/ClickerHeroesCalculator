@@ -479,12 +479,7 @@ function importSaveGame() {
 
     $("#tp").val(utils.numberToString(data.tp));
 
-    data.capReached = calculator.tpCapReached();
-    $("#capreached").prop("checked", data.capReached);
-
     $("#gilds").val(data.gilds);
-
-    $("#tprewardcapzone").val(utils.numberToStringFormatted(calculator.zoneToHitCap(false)));
 
     data.useSoulsEnteredManually = false;
     calculateAndUpdate();
@@ -538,7 +533,6 @@ function display(spentHS) {
         }
     });
 
-    $("#tprewardcapzonenew").val(utils.numberToStringFormatted(calculator.zoneToHitCap(true)));
     initializeAncientSoulPlanner();
     ancientSoulPlanner();
 }
