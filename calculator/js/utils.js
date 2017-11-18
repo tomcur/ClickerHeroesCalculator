@@ -140,6 +140,8 @@ var ANTI_CHEAT_CODE = "Fe12NAfA3R6z4k0z";
 var SALT = "af0ik392jrmt0nsfdghy0";
 var CHARACTERS = '1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
 function decodeSprinkle(txtIn) {
+    var MD5 = require("crypto-js/md5");
+    
     var txtOut="";
 
     if (txtIn.search("ClickerHeroesAccountSO") != -1) {
@@ -155,7 +157,7 @@ function decodeSprinkle(txtIn) {
             for (var i = 0; i < result[0].length; i += 2) {
                 txtOut += result[0][i];
             }
-            if (CryptoJS.MD5(txtOut + SALT) != result[1]) {
+            if (MD5(txtOut + SALT) != result[1]) {
                 alert("Bad hash");
                 return;
             }
@@ -197,10 +199,12 @@ function sprinkle(string) {
 }
 
 function getHash(string) {
+    var MD5 = require("crypto-js/md5");
+    
     var charaters = string.split();
     charaters.sort();
     var sortedCharaters = charaters.join();
-    return CryptoJS.MD5(sortedCharaters + SALT);
+    return MD5(sortedCharaters + SALT);
 }
 
 /**********************************************************/
