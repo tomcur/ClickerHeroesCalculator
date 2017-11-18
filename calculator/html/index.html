@@ -21,12 +21,18 @@
                 var theme = localStorage["theme"];
             }
             
+            // Because of a bug in Chrome (regarding the dark theme)
+            // we first have to disable the chosen theme, then enable it
             if (theme != "dark")
             {
-                document.getElementById('theme-light').disabled  = false;
                 document.getElementById('theme-dark').disabled = true;
+            
+                document.getElementById('theme-light').disabled  = true;
+                document.getElementById('theme-light').disabled  = false;
             } else {
                 document.getElementById('theme-light').disabled  = true;
+                
+                document.getElementById('theme-dark').disabled = true;
                 document.getElementById('theme-dark').disabled = false;
             }
         }
