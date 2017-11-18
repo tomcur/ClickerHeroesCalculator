@@ -17,7 +17,12 @@ var model = require(__dirname + '/data/model.js');
 
 // Bindings
 $(document).ready(function () {
-    $('#import, #addsouls, #wep8k, #copyancientlevels, [name="buildmode"], #keepsoulsforregilding, #ignoreminimizedancients')
+    $('#import').on("click", function () {
+        console.log("Working...");
+        importSaveGame(true);
+    });
+    
+    $('#addsouls, #wep8k, #copyancientlevels, [name="buildmode"], #keepsoulsforregilding, #ignoreminimizedancients')
     .on("click", function () {
         console.log("Working...");
         importSaveGame();
@@ -366,8 +371,17 @@ function SetDifference(a, b) {
     return cnt;
 }
 
-function importSaveGame() {
-    var rawDataAlgo = utils.decodeSaveGame($("#savedata").val());
+function importSaveGame(force) {
+    // force = false default
+    force = utils.defaultFor(force, false);
+    
+    var saveData = $("#savedata").val()
+    
+    if (!saveData && !force) {
+        return;
+    }
+    
+    var rawDataAlgo = utils.decodeSaveGame(saveData);
     if (!rawDataAlgo) {
         alert('Could not decode the save game data.');
         return;
