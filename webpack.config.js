@@ -5,6 +5,7 @@ var production = (process.env.NODE_ENV === 'production');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const extractSass = new ExtractTextPlugin({ filename: '[hash].css' });
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 
 module.exports = {  
     entry: [
@@ -67,9 +68,9 @@ module.exports = {
             'template': 'calculator/html/index.html'
         })
     ].concat(production ? [
+        new FaviconsWebpackPlugin('./calculator/images/borb.png'),
         new webpack.optimize.UglifyJsPlugin({
             compress: { warnings: false }
-        }),
-        extractSass
+        })
     ] : [])
 }
