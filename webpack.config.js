@@ -31,7 +31,8 @@ module.exports = {
             use: extractSass.extract({
                 use: [{
                     loader: "css-loader", options: {
-                        sourceMap: true
+                        sourceMap: true,
+                        minimize: production
                     }
                 }, {
                     loader: "sass-loader", options: {
