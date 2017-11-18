@@ -206,7 +206,9 @@ function optimize(tuneAncient) {
     // polynomial in hs, is still very slow (as hs is basically exponential 
     // in play-time). As such, we'll make do with an approximation.
     var initialDiff = right.minus(left);
-    while (right.minus(left).greaterThan(1) && right.minus(left).dividedBy(initialDiff).greaterThan(0.00001)) {
+    var precision = new Decimal(10).pow(-data.settings.precision);
+    
+    while (right.minus(left).greaterThan(1) && right.minus(left).dividedBy(initialDiff).greaterThan(precision)) {
         if(typeof spentHS === 'undefined') {
             var mid = right.plus(left).dividedBy(2).floor();
         } else { 

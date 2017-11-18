@@ -75,6 +75,10 @@ $(document).ready(function () {
     $("#skillancientsrate").change(function () {
         SaveSettings("#skillancientsrate");
     });
+    
+    $("#precision").change(function () {
+        SaveSettings("#precision");
+    });
 
     $('#keepsoulsforregilding').change(function () {
         SaveSettingsCheckBox("#keepsoulsforregilding");
@@ -143,6 +147,17 @@ $(document).ready(function () {
     $('#skillancientsrate').on("slideStop", function () {
         importSaveGame();
     });
+    
+    // Set up precision slider
+    $('#precision').slider({
+        formatter: function (value) {
+            return value;
+        },
+        value: Number($('#precision').val())
+    });
+    $('#precision').on("slideStop", function () {
+        importSaveGame();
+    });
 
     // Show or hide the advanced configuration container
     showHideAdvancedConfigurationContainer();
@@ -176,7 +191,8 @@ function LoadAllSettings() {
     var strSettingsList = [
         "#hybridratio",
         "#revolcrate",
-        "#skillancientsrate"
+        "#skillancientsrate",
+        "#precision"
     ];
 
     var strCustomSave = [];
@@ -427,6 +443,7 @@ function importSaveGame(force) {
     data.settings.hybridRatio = $('#hybridratio').slider('getValue');
     data.settings.revolcLevelRate = $('#revolcrate').slider('getValue');
     data.settings.skillAncientsLevelRate = $('#skillancientsrate').slider('getValue');
+    data.settings.precision = $('#precision').slider('getValue');
     data.settings.keepSoulsForRegilding = $("#keepsoulsforregilding").prop("checked");
     data.settings.ignoreMinimizedAncients = $("#ignoreminimizedancients").prop("checked");
 

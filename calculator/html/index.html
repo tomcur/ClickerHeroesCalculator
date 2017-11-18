@@ -165,6 +165,18 @@
 
                     </div>
                     <hr>
+                    <div>
+                        <label for="skillancientsrate">
+                            Calculator precision (significant digits)<br>
+                            (4 = very quick, 10 = very precise)
+                        </label>
+                        <div>
+                            <input id="precision" data-slider-id="precisionSlider" type="text"
+                                   data-slider-ticks="[4, 19]" data-slider-step="0.05" value="6"/>
+                        </div>
+
+                    </div>
+                    <hr>
                     <div class="form-check">
                         <label class="form-check-label mb-2">
                             <input class="form-check-input" type="checkbox" id="keepsoulsforregilding">
@@ -423,6 +435,10 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <tr>
+                                <td>2017/11/18</td>
+                                <td>Add a dark theme.</td>
+                            </tr>
                             <tr>
                                 <td>2017/11/18</td>
                                 <td>Make save-game generation publicly available.</td>
