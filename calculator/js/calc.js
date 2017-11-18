@@ -1,5 +1,6 @@
 var Decimal = require('decimal.js');
 var utils = require(__dirname + '/utils.js');
+var functions = require(__dirname + '/data/functions.js');
 
 /**
  * See: https://www.reddit.com/r/ClickerHeroes/comments/4naohc/math_and_transcendance/
