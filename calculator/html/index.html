@@ -23,9 +23,7 @@
                 </div>
                 <div class="card-body">
                     <p>
-                        The calculator assumes that, at the very least, you own Siyalatas for idle and hybrid
-                        builds,
-                        and Fragsworth for active builds.
+                        The calculator assumes that you own Siyalatas for idle and hybrid builds, and Fragsworth for active builds.
                     </p>
                     <p>
                         The source code can be found <a href="https://github.com/Beskhue/ClickerHeroesCalculator">here</a>.
@@ -53,11 +51,9 @@
                     <div class="form-group">
                         <label for="savedata">Paste your game file here:</label>
                         <textarea class="form-control w-100" id="savedata" style="height: 80px" onclick="this.select()" autofocus></textarea>
-                        <div style="float: right; margin-top: 10px;">
-                            <button type="button" class="btn btn-primary float-right" id="import">
-                                Import
-                            </button>
-                        </div>
+                        <button type="button" class="btn btn-outline-primary btn-block mt-3" id="import">
+                            Import
+                        </button>
                         <div class="panel-settings mt-3">
                             <div class="form-check">
                                 <label class="form-check-label mb-2">
@@ -391,6 +387,10 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <tr>
+                                <td>2017/11/18</td>
+                                <td>Make save-game generation publicly available.</td>
+                            </tr>
                             <tr>
                                 <td>2017/11/18</td>
                                 <td>Improve layout.</td>
