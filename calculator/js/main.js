@@ -1,8 +1,7 @@
 var Decimal = require('decimal.js');
 
-// External modules
+// Require modules
 require('jquery');
-
 Popper = require('popper.js');
 require('bootstrap');
 require('bootstrap-slider');
@@ -59,6 +58,11 @@ $(document).ready(function () {
         saveBuildMode();
         showHideHybridRatioContainer();
     });
+    
+    $("input[name=theme]:radio").change(function () {
+        saveTheme();
+        setTheme();
+    });
 
     $("#hybridratio").change(function () {
         SaveSettings("#hybridratio");
@@ -97,13 +101,15 @@ $(document).ready(function () {
             $("#config-collapse").collapse('hide');
         }
     });
+    
+    // Load settings
+    LoadAllSettings();
 
     window.data = require(__dirname + '/data/ClickerHeroes_v14307.json');
     model.createObjects(data);
     window.Items = {items: {}, slots: {}};    // No relics.
     ShowTables();
-    LoadAllSettings();
-
+    
     // Set up hybrid ratio slider
     $('#hybridratio').slider({
         formatter: function (value) {
@@ -150,30 +156,31 @@ $(document).ready(function () {
     configureDecimal();
 });
 
-var strSettingsCheckBox = [
-    "#addsouls",
-    "#wep8k",
-    "#copyancientlevels",
-    "#displayadvancedconfiguration",
-    "#displaysavegamegeneration",
-    "#keepsoulsforregilding",
-    "#ignoreminimizedancients",
-    "#collapseancienttableonsmallscreens"
-];
+function LoadAllSettings() { 
+    var strSettingsCheckBox = [
+        "#addsouls",
+        "#wep8k",
+        "#copyancientlevels",
+        "#displayadvancedconfiguration",
+        "#displaysavegamegeneration",
+        "#keepsoulsforregilding",
+        "#ignoreminimizedancients",
+        "#collapseancienttableonsmallscreens"
+    ];
 
-var strSettingsRadio = [
-    "buildmode"
-];
+    var strSettingsRadio = [
+        "buildmode",
+        "theme"
+    ];
 
-var strSettingsList = [
-    "#hybridratio",
-    "#revolcrate",
-    "#skillancientsrate"
-];
+    var strSettingsList = [
+        "#hybridratio",
+        "#revolcrate",
+        "#skillancientsrate"
+    ];
 
-var strCustomSave = [];
-
-function LoadAllSettings() {
+    var strCustomSave = [];
+    
     if (typeof(Storage) !== "undefined") {
         for (var i in strCustomSave) {
             if (localStorage.hasOwnProperty(i)) {
@@ -224,11 +231,28 @@ function saveBuildMode() {
     }
 }
 
+function saveTheme() {
+    var strTheme = $('input[name="theme"]:checked').val();
+    if (typeof(Storage) !== "undefined") {
+        localStorage.theme = strTheme;
+    }
+}
+
 function showHideHybridRatioContainer() {
     if ($('input[name="buildmode"]:checked').val() == "hybrid") {
         $("#hybridratiocontainer").show();
     } else {
         $("#hybridratiocontainer").hide();
+    }
+}
+
+function setTheme() {
+    if ($('input[name="theme"]:checked').val() == "light") {
+        $("#theme-light").prop("disabled", false);
+        $("#theme-dark").prop("disabled", true);
+    } else {
+        $("#theme-light").prop("disabled", true);
+        $("#theme-dark").prop("disabled", false);
     }
 }
 

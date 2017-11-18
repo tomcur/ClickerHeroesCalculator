@@ -4,18 +4,25 @@ var production = (process.env.NODE_ENV === 'production');
 
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const extractSass = new ExtractTextPlugin({ filename: '[hash].css' });
+const extractSass = new ExtractTextPlugin({ filename: '[name].css' });
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 
 module.exports = {  
-    entry: [
-        __dirname + '/calculator/js/main.js',
-        __dirname + '/calculator/scss/main.scss'
-    ],
+    entry: {
+        main: [
+            __dirname + '/calculator/js/main.js'
+        ],
+        light: [
+            __dirname + '/calculator/scss/light.scss'
+        ],
+        dark: [
+            __dirname + '/calculator/scss/dark.scss'
+        ]
+    },
     devtool: 'source-map',
     output: {
         path: __dirname + '/dist/',
-        filename: '[hash].js'
+        filename: '[name]-[hash].js'
     },
   
     module: {
@@ -65,7 +72,8 @@ module.exports = {
     plugins: [
         extractSass,
         new HtmlWebpackPlugin({
-            'template': 'calculator/html/index.html'
+            'template': 'calculator/html/index.html',
+            'excludeChunks': ['light', 'dark']
         })
     ].concat(production ? [
         new FaviconsWebpackPlugin('./calculator/images/borb.png'),
