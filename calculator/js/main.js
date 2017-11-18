@@ -480,9 +480,8 @@ function importSaveGame(force) {
     data.ancientSoulsTotal = new Decimal(rawData.ancientSoulsTotal);
     $("#astotal").val(data.ancientSoulsTotal);
 
-    var tpAncientSoulsPart = new Decimal(50).minus(new Decimal(49).times(data.ancientSoulsTotal.dividedBy(10000).times(-1).exp()));
-    var tpPhandoryssPart = new Decimal(50).times(new Decimal(1).minus(data.outsiders["phandoryss"].level.dividedBy(1000).times(-1).exp()));
-    data.tp = Decimal.max(tpAncientSoulsPart.plus(tpPhandoryssPart), new Decimal(1));
+    var tpAncientSoulsPart = new Decimal(0.25).minus(new Decimal(0.23).times(data.ancientSoulsTotal.times(-0.0003).exp())).times(100);
+    data.tp = Decimal.max(tpAncientSoulsPart, new Decimal(1));
 
     if (!rawData.transcendent) {
         data.tp = new Decimal(0);
