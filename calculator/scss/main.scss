@@ -1,62 +1,14 @@
-@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~bootstrap/scss/bootstrap.scss";
 @import "~bootstrap-slider/dist/css/bootstrap-slider.min.css";
 
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome.scss";
+
 $small: 768px; $medium: 992px; $large: 1200px; $maxwidth: 1280px;
-
-html {
-    font-size: 1rem; @extend body;
-}
-
-body {
-    margin: 0; padding: 0;
-}
-
-/* Table Reset */
-
-table {
-    display: table;
-}
-
-thead {
-    display: table-header-group;
-}
-
-tbody {
-    display: table-row-group;
-}
-
-tr {
-    display: table-row;
-}
-
-th, td {
-    display: table-cell;
-}
-
-/* Wrapper */
-
-.wrapper {
-    width: 100%;
-    max-width: $maxwidth;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    label {
-        line-height: 2; vertical-align: middle;
-    }
-}
-
-/* io-panel */
-
-.io-panel > div {
-    padding: auto;
-}
 
 /* about-panel */
 
 #about .tab-pane {
-    padding: 15px;
     border-left: 1px solid #ddd;
     border-right: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
@@ -64,32 +16,6 @@ th, td {
 }
 
 /* panel-body */
-
-.panel-body .panel-settings {
-    margin-top: 1rem;
-}
-
-/* header elements (for panels) */
-
-header {
-    display: table;
-    width: 100%;
-    
-    a.btn[data-toggle="collapse"] {
-        display: inline; line-height: 2;
-    }
-
-    > span {
-        display: table-cell; width: 50%;
-    }
-
-    .panel-heading-left {
-        text-align: left;
-    }
-    .panel-heading-right {
-        text-align: right;
-    }
-}
 
 /* input portion of io-panel */
 #input {
@@ -102,13 +28,6 @@ header {
     input[type=radio] {
         margin-left: 1.5rem; 
     }
-}
-
-#input textarea, #generatedsavedatacontainer textarea {
-    width: 100%;
-    resize: vertical;
-    margin: .5rem 0;
-    min-height: 75px;
 }
 
 div.slider-tick {
@@ -213,10 +132,6 @@ div.slider-tick {
                 top: -9999px;
                 left: -9999px;
             }
-        }
-
-        tr {
-            border: 1px solid #ccc;
         }
         
         td {

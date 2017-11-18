@@ -2,6 +2,8 @@ var Decimal = require('decimal.js');
 
 // External modules
 require('jquery');
+
+Popper = require('popper.js');
 require('bootstrap');
 require('bootstrap-slider');
 require('lodash');
@@ -528,7 +530,7 @@ function display(spentHS) {
             ancient.ui.targetBox.attr("style","display:none");
         }
     }
-
+    
     $("#ancienttbl tr:visible").each(function (index, row) {
         $(row).removeClass('odd_row');
         if (index % 2 == 1) { //odd row
