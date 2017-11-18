@@ -167,12 +167,13 @@
                     <hr>
                     <div>
                         <label for="skillancientsrate">
-                            Calculator precision (significant digits)<br>
-                            (4 = very quick, 10 = very precise)
+                            Calculator precision in significant digits<br>
+                            (low precision is quicker, high precision is more accurate)
                         </label>
                         <div>
                             <input id="precision" data-slider-id="precisionSlider" type="text"
-                                   data-slider-ticks="[4, 19]" data-slider-step="0.05" value="6"/>
+                                   data-slider-ticks="[4, 35]" data-slider-scale="logarithmic"
+                                   data-slider-step="0.05" value="7"/>
                         </div>
 
                     </div>

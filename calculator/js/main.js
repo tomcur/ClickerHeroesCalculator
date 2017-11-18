@@ -167,8 +167,6 @@ $(document).ready(function () {
 
     // Do or do not collapse the ancient table on small screens
     doOrDoNotCollapseAncientTableOnSmallScreens();
-
-    configureDecimal();
 });
 
 function LoadAllSettings() { 
@@ -297,9 +295,9 @@ function doOrDoNotCollapseAncientTableOnSmallScreens() {
     }
 }
 
-function configureDecimal() {
+function configureDecimal(precision) {
     Decimal.config({
-        precision: 20
+        precision: precision
     });
 }
 
@@ -447,9 +445,12 @@ function importSaveGame(force) {
     data.settings.keepSoulsForRegilding = $("#keepsoulsforregilding").prop("checked");
     data.settings.ignoreMinimizedAncients = $("#ignoreminimizedancients").prop("checked");
 
+    // Set precision
+    configureDecimal(Math.ceil(data.settings.precision) + 3);
+    
     // Older saves won't have items.
     data.items = rawData.hasOwnProperty("items") ? rawData.items : {items: {}, slots: {}};
-
+    
     data.heroSoulsSacrificed = new Decimal(rawData.heroSoulsSacrificed);
 
     // Calculate total HS earned
@@ -534,6 +535,7 @@ function importSaveGame(force) {
 
     data.useSoulsEnteredManually = false;
     
+    // Calculate
     var dateTimeBefore = new Date();
     calculateAndUpdate();
     var dateTimeAfter = new Date();
