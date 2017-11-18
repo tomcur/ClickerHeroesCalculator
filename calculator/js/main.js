@@ -42,10 +42,12 @@ $(document).ready(function () {
 
     $('#displayadvancedconfiguration').change(function () {
         SaveSettingsCheckBox('#displayadvancedconfiguration');
+        showHideAdvancedConfigurationContainer();
     });
     
     $('#displaysavegamegeneration').change(function () {
         SaveSettingsCheckBox('#displaysavegamegeneration');
+        showHideGeneratedSaveGameContainer();
     });
 
     $("input[name=buildmode]:radio").change(function () {
@@ -55,14 +57,6 @@ $(document).ready(function () {
 
     $("#hybridratio").change(function () {
         SaveSettings("#hybridratio");
-    });
-
-    $("#displayadvancedconfiguration").change(function () {
-        showHideAdvancedConfigurationContainer();
-    });
-    
-    $("#displaysavegamegeneration").change(function () {
-        showHideGeneratedSaveGameContainer();
     });
 
     $("#revolcrate").change(function () {
