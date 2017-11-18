@@ -50,50 +50,57 @@
                     </div>
                 </div>
                 <div class="card-body collapse show" id="input-collapse">
-                    <label for="savedata">Paste your game file here:</label>
-                    <textarea id="savedata" style="width: 100%; height: 50px" onclick="this.select()"
-                              autofocus></textarea>
-                    <div style="float: right; margin-top: 10px;">
-                        <button type="button" class="btn btn-primary" id="import" style="float: right;">
-                            Import
-                        </button>
-                    </div>
-                    <div class="panel-settings">
-                        <div>
-                            <label><input type="checkbox" id="addsouls"> Include souls gained
-                                after ascension</label>
+                    <div class="form-group">
+                        <label for="savedata">Paste your game file here:</label>
+                        <textarea class="form-control w-100" id="savedata" style="height: 50px" onclick="this.select()" autofocus></textarea>
+                        <div style="float: right; margin-top: 10px;">
+                            <button type="button" class="btn btn-primary float-right" id="import">
+                                Import
+                            </button>
                         </div>
-                        <div>
-                            <label><input type="checkbox" id="wep8k"> Best hero will be
-                                leveled
-                                beyond 8,000</label>
-                        </div>
-                        <div>
-                            <label><input type="checkbox" id="copyancientlevels"> Copy
-                                ancient
-                                change to clipboard when selected</label>
-                        </div>
-                        <div>
-                            <label><input type="checkbox" id="displayadvancedconfiguration"> Display advanced
-                                configuration</label>
-                        </div>
-                        <hr>
-                        <div>
-                            Build
-                            <label><input type="radio" name="buildmode" value="idle"
-                                          checked="checked"> Idle</label>
-                            <label><input type="radio" name="buildmode" value="hybrid"
-                                          checked="checked"> Hybrid</label>
-                            <label><input type="radio" name="buildmode" value="active">
-                                Active</label>
-                        </div>
-                        <div id="hybridratiocontainer">
-                            <label for="hybridratio">Ratio Fragsworth/Siyalatas (default: 0.5)</label>
-                            <div>
-                                <input id="hybridratio" data-slider-id="hybridratioSlider" type="text"
-                                       data-slider-step="0.05" data-slider-scale="logarithmic"
-                                       data-slider-ticks="[0.05, 0.1, 0.5, 1, 2, 3, 4, 5, 10, 20]"
-                                       data-slider-ticks-snap-bounds="0.05" value="0.5"/>
+                        <div class="panel-settings mt-3">
+                            <div class="form-check">
+                                <label class="form-check-label mb-2">
+                                    <input class="form-check-input" type="checkbox" id="addsouls">
+                                    Include souls gained after ascension
+                                </label>
+                                <label class="form-check-label mb-2">
+                                    <input class="form-check-input" type="checkbox" id="wep8k">
+                                    Best hero will be leveled beyond 8,000
+                                </label>
+                                <label class="form-check-label mb-2">
+                                    <input class="form-check-input" type="checkbox" id="copyancientlevels">
+                                    Copy ancient change to clipboard when selected
+                                </label>
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" id="displayadvancedconfiguration">
+                                    Display advanced configuration
+                                </label>
+                            </div>
+                            <hr>
+                            <div class="form-check">
+                                Build
+                                <label class="form-check-label ml-3">
+                                    <input class="form-check-input" type="radio" name="buildmode" value="idle" checked="checked">
+                                    Idle
+                                </label>
+                                <label class="form-check-label ml-3">
+                                    <input class="form-check-input" type="radio" name="buildmode" value="hybrid" checked="checked">
+                                    Hybrid
+                                </label>
+                                <label class="form-check-label ml-3">
+                                    <input class="form-check-input" type="radio" name="buildmode" value="active">
+                                    Active
+                                </label>
+                            </div>
+                            <div id="hybridratiocontainer">
+                                <label for="hybridratio">Ratio Fragsworth/Siyalatas (default: 0.5)</label>
+                                <div>
+                                    <input id="hybridratio" data-slider-id="hybridratioSlider" type="text"
+                                           data-slider-step="0.05" data-slider-scale="logarithmic"
+                                           data-slider-ticks="[0.05, 0.1, 0.5, 1, 2, 3, 4, 5, 10, 20]"
+                                           data-slider-ticks-snap-bounds="0.05" value="0.5"/>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -137,22 +144,20 @@
 
                     </div>
                     <hr>
-                    <div>
-                        <label>
-                            <input type="checkbox" id="keepsoulsforregilding">
+                    <div class="form-check">
+                        <label class="form-check-label mb-2">
+                            <input class="form-check-input" type="checkbox" id="keepsoulsforregilding">
                             Reserve hero souls for regilding
                         </label>
-                    </div>
-                    <div>
-                        <label>
-                            <input type="checkbox" id="ignoreminimizedancients">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="ignoreminimizedancients">
                             Ignore minimized ancients
                         </label>
                     </div>
                     <hr>
-                    <div>
-                        <label>
-                            <input type="checkbox" id="collapseancienttableonsmallscreens">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="collapseancienttableonsmallscreens">
                             Collapse ancient table on small screens
                         </label>
                     </div>
@@ -172,11 +177,13 @@
                     </div>
                 </div>
                 <div class="card-body" id="savegame-collapse">
-                    <p>This functionality is experimental. Always backup your original save-game. If you notice
-                        problems, please notify me as soon as possible.</p>
+                    <p>
+                        This functionality is experimental, and is considered cheating.
+                        Always backup your original save-game. If you notice problems,
+                        please notify me as soon as possible.
+                    </p>
                     <label for="generatedsavedata">Import this into Clicker Heroes:</label>
-                    <textarea id="generatedsavedata" style="width: 100%; height: 50px" onclick="this.select()"
-                              autofocus></textarea>
+                    <textarea class="form-control w-100" id="generatedsavedata" style="height: 50px" onclick="this.select()" autofocus></textarea>
                     <hr>
                     <div class="panel-settings">
                         <div>
