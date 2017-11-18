@@ -1,0 +1,4 @@
+# Cache css, javascript and images for a month
+<filesMatch ".(css|js|jpg|jpeg|png|gif|ico)$">
+    Header set Cache-Control "max-age=2628000, public"
+</filesMatch>

@@ -7,6 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlMinifier = require('html-minifier');
 const extractSass = new ExtractTextPlugin({ filename: '[name].css' });
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {  
     entry: {
@@ -89,6 +90,11 @@ module.exports = {
         new FaviconsWebpackPlugin('./calculator/images/borb.png'),
         new webpack.optimize.UglifyJsPlugin({
             compress: { warnings: false }
-        })
+        }),
+        new CopyWebpackPlugin([
+            { 
+                from: __dirname + '/calculator/extra/.htaccess' 
+            },
+        ])
     ] : [])
 }
