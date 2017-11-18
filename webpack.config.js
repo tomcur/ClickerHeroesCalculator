@@ -4,6 +4,7 @@ var production = (process.env.NODE_ENV === 'production');
 
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlMinifier = require('html-minifier');
 const extractSass = new ExtractTextPlugin({ filename: '[name].css' });
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 
@@ -74,7 +75,15 @@ module.exports = {
         extractSass,
         new HtmlWebpackPlugin({
             'template': 'calculator/html/index.html',
-            'excludeChunks': ['light', 'dark']
+            'excludeChunks': ['light', 'dark'],
+            'minify': production ? {
+                removeAttributeQuotes: true,
+                collapseWhitespace: true,
+                html5: true,
+                minifyCSS: true,
+                removeComments: false,
+                removeEmptyAttributes: true,
+            } : false
         })
     ].concat(production ? [
         new FaviconsWebpackPlugin('./calculator/images/borb.png'),
