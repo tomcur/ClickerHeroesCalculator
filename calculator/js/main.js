@@ -533,7 +533,13 @@ function importSaveGame(force) {
     $("#gilds").val(data.gilds);
 
     data.useSoulsEnteredManually = false;
+    
+    var dateTimeBefore = new Date();
     calculateAndUpdate();
+    var dateTimeAfter = new Date();
+    
+    var elapsed = dateTimeAfter - dateTimeBefore;
+    $("#calculationtime").html("Calculation took " + utils.numberToString(elapsed / 1000, 3) + " seconds");
 }
 
 function calculateAndUpdate() {
