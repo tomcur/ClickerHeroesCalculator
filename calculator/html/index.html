@@ -161,6 +161,13 @@
                             Collapse ancient table on small screens
                         </label>
                     </div>
+                    <hr>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="displaysavegamegeneration">
+                            Enable save-game generation
+                        </label>
+                    </div>
                 </div>
             </div>
             <div id="generatedsavedatacontainer" class="card border-primary mb-3">
@@ -184,15 +191,6 @@
                     </p>
                     <label for="generatedsavedata">Import this into Clicker Heroes:</label>
                     <textarea class="form-control w-100" id="generatedsavedata" style="height: 50px" onclick="this.select()" autofocus></textarea>
-                    <hr>
-                    <div class="panel-settings">
-                        <div>
-                            <label>
-                                <input type="checkbox" onclick="toggleGenerateSaveGameData()" id="generatesavedata">
-                                Enable save-game generation
-                            </label>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

@@ -43,6 +43,10 @@ $(document).ready(function () {
     $('#displayadvancedconfiguration').change(function () {
         SaveSettingsCheckBox('#displayadvancedconfiguration');
     });
+    
+    $('#displaysavegamegeneration').change(function () {
+        SaveSettingsCheckBox('#displaysavegamegeneration');
+    });
 
     $("input[name=buildmode]:radio").change(function () {
         saveBuildMode();
@@ -55,6 +59,10 @@ $(document).ready(function () {
 
     $("#displayadvancedconfiguration").change(function () {
         showHideAdvancedConfigurationContainer();
+    });
+    
+    $("#displaysavegamegeneration").change(function () {
+        showHideGeneratedSaveGameContainer();
     });
 
     $("#revolcrate").change(function () {
@@ -71,11 +79,6 @@ $(document).ready(function () {
 
     $('#ignoreminimizedancients').change(function () {
         SaveSettingsCheckBox("#ignoreminimizedancients");
-    });
-
-    $('#generatesavedata').change(function () {
-        SaveSettingsCheckBox("#generatesavedata");
-        showHideGeneratedSaveGameContainer();
     });
 
     $('#collapseancienttableonsmallscreens').change(function () {
@@ -153,9 +156,9 @@ var strSettingsCheckBox = [
     "#wep8k",
     "#copyancientlevels",
     "#displayadvancedconfiguration",
+    "#displaysavegamegeneration",
     "#keepsoulsforregilding",
     "#ignoreminimizedancients",
-    "#generatesavedata",
     "#collapseancienttableonsmallscreens"
 ];
 
@@ -239,7 +242,7 @@ function showHideAdvancedConfigurationContainer() {
 }
 
 function showHideGeneratedSaveGameContainer() {
-    if ($("#generatesavedata").prop('checked')) {
+    if ($("#displaysavegamegeneration").prop('checked')) {
         $("#generatedsavedatacontainer").show();
     } else {
         $("#generatedsavedatacontainer").hide();
@@ -596,7 +599,7 @@ jQuery(function ($) {
 
 function generateSaveGame(spentHS) {
     // Only do this if save-game generation is enabled.
-    if (!$('#generatesavedata').prop('checked')) {
+    if (!$('#displaysavegamegeneration').prop('checked')) {
         return;
     }
 
@@ -609,11 +612,7 @@ function generateSaveGame(spentHS) {
         return;
     }
 
-    if (data.settings.includeSoulsAfterAscension) {
-
-    }
-
-    var rawDataAlgo = decodeSaveGame($("#savedata").val());
+    var rawDataAlgo = utils.decodeSaveGame($("#savedata").val());
     var rawData = rawDataAlgo.data;
 
     // Set ancient levels
@@ -629,19 +628,5 @@ function generateSaveGame(spentHS) {
     rawData.heroSouls = data.heroSouls.minus(spentHS).floor().toString();
 
     // Output save game
-    $('#generatedsavedata').val(encodeSaveGame(rawData, data.encodeAlgo));
-}
-
-/* Enables save-game generation.
- */
-function enableSaveGameGeneration() {
-    var msg = "Now enabling generation of save-game output.\n\n"
-        + "Using this functionality can be considered cheating. Please do not publicly distribute instructions on how to enable this feature.\n\n"
-        + "This functionality is experimental. Use it at your own risk. Always remember to back up your saves.";
-
-    console.log(msg);
-    alert(msg);
-
-    $('#generatesavedata').prop('checked', true);
-    $('#generatesavedata').change();
+    $('#generatedsavedata').val(utils.encodeSaveGame(rawData, data.encodeAlgo));
 }
