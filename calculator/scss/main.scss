@@ -180,3 +180,18 @@ div.slider-tick {
         }
     }
 }
+
+/* Temporary fix for bootstrap-slider to support Bootstrap 4 */
+.slider.slider-horizontal:hover, .slider.slider-vertical:hover {
+    .tooltip.tooltip-main {
+        opacity: 0.7 !important;
+    }
+    .tooltip-inner {
+        font-size: 90%;
+        width: auto;
+    }
+}
+
+.slider {
+    width: 100% !important;
+}
