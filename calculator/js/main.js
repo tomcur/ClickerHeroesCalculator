@@ -550,7 +550,7 @@ function importSaveGame(force) {
     try {
         calculateAndUpdate();
     } catch (e) {
-        showModal('An error occurred', e);
+        showModal('An error occurred', e, 'Close');
     }
     var dateTimeAfter = new Date();
     
