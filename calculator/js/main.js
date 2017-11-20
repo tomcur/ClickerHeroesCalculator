@@ -409,6 +409,16 @@ function SetDifference(a, b) {
     return cnt;
 }
 
+function showModal(title, content, btn) {
+    // btn = "Get it" default
+    btn = utils.defaultFor(btn, "Got it");
+    
+    $('#modal-title').html(title);
+    $('#modal-body').html(content);
+    $('#modal-btn').html(btn);
+    $('#modal').modal();
+}
+
 function importSaveGame(force) {
     // force = false default
     force = utils.defaultFor(force, false);
@@ -421,7 +431,7 @@ function importSaveGame(force) {
     
     var rawDataAlgo = utils.decodeSaveGame(saveData);
     if (!rawDataAlgo) {
-        alert('Could not decode the save game data.');
+        showModal('Oops!', '<p>Could not decode the save game data.</p>');
         return;
     }
     
