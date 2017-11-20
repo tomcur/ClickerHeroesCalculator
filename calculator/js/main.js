@@ -106,6 +106,13 @@ $(document).ready(function () {
         }
     });
     
+    $('#generatedsavedata').on('focus click', function () {
+        $(this).select();
+        if ($("#copyancientlevels").prop("checked") && document.queryCommandSupported('copy')) {
+            document.execCommand('copy');
+        }
+    });
+    
     // Load settings
     loadAllSettings();
 
