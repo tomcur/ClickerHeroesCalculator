@@ -547,7 +547,11 @@ function importSaveGame(force) {
     
     // Calculate
     var dateTimeBefore = new Date();
-    calculateAndUpdate();
+    try {
+        calculateAndUpdate();
+    } catch (e) {
+        showModal('An error occurred', e);
+    }
     var dateTimeAfter = new Date();
     
     var elapsed = dateTimeAfter - dateTimeBefore;
