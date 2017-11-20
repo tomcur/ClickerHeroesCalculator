@@ -436,7 +436,7 @@ function importSaveGame(force) {
     }
     
     var rawData = rawDataAlgo.data;
-
+    
     // Create data structure
     data.settings = {};
     
@@ -556,6 +556,9 @@ function importSaveGame(force) {
     
     var elapsed = dateTimeAfter - dateTimeBefore;
     $("#calculationtime").html("Calculation took " + utils.numberToString(elapsed / 1000, 3) + " seconds");
+    
+    // Enable field to enter available HS manually
+    $('#soulsin').prop('disabled', false);
 }
 
 function calculateAndUpdate() {
