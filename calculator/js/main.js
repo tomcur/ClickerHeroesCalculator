@@ -226,9 +226,19 @@ function loadAllSettings() {
     }
 }
 
+var saveSettingError = false;
 function saveSetting(key, val) {
     if (typeof(Storage) !== "undefined") {
-        localStorage[key] = val;
+        try {
+            localStorage[key] = val;
+            a = b + c;
+        } catch (e) {
+            if (!saveSettingError) {
+                saveSettingError = true;
+                
+                showModal('Oops!', '<p>Your browser prevented settings from being saved.</p><p>The error given was:</p><p><code>' + e + '</code></p>');
+            }
+        }
     }
 }
 
