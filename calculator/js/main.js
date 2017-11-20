@@ -558,7 +558,7 @@ function importSaveGame(force) {
     try {
         calculateAndUpdate();
     } catch (e) {
-        showModal('An error occurred', e, 'Close');
+        showModal('An error occurred', '<p>Something went wrong while calculating.</p><p>The error given was:</p><p><code>' + e + '</code></p>', 'Close');
     }
     var dateTimeAfter = new Date();
     
