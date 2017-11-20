@@ -231,12 +231,11 @@ function saveSetting(key, val) {
     if (typeof(Storage) !== "undefined") {
         try {
             localStorage[key] = val;
-            a = b + c;
         } catch (e) {
             if (!saveSettingError) {
                 saveSettingError = true;
                 
-                showModal('Oops!', '<p>Your browser prevented settings from being saved.</p><p>The error given was:</p><p><code>' + e + '</code></p>');
+                showModal('En error occurred', '<p>Your browser prevented settings from being saved.</p><p>The error given was:</p><p><code>' + e + '</code></p>');
             }
         }
     }
