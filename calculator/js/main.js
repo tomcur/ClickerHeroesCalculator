@@ -33,24 +33,24 @@ $(document).ready(function () {
     });
     
     $('#addsouls').change(function () {
-        SaveSettingsCheckBox("#addsouls");
+        saveSettingCheckBox("#addsouls");
     });
 
     $('#wep8k').change(function () {
-        SaveSettingsCheckBox("#wep8k");
+        saveSettingCheckBox("#wep8k");
     });
 
     $('#copyancientlevels').change(function () {
-        SaveSettingsCheckBox('#copyancientlevels');
+        saveSettingCheckBox('#copyancientlevels');
     });
 
     $('#displayadvancedconfiguration').change(function () {
-        SaveSettingsCheckBox('#displayadvancedconfiguration');
+        saveSettingCheckBox('#displayadvancedconfiguration');
         showHideAdvancedConfigurationContainer();
     });
     
     $('#displaysavegamegeneration').change(function () {
-        SaveSettingsCheckBox('#displaysavegamegeneration');
+        saveSettingCheckBox('#displaysavegamegeneration');
         showHideGeneratedSaveGameContainer();
     });
 
@@ -65,31 +65,31 @@ $(document).ready(function () {
     });
 
     $("#hybridratio").change(function () {
-        SaveSettings("#hybridratio");
+        saveSettingField("#hybridratio");
     });
 
     $("#revolcrate").change(function () {
-        SaveSettings("#revolcrate");
+        saveSettingField("#revolcrate");
     });
 
     $("#skillancientsrate").change(function () {
-        SaveSettings("#skillancientsrate");
+        saveSettingField("#skillancientsrate");
     });
     
     $("#precision").change(function () {
-        SaveSettings("#precision");
+        saveSettingField("#precision");
     });
 
     $('#keepsoulsforregilding').change(function () {
-        SaveSettingsCheckBox("#keepsoulsforregilding");
+        saveSettingCheckBox("#keepsoulsforregilding");
     });
 
     $('#ignoreminimizedancients').change(function () {
-        SaveSettingsCheckBox("#ignoreminimizedancients");
+        saveSettingCheckBox("#ignoreminimizedancients");
     });
 
     $('#collapseancienttableonsmallscreens').change(function () {
-        SaveSettingsCheckBox("#collapseancienttableonsmallscreens");
+        saveSettingCheckBox("#collapseancienttableonsmallscreens");
         doOrDoNotCollapseAncientTableOnSmallScreens();
     });
 
@@ -107,12 +107,12 @@ $(document).ready(function () {
     });
     
     // Load settings
-    LoadAllSettings();
+    loadAllSettings();
 
     window.data = require(__dirname + '/data/ClickerHeroes_v14307.json');
     model.createObjects(data);
     window.Items = {items: {}, slots: {}};    // No relics.
-    ShowTables();
+    showTables();
     
     // Set up hybrid ratio slider
     $('#hybridratio').slider({
@@ -169,7 +169,7 @@ $(document).ready(function () {
     doOrDoNotCollapseAncientTableOnSmallScreens();
 });
 
-function LoadAllSettings() { 
+function loadAllSettings() { 
     var strSettingsCheckBox = [
         "#addsouls",
         "#wep8k",
@@ -226,30 +226,28 @@ function LoadAllSettings() {
     }
 }
 
-function SaveSettings(strSetting) {
+function saveSetting(key, val) {
     if (typeof(Storage) !== "undefined") {
-        localStorage[strSetting] = $(strSetting).val();
+        localStorage[key] = val;
     }
-};
+}
 
-function SaveSettingsCheckBox(strSetting) {
-    if (typeof(Storage) !== "undefined") {
-        localStorage[strSetting] = $(strSetting).prop('checked');
-    }
+function saveSettingField(strSetting) {
+    saveSetting(strSetting, $(strSetting).val());
+}
+
+function saveSettingCheckBox(strSetting) {
+    saveSetting(strSetting, $(strSetting).prop('checked'));
 }
 
 function saveBuildMode() {
     var strBuildMode = $('input[name="buildmode"]:checked').val();
-    if (typeof(Storage) !== "undefined") {
-        localStorage.buildmode = strBuildMode;
-    }
+    saveSetting("buildmode", strBuildMode);
 }
 
 function saveTheme() {
     var strTheme = $('input[name="theme"]:checked').val();
-    if (typeof(Storage) !== "undefined") {
-        localStorage.theme = strTheme;
-    }
+    saveSetting("theme", strTheme);
 }
 
 function showHideHybridRatioContainer() {
@@ -346,7 +344,7 @@ function addOutsider(key) {
     $("#outsidertbl").append(tr);
 }
 
-function ShowTables() {
+function showTables() {
     var ancientList = _.keys(data.ancients).sort();
 
     // Ancient Tab
