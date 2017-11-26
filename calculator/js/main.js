@@ -21,7 +21,7 @@ $(document).ready(function () {
         importSaveGame(true);
     });
     
-    $('#addsouls, #wep8k, #copyancientlevels, #usescientificnotation, [name="buildmode"], #keepsoulsforregilding, #ignoreminimizedancients')
+    $('#addsouls, #wep8k, #copyancientlevels, [name="buildmode"], #keepsoulsforregilding, #ignoreminimizedancients')
     .on("click", function () {
         console.log("Working...");
         importSaveGame();
@@ -42,10 +42,6 @@ $(document).ready(function () {
 
     $('#copyancientlevels').change(function () {
         saveSettingCheckBox('#copyancientlevels');
-    });
-    
-    $('#usescientificnotation').change(function () {
-        saveSettingCheckBox('#usescientificnotation');
     });
 
     $('#displayadvancedconfiguration').change(function () {
@@ -185,7 +181,6 @@ function loadAllSettings() {
         "#addsouls",
         "#wep8k",
         "#copyancientlevels",
-        "#usescientificnotation",
         "#displayadvancedconfiguration",
         "#displaysavegamegeneration",
         "#keepsoulsforregilding",
@@ -466,7 +461,7 @@ function importSaveGame(force) {
     data.settings.includeSoulsAfterAscension = $("#addsouls").prop("checked");
     data.settings.wep8k = $("#wep8k").prop("checked");
     data.settings.copyAncientLevelsToClipboard = $("#copyancientlevels").prop("checked");
-    data.settings.useScientificNotation = $("#usescientificnotation").prop("checked");
+    data.settings.useScientificNotation = rawData.hasOwnProperty("numberDisplayMode") ? rawData.numberDisplayMode : true;
     data.settings.buildMode = $('input[name="buildmode"]:checked').val();
     data.settings.hybridRatio = $('#hybridratio').slider('getValue');
     data.settings.revolcLevelRate = $('#revolcrate').slider('getValue');
