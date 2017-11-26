@@ -21,7 +21,7 @@ $(document).ready(function () {
         importSaveGame(true);
     });
     
-    $('#addsouls, #wep8k, #copyancientlevels, [name="buildmode"], #keepsoulsforregilding, #ignoreminimizedancients')
+    $('#addsouls, #wep8k, #copyancientlevels, #usescientificnotation, [name="buildmode"], #keepsoulsforregilding, #ignoreminimizedancients')
     .on("click", function () {
         console.log("Working...");
         importSaveGame();
@@ -42,6 +42,10 @@ $(document).ready(function () {
 
     $('#copyancientlevels').change(function () {
         saveSettingCheckBox('#copyancientlevels');
+    });
+    
+    $('#usescientificnotation').change(function () {
+        saveSettingCheckBox('#usescientificnotation');
     });
 
     $('#displayadvancedconfiguration').change(function () {
@@ -181,6 +185,7 @@ function loadAllSettings() {
         "#addsouls",
         "#wep8k",
         "#copyancientlevels",
+        "#usescientificnotation",
         "#displayadvancedconfiguration",
         "#displaysavegamegeneration",
         "#keepsoulsforregilding",
@@ -339,7 +344,7 @@ function AddAncient(key) {
 
 
     data.ancients[key].ui.change.focusout(function () {
-        $(this).val(utils.numberToStringFormatted(data.ancients[key].extraInfo.optimalLevel.minus(data.ancients[key].level)));
+        $(this).val(utils.numberToStringFormatted(data.ancients[key].extraInfo.optimalLevel.minus(data.ancients[key].level), data.settings.useScientificNotation));
     });
 
     tr.append($("<td></td>").addClass("col2").append(data.ancients[key].ui.level))
@@ -461,6 +466,7 @@ function importSaveGame(force) {
     data.settings.includeSoulsAfterAscension = $("#addsouls").prop("checked");
     data.settings.wep8k = $("#wep8k").prop("checked");
     data.settings.copyAncientLevelsToClipboard = $("#copyancientlevels").prop("checked");
+    data.settings.useScientificNotation = $("#usescientificnotation").prop("checked");
     data.settings.buildMode = $('input[name="buildmode"]:checked').val();
     data.settings.hybridRatio = $('#hybridratio').slider('getValue');
     data.settings.revolcLevelRate = $('#revolcrate').slider('getValue');
@@ -525,7 +531,7 @@ function importSaveGame(force) {
             // Check whether the ancient is minimized in the game or not
             data.ancients[k].minimized = rawData.ancientEntrySizes.hasOwnProperty(data.ancients[k].id);
 
-            data.ancients[k].ui.level.text(utils.numberToStringFormatted(data.ancients[k].level));
+            data.ancients[k].ui.level.text(utils.numberToStringFormatted(data.ancients[k].level, data.settings.useScientificNotation));
         }
     }
 
@@ -536,7 +542,7 @@ function importSaveGame(force) {
             } else {
                 data.outsiders[k].level = new Decimal(0);
             }
-            data.outsiders[k].ui.level.text(utils.numberToStringFormatted(data.outsiders[k].level));
+            data.outsiders[k].ui.level.text(utils.numberToStringFormatted(data.outsiders[k].level, data.settings.useScientificNotation));
         }
     }
 
@@ -599,15 +605,15 @@ function manualHeroSoulEntry() {
 }
 
 function display(spentHS) {
-    $("#soulsgoal").text(utils.numberToStringFormatted(data.heroSouls.minus(spentHS).floor()));
-    $("#soulschange").text((spentHS > 0 ? "-" : "") + utils.numberToStringFormatted(spentHS));
+    $("#soulsgoal").text(utils.numberToStringFormatted(data.heroSouls.minus(spentHS).floor(), data.settings.useScientificNotation));
+    $("#soulschange").text((spentHS > 0 ? "-" : "") + utils.numberToStringFormatted(spentHS, data.settings.useScientificNotation));
 
     for (var k in data.ancients) {
         var ancient = data.ancients[k];
         if (ancient.extraInfo.optimalLevel) {
-            ancient.ui.goal.text(utils.numberToStringFormatted(ancient.extraInfo.optimalLevel));
-            ancient.ui.change.val(utils.numberToStringFormatted(ancient.extraInfo.optimalLevel.minus(ancient.level)));
-            ancient.ui.cost.text(utils.numberToStringFormatted(ancient.extraInfo.costToLevelToOptimal));
+            ancient.ui.goal.text(utils.numberToStringFormatted(ancient.extraInfo.optimalLevel, data.settings.useScientificNotation));
+            ancient.ui.change.val(utils.numberToStringFormatted(ancient.extraInfo.optimalLevel.minus(ancient.level), data.settings.useScientificNotation));
+            ancient.ui.cost.text(utils.numberToStringFormatted(ancient.extraInfo.costToLevelToOptimal), data.settings.useScientificNotation);
 
             ancient.ui.targetBox.attr("style","display:auto;");
 
@@ -664,8 +670,8 @@ function ancientSoulPlanner(add) {
 
         table.find('tbody:last-child').append('<tr>\
             <td>+' + planTo + ' AS</td>\
-            <td>' + utils.numberToStringFormatted(cost, 4) + ' HS</td>\
-            <td>' + utils.numberToStringFormatted(deltaCost, 4) + '</td>\
+            <td>' + utils.numberToStringFormatted(cost, data.settings.useScientificNotation) + ' HS</td>\
+            <td>' + utils.numberToStringFormatted(deltaCost, data.settings.useScientificNotation) + '</td>\
             </tr>'
         );
 
