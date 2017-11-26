@@ -67,7 +67,7 @@ function addCommas(nStr) {
 }
 
 export function numberToStringFormatted(number, scientific) {
-    if (number < 100000) return number;
+    if (number < 100000) return addCommas(number);
     
     const e = Math.floor(Math.log10(number));
     if (!scientific) {
