@@ -66,16 +66,27 @@ function addCommas(nStr) {
     return x1 + x2;
 }
 
-export function numberToStringFormatted(number, decimals) { 
-    // decimals = 2 default
-    decimals = defaultFor(decimals, 2);
+export function numberToStringFormatted(number, scientific) {
+    if (number < 100000) return addCommas(number);
+    
+    const e = Math.floor(Math.log10(number));
+    if (!scientific) {
+        const units = 'KMBTqQsSONdUD!@#$%^&*';
+        
+        var unitIndex = Math.floor(e / 3);
 
-    var number = new Decimal(number);
-    if(number.greaterThan(1000000)) {
-        return number.toPrecision(decimals+1);
-    } else {
-        return addCommas(number.toNearest(1 / Math.pow(10, decimals)));
+        var base = 0;
+        do {
+            base = Math.floor(number / Math.pow(1000, unitIndex));
+            unitIndex--;
+        }
+        while (base < 100);
+    
+        if (unitIndex < units.length) return addCommas(base) + units[unitIndex];
     }
+    
+    base = Math.floor(number / Math.pow(1000, (e - 3) / 3))
+    return addCommas(base).replace(',', '.') + 'e' + e;
 }
 
 /**********************************************************/
