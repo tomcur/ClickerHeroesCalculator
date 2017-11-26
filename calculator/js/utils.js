@@ -70,7 +70,7 @@ export function numberToStringFormatted(number, scientific) {
     if (number < 100000) return number;
     
     const e = Math.floor(Math.log10(number));
-    if (scientific) {
+    if (!scientific) {
         const units = 'KMBTqQsSONdUD!@#$%^&*';
         
         var unitIndex = Math.floor(e / 3);
