@@ -613,7 +613,7 @@ function display(spentHS) {
         if (ancient.extraInfo.optimalLevel) {
             ancient.ui.goal.text(utils.numberToStringFormatted(ancient.extraInfo.optimalLevel, data.settings.useScientificNotation));
             ancient.ui.change.val(utils.numberToStringFormatted(ancient.extraInfo.optimalLevel.minus(ancient.level), data.settings.useScientificNotation));
-            ancient.ui.cost.text(utils.numberToStringFormatted(ancient.extraInfo.costToLevelToOptimal), data.settings.useScientificNotation);
+            ancient.ui.cost.text(utils.numberToStringFormatted(ancient.extraInfo.costToLevelToOptimal, data.settings.useScientificNotation));
 
             ancient.ui.targetBox.attr("style","display:auto;");
 
