@@ -97,18 +97,14 @@ export function decodeSaveGame(str) {
         algo = hashesAlgos[algoHash];
     }
     
-    try {
-        if (algo == "sprinkle") {
-            var json = decodeSprinkle(str);
-            return {data: $.parseJSON(json), algo: algo};
-        } else {
-            var strStripped = str.substring(32);
-            
-            var json = decodeAlgos[algo](atob(strStripped));
-            return {data: $.parseJSON(json), algo: algo};
-        }
-    } catch(e) {
-        return null;
+    if (algo == "sprinkle") {
+        var json = decodeSprinkle(str);
+        return {data: $.parseJSON(json), algo: algo};
+    } else {
+        var strStripped = str.substring(32);
+        
+        var json = decodeAlgos[algo](atob(strStripped));
+        return {data: $.parseJSON(json), algo: algo};
     }
 }
 

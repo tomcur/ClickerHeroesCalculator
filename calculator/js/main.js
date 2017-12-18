@@ -438,121 +438,127 @@ function importSaveGame(force) {
         return;
     }
     
-    var rawDataAlgo = utils.decodeSaveGame(saveData);
-    if (!rawDataAlgo) {
-        showModal('Oops!', '<p>Could not decode the save game data.</p>');
-        return;
+    try {
+        var rawDataAlgo = utils.decodeSaveGame(saveData);
+    } catch (e) {
+        showModal('Oops!', '<p>Could not decode the save game data.</p><p>The error given was:</p><p><code>' + e + '</code></p>', 'Close');
+        throw e;
     }
     
-    var rawData = rawDataAlgo.data;
-    
-    // Create data structure
-    data.settings = {};
-    
-    // Store the save-file encoding algorithm used
-    data.encodeAlgo = rawDataAlgo.algo;
-    
-    // Read on-page settings
-    data.settings.includeSoulsAfterAscension = $("#addsouls").prop("checked");
-    data.settings.wep8k = $("#wep8k").prop("checked");
-    data.settings.copyAncientLevelsToClipboard = $("#copyancientlevels").prop("checked");
-    data.settings.buildMode = $('input[name="buildmode"]:checked').val();
-    data.settings.hybridRatio = $('#hybridratio').slider('getValue');
-    data.settings.revolcLevelRate = $('#revolcrate').slider('getValue');
-    data.settings.skillAncientsLevelRate = $('#skillancientsrate').slider('getValue');
-    data.settings.precision = $('#precision').slider('getValue');
-    data.settings.keepSoulsForRegilding = $("#keepsoulsforregilding").prop("checked");
-    data.settings.ignoreMinimizedAncients = $("#ignoreminimizedancients").prop("checked");
+    try {
+        var rawData = rawDataAlgo.data;
+        
+        // Create data structure
+        data.settings = {};
+        
+        // Store the save-file encoding algorithm used
+        data.encodeAlgo = rawDataAlgo.algo;
+        
+        // Read on-page settings
+        data.settings.includeSoulsAfterAscension = $("#addsouls").prop("checked");
+        data.settings.wep8k = $("#wep8k").prop("checked");
+        data.settings.copyAncientLevelsToClipboard = $("#copyancientlevels").prop("checked");
+        data.settings.buildMode = $('input[name="buildmode"]:checked').val();
+        data.settings.hybridRatio = $('#hybridratio').slider('getValue');
+        data.settings.revolcLevelRate = $('#revolcrate').slider('getValue');
+        data.settings.skillAncientsLevelRate = $('#skillancientsrate').slider('getValue');
+        data.settings.precision = $('#precision').slider('getValue');
+        data.settings.keepSoulsForRegilding = $("#keepsoulsforregilding").prop("checked");
+        data.settings.ignoreMinimizedAncients = $("#ignoreminimizedancients").prop("checked");
 
-    // Set precision
-    configureDecimal(Math.ceil(data.settings.precision) + 3);
-    
-    // Older saves won't have items.
-    data.items = rawData.hasOwnProperty("items") ? rawData.items : {items: {}, slots: {}};
-    
-    data.heroSoulsSacrificed = new Decimal(rawData.heroSoulsSacrificed);
+        // Set precision
+        configureDecimal(Math.ceil(data.settings.precision) + 3);
+        
+        // Older saves won't have items.
+        data.items = rawData.hasOwnProperty("items") ? rawData.items : {items: {}, slots: {}};
+        
+        data.heroSoulsSacrificed = new Decimal(rawData.heroSoulsSacrificed);
 
-    // Calculate total HS earned
-    data.totalHSEarned = data.heroSoulsSacrificed.plus(new Decimal(rawData.heroSouls));
-    for (var k in rawData.ancients.ancients) {
-        data.totalHSEarned = data.totalHSEarned.plus(new Decimal(rawData.ancients.ancients[k].spentHeroSouls));
-    }
-
-    var heroes = rawData.heroCollection.heroes;
-    var ascensionSouls = new Decimal(0);
-    for (var k in heroes) {
-        var id = parseInt(k, 10);
-        ascensionSouls = ascensionSouls.plus(new Decimal(heroes[k].level));
-    }
-    ascensionSouls = ascensionSouls.dividedBy(2000).floor().plus(new Decimal(rawData.primalSouls));
-    data.ascensionSouls = ascensionSouls;
-
-    var levels = {};
-    for (var i = data.ancientMin; i <= data.ancientMax; i++) {
-        if (rawData.ancients.ancients.hasOwnProperty(i)) {
-            levels[i] = true;
+        // Calculate total HS earned
+        data.totalHSEarned = data.heroSoulsSacrificed.plus(new Decimal(rawData.heroSouls));
+        for (var k in rawData.ancients.ancients) {
+            data.totalHSEarned = data.totalHSEarned.plus(new Decimal(rawData.ancients.ancients[k].spentHeroSouls));
         }
-    }
 
+        var heroes = rawData.heroCollection.heroes;
+        var ascensionSouls = new Decimal(0);
+        for (var k in heroes) {
+            var id = parseInt(k, 10);
+            ascensionSouls = ascensionSouls.plus(new Decimal(heroes[k].level));
+        }
+        ascensionSouls = ascensionSouls.dividedBy(2000).floor().plus(new Decimal(rawData.primalSouls));
+        data.ascensionSouls = ascensionSouls;
 
-    data.heroSouls = new Decimal(rawData.heroSouls);
-    if (data.settings.includeSoulsAfterAscension) {
-        data.heroSouls = data.heroSouls.plus(data.ascensionSouls);
-    }
-    $("#soulsin").val(utils.numberToString(data.heroSouls.floor()));
-
-    // Calculate number of gilds
-    data.gilds = new Decimal(Math.max((Number(rawData.epicHeroReceivedUpTo) - 90) / 10, 0) + Number(rawData.extraGildsAwarded));
-
-    for (var k in data.ancients) {
-        if (data.ancients.hasOwnProperty(k)) {
-            if (rawData.ancients.ancients[data.ancients[k].id]) {
-                data.ancients[k].level = new Decimal(rawData.ancients.ancients[data.ancients[k].id].level);
-
-                // Currently it's possible to own a decimal number of ancients due to a bug.
-                // The game treats the ancient level as being rounded down (at least for calculating cost).
-                // So round down the ancient level to be safe:
-                data.ancients[k].level = data.ancients[k].level.floor();
-            } else {
-                data.ancients[k].level = new Decimal(0);
+        var levels = {};
+        for (var i = data.ancientMin; i <= data.ancientMax; i++) {
+            if (rawData.ancients.ancients.hasOwnProperty(i)) {
+                levels[i] = true;
             }
-
-            // Check whether the ancient is minimized in the game or not
-            data.ancients[k].minimized = rawData.ancientEntrySizes.hasOwnProperty(data.ancients[k].id);
-
-            data.ancients[k].ui.level.text(utils.numberToStringFormatted(data.ancients[k].level));
         }
-    }
 
-    for (var k in data.outsiders) {
-        if (data.outsiders.hasOwnProperty(k)) {
-            if (rawData.outsiders.outsiders[data.outsiders[k].id]) {
-                data.outsiders[k].level = new Decimal(rawData.outsiders.outsiders[data.outsiders[k].id].level);
-            } else {
-                data.outsiders[k].level = new Decimal(0);
+
+        data.heroSouls = new Decimal(rawData.heroSouls);
+        if (data.settings.includeSoulsAfterAscension) {
+            data.heroSouls = data.heroSouls.plus(data.ascensionSouls);
+        }
+        $("#soulsin").val(utils.numberToString(data.heroSouls.floor()));
+
+        // Calculate number of gilds
+        data.gilds = new Decimal(Math.max((Number(rawData.epicHeroReceivedUpTo) - 90) / 10, 0) + Number(rawData.extraGildsAwarded));
+
+        for (var k in data.ancients) {
+            if (data.ancients.hasOwnProperty(k)) {
+                if (rawData.ancients.ancients[data.ancients[k].id]) {
+                    data.ancients[k].level = new Decimal(rawData.ancients.ancients[data.ancients[k].id].level);
+
+                    // Currently it's possible to own a decimal number of ancients due to a bug.
+                    // The game treats the ancient level as being rounded down (at least for calculating cost).
+                    // So round down the ancient level to be safe:
+                    data.ancients[k].level = data.ancients[k].level.floor();
+                } else {
+                    data.ancients[k].level = new Decimal(0);
+                }
+
+                // Check whether the ancient is minimized in the game or not
+                data.ancients[k].minimized = rawData.ancientEntrySizes.hasOwnProperty(data.ancients[k].id);
+
+                data.ancients[k].ui.level.text(utils.numberToStringFormatted(data.ancients[k].level));
             }
-            data.outsiders[k].ui.level.text(utils.numberToStringFormatted(data.outsiders[k].level));
         }
+
+        for (var k in data.outsiders) {
+            if (data.outsiders.hasOwnProperty(k)) {
+                if (rawData.outsiders.outsiders[data.outsiders[k].id]) {
+                    data.outsiders[k].level = new Decimal(rawData.outsiders.outsiders[data.outsiders[k].id].level);
+                } else {
+                    data.outsiders[k].level = new Decimal(0);
+                }
+                data.outsiders[k].ui.level.text(utils.numberToStringFormatted(data.outsiders[k].level));
+            }
+        }
+
+        data.ascensionZone = new Decimal(rawData.highestFinishedZonePersist);
+        $("#ascensionzone").val(data.ascensionZone);
+
+        data.ancientSoulsTotal = new Decimal(rawData.ancientSoulsTotal);
+        $("#astotal").val(data.ancientSoulsTotal);
+
+        var tpAncientSoulsPart = new Decimal(0.25).minus(new Decimal(0.23).times(data.ancientSoulsTotal.times(-0.0003).exp())).times(100);
+        data.tp = Decimal.max(tpAncientSoulsPart, new Decimal(1));
+
+        if (!rawData.transcendent) {
+            data.tp = new Decimal(0);
+        }
+
+        $("#tp").val(utils.numberToString(data.tp));
+
+        $("#gilds").val(data.gilds);
+
+        data.useSoulsEnteredManually = false;
+    } catch (e) {
+        showModal('An error occurred', '<p>The save game data appears to be malformed.</p><p>The error given was:</p><p><code>' + e + '</code></p>', 'Close');
+        throw e;
     }
-
-    data.ascensionZone = new Decimal(rawData.highestFinishedZonePersist);
-    $("#ascensionzone").val(data.ascensionZone);
-
-    data.ancientSoulsTotal = new Decimal(rawData.ancientSoulsTotal);
-    $("#astotal").val(data.ancientSoulsTotal);
-
-    var tpAncientSoulsPart = new Decimal(0.25).minus(new Decimal(0.23).times(data.ancientSoulsTotal.times(-0.0003).exp())).times(100);
-    data.tp = Decimal.max(tpAncientSoulsPart, new Decimal(1));
-
-    if (!rawData.transcendent) {
-        data.tp = new Decimal(0);
-    }
-
-    $("#tp").val(utils.numberToString(data.tp));
-
-    $("#gilds").val(data.gilds);
-
-    data.useSoulsEnteredManually = false;
     
     // Calculate
     var dateTimeBefore = new Date();
@@ -560,7 +566,9 @@ function importSaveGame(force) {
         calculateAndUpdate();
     } catch (e) {
         showModal('An error occurred', '<p>Something went wrong while calculating.</p><p>The error given was:</p><p><code>' + e + '</code></p>', 'Close');
+        throw e;
     }
+    
     var dateTimeAfter = new Date();
     
     var elapsed = dateTimeAfter - dateTimeBefore;
