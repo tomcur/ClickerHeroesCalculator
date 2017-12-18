@@ -93,11 +93,6 @@ $(document).ready(function () {
         doOrDoNotCollapseAncientTableOnSmallScreens();
     });
 
-    $(window).on("message", function (event) {
-        $("#savedata").val(event.originalEvent.data);
-        importSaveGame();
-    });
-
     $('#import-button').click(function(){
         // collapse if small
         if($("#input-collapse-btn").is(":visible") && $("#input-collapse").is(":visible")){
