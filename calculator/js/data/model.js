@@ -111,7 +111,8 @@ var AncientsExtraInfo = {
     "dora": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
             baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
-            return baseLevel.ln().times(2.877).minus(Decimal.div(100, 99).minus(oldLevel.times(-0.002).exp()).ln().times(1.4365)).minus(9.63);
+            var level = baseLevel.ln().times(2.877).minus(Decimal.div(100, 99).minus(oldLevel.times(-0.002).exp()).ln().times(1.4365)).minus(9.63);
+            return Decimal.min(level, 18715);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
@@ -120,12 +121,14 @@ var AncientsExtraInfo = {
     "atman": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
             baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
+            var level;
             if(transcended) {
-                return baseLevel.ln().times(2.832).minus(alpha.ln().times(1.416)).minus(Decimal.div(4, 3).minus(oldLevel.times(-0.013).exp()).ln().times(1.416)).minus(6.613);
+                level = baseLevel.ln().times(2.832).minus(alpha.ln().times(1.416)).minus(Decimal.div(4, 3).minus(oldLevel.times(-0.013).exp()).ln().times(1.416)).minus(6.613);
             } else {
                 // Todo: need RoT for this
-                return baseLevel.ln().dividedBy(new Decimal(2).ln());
+                level = baseLevel.ln().dividedBy(new Decimal(2).ln());
             }
+            return Decimal.min(level, 2880);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
@@ -134,12 +137,14 @@ var AncientsExtraInfo = {
     "kumawakamaru": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
             baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
+            var level;
             if(transcended) {
-                return baseLevel.ln().times(2.844).minus(alpha.ln().times(1.422)).minus(Decimal.div(1, 4).plus(oldLevel.times(-0.01).exp()).ln().times(1.422)).minus(7.014);
+                level = baseLevel.ln().times(2.844).minus(alpha.ln().times(1.422)).minus(Decimal.div(1, 4).plus(oldLevel.times(-0.01).exp()).ln().times(1.422)).minus(7.014);
             } else {
                 // Todo: need RoT for this
-                return baseLevel.ln().dividedBy(new Decimal(2).ln());
+                level = baseLevel.ln().dividedBy(new Decimal(2).ln());
             }
+            return Decimal.min(level, 14972);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
@@ -148,7 +153,8 @@ var AncientsExtraInfo = {
     "dogcog": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
             baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
-            return baseLevel.ln().times(2.844).minus(Decimal.div(1, 99).plus(oldLevel.times(-0.01).exp()).ln().times(1.422)).minus(7.232);
+            var level = baseLevel.ln().times(2.844).minus(Decimal.div(1, 99).plus(oldLevel.times(-0.01).exp()).ln().times(1.422)).minus(7.232);
+            return Decimal.min(level, 3743);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
@@ -157,7 +163,8 @@ var AncientsExtraInfo = {
     "fortuna": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
             baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
-            return baseLevel.ln().times(2.875).minus(Decimal.div(10, 9).minus(oldLevel.times(-0.0025).exp()).ln().times(1.4375)).minus(9.3);
+            var level = baseLevel.ln().times(2.875).minus(Decimal.div(10, 9).minus(oldLevel.times(-0.0025).exp()).ln().times(1.4375)).minus(9.3);
+            return Decimal.min(level, 14972);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
@@ -166,7 +173,8 @@ var AncientsExtraInfo = {
     "bubos": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
             baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
-            return baseLevel.ln().times(2.8).minus(new Decimal(1).plus(oldLevel.times(-0.02).exp()).ln().times(1.4)).minus(5.94);
+            var level = baseLevel.ln().times(2.8).minus(new Decimal(1).plus(oldLevel.times(-0.02).exp()).ln().times(1.4)).minus(5.94);
+            return Decimal.min(level, 18715);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
@@ -175,7 +183,8 @@ var AncientsExtraInfo = {
     "chronos": { // Both
         "goalIdle": function(baseLevel, oldLevel, alpha, transcended, wepwawetLeveledBeyond8k, hybridRatio) { 
             baseLevel = Decimal.max(baseLevel, baseLevel.times(hybridRatio));
-            return baseLevel.ln().times(2.75).minus(new Decimal(2).minus(oldLevel.times(-0.034).exp()).ln().times(1.375)).minus(5.1);
+            var level = baseLevel.ln().times(2.75).minus(new Decimal(2).minus(oldLevel.times(-0.034).exp()).ln().times(1.375)).minus(5.1);
+            return Decimal.min(level, 1101);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
@@ -288,7 +297,8 @@ var AncientsExtraInfo = {
                 baseLevel.times(new Decimal(data.settings.revolcLevelRate).pow(2)), 
                 baseLevel.times(hybridRatio).times(new Decimal(data.settings.revolcLevelRate).pow(2))
             );
-            return baseLevel.ln().times(2.75).minus(new Decimal(2).minus(oldLevel.times(-0.034).exp()).ln().times(1.375)).minus(5.1);
+            var level = baseLevel.ln().times(2.75).minus(new Decimal(2).minus(oldLevel.times(-0.034).exp()).ln().times(1.375)).minus(5.1);
+            return Decimal.min(level, 3743);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
@@ -316,7 +326,8 @@ var AncientsExtraInfo = {
                 baseLevel.times(new Decimal(data.settings.skillAncientsLevelRate).pow(2)), 
                 baseLevel.times(hybridRatio).times(new Decimal(data.settings.skillAncientsLevelRate).pow(2))
             );
-            return baseLevel.ln().times(2.75).minus(new Decimal(2).minus(oldLevel.times(-0.034).exp()).ln().times(1.375)).minus(5.1);
+            var level = baseLevel.ln().times(2.75).minus(new Decimal(2).minus(oldLevel.times(-0.034).exp()).ln().times(1.375)).minus(5.1);
+            return Decimal.min(level, 1440);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
