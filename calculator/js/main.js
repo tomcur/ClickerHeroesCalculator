@@ -698,7 +698,7 @@ function generateSaveGame(spentHS) {
     // after ascending.
     if (data.useSoulsEnteredManually
         || data.settings.includeSoulsAfterAscension) {
-        $('#generatedsavedata').val("");
+        $('#generatedsavedata').val("Won't generate save-game when 'Include souls gained after ascension' is ticked or hero souls are entered manually.");
         return;
     }
 
