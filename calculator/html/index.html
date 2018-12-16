@@ -114,21 +114,26 @@
                                 </label>
                             </div>
                             <hr>
-                            <div class="form-check">
-                                Build
-                                <label class="form-check-label ml-3">
-                                    <input class="form-check-input" type="radio" name="buildmode" value="idle" checked="checked">
-                                    Idle
-                                </label>
-                                <label class="form-check-label ml-3">
-                                    <input class="form-check-input" type="radio" name="buildmode" value="hybrid">
-                                    Hybrid
-                                </label>
-                                <label class="form-check-label ml-3">
-                                    <input class="form-check-input" type="radio" name="buildmode" value="active">
-                                    Active
-                                </label>
-                            </div>
+                            <fieldset class="form-group">
+                                <div class="form-check">
+                                    Build:
+                                    <label class="ml-2">
+                                        <input type="radio" name="buildmode" value="idle" checked="checked">
+                                        Idle
+                                    </label>
+                                    </span>
+                                
+                                    <label class="ml-2">
+                                        <input type="radio" name="buildmode" value="hybrid">
+                                        Hybrid
+                                    </label>
+                                
+                                    <label class="ml-2">
+                                        <input type="radio" name="buildmode" value="active">
+                                        Active
+                                    </label>
+                                </div>
+                            </fieldset>
                             <div id="hybridratiocontainer">
                                 <label for="hybridratio">Ratio Fragsworth/Siyalatas (default: 0.5)</label>
                                 <div>
@@ -211,13 +216,13 @@
                         </label>
                     </div>
                     <div class="form-check">
-                        Theme
-                        <label class="form-check-label ml-3">
-                            <input class="form-check-input" type="radio" name="theme" value="light" checked="checked">
+                        Theme:
+                        <label class="ml-2">
+                            <input type="radio" name="theme" value="light" checked="checked">
                             Light
                         </label>
-                        <label class="form-check-label ml-3">
-                            <input class="form-check-input" type="radio" name="theme" value="dark">
+                        <label class="ml-2">
+                            <input type="radio" name="theme" value="dark">
                             Dark
                         </label>
                     </div>
@@ -449,6 +454,10 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <tr>
+                                <td>2018/12/16</td>
+                                <td>Slight layout changes and under-the-hood updates.</td>
+                            </tr>
                             <tr>
                                 <td>2018/01/29</td>
                                 <td>Implement hard level cap for capped ancients.</td>
