@@ -144,7 +144,7 @@ var AncientsExtraInfo = {
                 // Todo: need RoT for this
                 level = baseLevel.ln().dividedBy(new Decimal(2).ln());
             }
-            return Decimal.min(level, 14972);
+            return Decimal.min(level, 1498);
         },
         "goalHybrid": "goalIdle",
         "goalActive": "goalIdle",
