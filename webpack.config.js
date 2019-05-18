@@ -2,14 +2,14 @@ var webpack = require('webpack');
 
 var production = (process.env.NODE_ENV === 'production');
 
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlMinifier = require('html-minifier');
-const extractSass = new ExtractTextPlugin({ filename: '[name].css' });
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-module.exports = {  
+module.exports = {
+    mode: production ? 'production' : 'development',
     entry: {
         main: [
             __dirname + '/calculator/js/main.js'
@@ -26,22 +26,15 @@ module.exports = {
         path: __dirname + '/dist/',
         filename: '[name]-[hash].js'
     },
-  
     module: {
         rules: [{
             test: /\.scss$/,
-            use: extractSass.extract({
-                use: [{
-                    loader: "css-loader", options: {
-                        sourceMap: true,
-                        minimize: production
-                    }
-                }, {
-                    loader: "sass-loader", options: {
-                        sourceMap: true
-                    }
-                }]
-            })
+            use: [
+                MiniCssExtractPlugin.loader,
+                "css-loader",
+                "postcss-loader",
+                "sass-loader",
+            ]
         }, {
             test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
             loader: "url-loader?name=./files/[hash].[ext]&limit=10000&mimetype=application/font-woff"
@@ -71,9 +64,7 @@ module.exports = {
             }]
         }]
     },
-
     plugins: [
-        extractSass,
         new HtmlWebpackPlugin({
             'template': 'calculator/html/index.html',
             'excludeChunks': ['light', 'dark'],
@@ -85,12 +76,13 @@ module.exports = {
                 removeComments: false,
                 removeEmptyAttributes: true,
             } : false
+        }),
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+            chunkFilename: "[id].css"
         })
     ].concat(production ? [
         new FaviconsWebpackPlugin('./calculator/images/borb.png'),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: { warnings: false }
-        }),
         new CopyWebpackPlugin([
             { 
                 from: __dirname + '/calculator/extra/.htaccess' 
