@@ -6,17 +6,20 @@ var pako = require('pako');
 /**********************************************************/
 
 var hashesAlgos = {
-    "7a990d405d2c6fb93aa8fbb0ec1a3b23": "zlib"
+    "7a990d405d2c6fb93aa8fbb0ec1a3b23": "zlib",
+    "7e8bb5a89f2842ac4af01b3b7e228592": "deflate"
 };
 
 var algosHashes = swapKeysValues(hashesAlgos);
 
 var decodeAlgos = {
-    "zlib": function(str) { return pako.inflate(str, {to: 'string'}); }
+    "zlib": function(str) { return pako.inflate(str, {to: 'string'}); },
+    "deflate": function(str) { return pako.inflateRaw(str, {to: 'string'}); }
 };
 
 var encodeAlgos = {
-    "zlib": function(str) { return pako.deflate(str, {to: 'string'}); }
+    "zlib": function(str) { return pako.deflate(str, {to: 'string'}); },
+    "deflate": function(str) { return pako.deflateRaw(str, {to: 'string'}); }
 };
 
 /**********************************************************/
